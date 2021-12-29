@@ -16,6 +16,15 @@ contract NFT is ERC721URIStorage , Ownable{
      uint256 public nftPerAddressLimit = 3;
      address[] public whitelistedAddresses;
 
+    uint256 public Train_common;
+    uint256 public Train_rare;
+    uint256 public Train_epic;
+    uint256 public Train_legendary;
+
+    uint256 public Station_common;
+    uint256 public Station_mitic;
+    uint256 public Station_Legendary;
+
     struct NftDetails{
         address[] owners;
         uint256 creationTime;
@@ -71,4 +80,29 @@ contract NFT is ERC721URIStorage , Ownable{
     function getTime() private view returns(uint256){
         return block.timestamp;
     }
+
+
+    //INC functions
+    function  TCommonInc ()private {
+        Train_common= Train_common + 1;
+        }
+    function TRareInc() private{
+        Train_rare= Train_rare + 1;
+    }
+    function TEpicInc() private{
+       Train_epic= Train_epic + 1;
+    }
+    function TLegendaryInc() private{
+       Train_legendary= Train_legendary + 1;
+    }
+
+     function SCommonInc() private{
+      Station_common= Station_common +1;
+    }  
+    function SMiticInc() private{
+      Station_mitic= Station_mitic +1;
+    } 
+    function SLegendaryInc() private{
+      Station_Legendary= Station_Legendary +1;
+    } 
 }
