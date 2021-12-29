@@ -1,61 +1,30 @@
+
 // Follow me on twitter @JamesPistell
 
 // Access the File System via Node's fs module
-const fs = require('fs');
-
+const fs = require("fs");
 
 //* ************************************************** //
 //* **************** Metadata Attributes ************* //
 //* ************************************************** //
 // Create metadata for a person (hair, eye, height, etc)
-const hairColor = [
-  ['Black hair', 10],
-  ['Redhead', 1],
-  ['Brunette', 40],
-  ['Blonde', 5]
+
+const nftType = [
+  ["TRAINS", 4660],
+  ["STATIONS", 600],
 ];
 
-const eyeColor = [
-  ['Brown eyes', 70],
-  ['Blue eyes', 10],
-  ['Hazel eyes', 5],
-  ['Amber eyes', 5],
-  ['Gray eyes', 3],
-  ['Green eyes', 2]
+const Train = [
+  ["Common", 2500],
+  ["Rare", 1500],
+  ["Epic", 500],
+  ["Legendary", 160],
 ];
 
-const height = [
-  ['Average height', 80],
-  ['Tall as fuck', 10],
-  ['Short', 10]
-];
-
-const bodyType = [
-  ['Average Body', 70],
-  ['Thin', 10],
-  ['Slim', 10],
-  ['Fat fuck', 10],
-  ['Jacked as fuck', 5]
-];
-
-const penisSize = [
-  ['Average dong', 80],
-  ['Gigantic', 2],
-  ['Pathetic', 5]
-];
-
-// random number based on a range of 1-100
-// Math.floor(Math.random() * 100 + 1)
-// Leave as undefined for now because the value will be filled out in the loop below
-let age = undefined;
-
-const disease = [
-  ['Healthy', 70],
-  ['AIDS', 5],
-  ['Herpes', 15],
-  ['Chlamydia', 15],
-  ['Scurvy', 23],
-  ['Twitter addict', 10]
+const Stations = [
+  ["Common", 300],
+  ["Mitic", 200],
+  ["Legendary", 100],
 ];
 
 
@@ -72,10 +41,13 @@ function randomWeight(arr) {
   let total = 0;
   for (let index = 0; index < arr.length; ++index) {
     total += arr[index][1];
+    console.log("total", total);
   }
   // Total in hand, we can now pick a random value akin to our
   // random index from before.
   const threshold = Math.random() * total;
+
+  
 
   // Now we just need to loop through the main arr one more time
   // until we discover which value would live within this
@@ -88,32 +60,51 @@ function randomWeight(arr) {
     total += arr[index][1];
     // If this value falls within the threshold, we're done!
     if (total >= threshold) {
+      console.log("index", arr[index][0]);
       return arr[index][0];
     }
   }
   return arr[arr.length - 1][0];
 }
 
-
 //* ************************************************** //
 //* ********** Create the JSON metadata file ********* //
 //* ************************************************** //
-for (let index = 0; index < 15; index++) {
 
-  let personData = {
-    hairColor: randomWeight(hairColor),
-    eyeColor: randomWeight(eyeColor),
-    height: randomWeight(height),
-    bodyType: randomWeight(bodyType),
-    penisSize: randomWeight(penisSize),
-    age: Math.floor(Math.random() * 100 + 1),
-    disease: randomWeight(disease)
-  };
-
-  // lets output this data to JSON!!!!!!!
-  fs.writeFileSync(`./metadata/${index}.json`, JSON.stringify(personData, null, 2));
+function randomInteger(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+for (let index = 0; index < 20; index++) {
+  let nftData;
+
+  const type = randomWeight(nftType);
+
+  if (type === "TRAINS") {
+    const trainType = randomWeight(Train);
+    const Hardness = Math.floor(Math.random() * 99);
+    nftData = {
+      nftType: type,
+      trainType: trainType,
+      Hardness: randomInteger(20, 99),
+      Power: randomInteger(20, 99),
+      Speed: randomInteger(20, 99),
+    };
+  } else {
+    const stationType = randomWeight(Stations);
+    nftData = {
+      nftType: type,
+      stationType: stationType,
+    };
+  }
+  console.log("type", type);
+
+  // lets output this data to JSON!!!!!!!
+  fs.writeFileSync(
+    `./metadata/${index}.json`,
+    JSON.stringify(nftData, null, 2)
+  );
+}
 
 //* ************************************************** //
 //* ********** Validate your rarity DATA ************* //
@@ -124,7 +115,7 @@ const counts = {};
 for (let index = 1; index < 8888; index++) {
   // Pick a random attribute array to find how how many are going to be generated
   // In this example I am analyzing eyeColor
-  emptyArr.push(randomWeight(eyeColor));
+  emptyArr.push(randomWeight(nftType));
 }
 
 // view the total number of each attribute generated
@@ -133,7 +124,7 @@ emptyArr.forEach((x) => {
   counts[x] = totalNum;
 });
 
-console.log('================= TOTAL COUNT =================');
+console.log("================= TOTAL COUNT =================");
 console.log(counts);
 
 // view the total percentage of each attribute generated
@@ -141,5 +132,5 @@ Object.entries(counts).forEach((e) => {
   counts[e[0]] = `${((e[1] / 8888) * 100).toFixed(2)}%`;
 });
 
-console.log('================= TOTAL PERCENTAGE =================');
+console.log("================= TOTAL PERCENTAGE =================");
 console.log(counts);
