@@ -32,6 +32,8 @@ contract NFT is ERC721URIStorage , Ownable{
     uint256 public Station_mitic_limit=200;//5
     uint256 public Station_Legendary_limit=100;//6
 
+    
+
     struct NftDetails{
         address[] owners;
         uint256 creationTime;

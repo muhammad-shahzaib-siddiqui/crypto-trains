@@ -6,7 +6,7 @@
 const hre = require("hardhat");
 const { json } = require("hardhat/internal/core/params/argumentTypes");
 
-  // This is a script for deploying your contracts. You can adapt it to deploy
+// This is a script for deploying your contracts. You can adapt it to deploy
 // yours, or create new ones.
 async function main() {
   // This is just a convenience check
@@ -27,57 +27,54 @@ async function main() {
 
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  
 
-  //  let manager_addr = await lasm.manager_addr()
-  //  console.log(manager_addr)
 
-  // NFTCrowdsale = await ethers.getContractFactory("NFTCrowdsale");
-  // nftPreSale = await NFTCrowdsale.deploy();
-  // await nftPreSale.deployed();
+  NFTpaymentSplitter = await ethers.getContractFactory("NFTpaymentSplitter");
+  nFTpaymentSplitter = await NFTpaymentSplitter.deploy();
+  await nFTpaymentSplitter.deployed();
 
-  // nftPubSale = await NFTCrowdsale.deploy();
-  // await nftPubSale.deployed();
+  NFTCrowdsale = await ethers.getContractFactory("NFTCrowdsale");
+  nftPreSale = await NFTCrowdsale.deploy(nFTpaymentSplitter.address);
+  await nftPreSale.deployed();
 
- 
-
-   NFT = await ethers.getContractFactory("NFT");
-   nft = await NFT.deploy(nftPreSale.address,nftPubSale.address);
-   await nft.deployed();
+  NFT = await ethers.getContractFactory("NFT");
+  nft = await NFT.deploy(nftPreSale.address);
+  await nft.deployed();
 
   // Manager = await ethers.getContractFactory("Manager");
   // manager = await Manager.attach(manager_addr)
 
- 
+  console.log("paymentSplitter deployed to:", nFTpaymentSplitter.address);
   console.log("nftPreSale deployed to:", nftPreSale.address);
-  console.log("nftPubSale deployed to:", nftPubSale.address);
   console.log("nft deployed to:", nft.address);
 
   // We also save the contract's artifacts and address in the frontend directory
-  saveFrontendFiles(nft);
+  saveFrontendFiles(nFTpaymentSplitter, nftPreSale, nft);
 }
 //,nftPreSale,nftPubSale,nft
 
-function saveFrontendFiles(lasm,nftPreSale,nftPubSale,nft) {
+function saveFrontendFiles(nFTpaymentSplitter, nftPreSale, nft) {
   const fs = require("fs");
-  const contractsDir = __dirname + "/../frontend/src/contracts";
+  const contractsDir = "../frontend/src/contract";
 
   if (!fs.existsSync(contractsDir)) {
     fs.mkdirSync(contractsDir);
   }
-let config = `
- const nft_addr = "${nft.address}"
+  let config = `
+ export const nft_addr = "${nft.address}"
+ export const nftPreSale_addr = "${nftPreSale.address}"
+ export const nFTpaymentSplitter_addr = "${nFTpaymentSplitter.address}"
 `
-let data =  JSON.stringify(config)
-fs.writeFileSync(
-  contractsDir + '/addresses.js', JSON.parse(data)
-  
-);
+  let data = JSON.stringify(config)
+  fs.writeFileSync(
+    contractsDir + '/addresses.js', JSON.parse(data)
+
+  );
   // fs.writeFileSync(
   //   contractsDir + "/contract-address.json",
   //   JSON.stringify({ LASM: lasm.address ,  nftPreSale: nftPreSale.address ,nftPubSale: nftPubSale.address ,nft: nft.address }
   //     , undefined, 2)
-    
+
   // );
   // fs.writeFileSync(
   //   contractsDir + "/contract-address.json",
@@ -92,27 +89,27 @@ fs.writeFileSync(
   //   JSON.stringify({ nft: nft.address }, undefined, 2)
   // );
 
- 
-  const nftArtifact = artifacts.readArtifactSync("NFT");
+
+  // const nftArtifact = artifacts.readArtifactSync("NFT");
 
 
 
-  let abi 
-  
+  // let abi
 
- 
 
-  abi  = `const NFT  = ${JSON.stringify(nftArtifact)}`
 
-  data = JSON.stringify(abi,null,2)
 
-  fs.writeFileSync(
-    contractsDir + '/NFT.js', JSON.parse(data)
-    
-  );
- 
+  // abi = `const NFT  = ${JSON.stringify(nftArtifact)}`
 
- 
+  // data = JSON.stringify(abi, null, 2)
+
+  // fs.writeFileSync(
+  //   contractsDir + '/NFT.js', JSON.parse(data)
+
+  // );
+
+
+
 }
 
 main()

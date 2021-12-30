@@ -67,7 +67,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     mapping (address => uint256) purchase;
     mapping (address => uint256) msgValue;
     uint256 public start = 0;
-    uint256 public limitationtime = block.timestamp + 7776000   * 1 seconds;
+    uint256 public limitationtime = 0;
     mapping(address => bool) private _whitelist;
    
     constructor( address payable wallet_ ){
@@ -92,6 +92,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         }
        
         start = block.timestamp + startTime * 1 seconds;
+        limitationtime = start + 14400   * 1 seconds;
     }
  
     fallback () external payable { 
@@ -126,7 +127,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     function buyNFT(uint8 no) public nonReentrant payable {
         require(start<block.timestamp || start !=0,"Sale not started");
         uint256 price;
-        if(block.timestamp<start+ 14400 * 1 seconds){
+        if(block.timestamp<limitationtime){
             price = discount_price(no);
         }else{
             price = normal_price(no);
