@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import './App.css';
 import Header from './components/Header';
-import Home from './components/Home';
-import MainPage from "./components/CryptoMainPage"
+import MainPage from "./screens/CryptoMainPage"
 import { useEagerConnect, useInactiveListener } from './hooks/useEagerConnect';
 
 

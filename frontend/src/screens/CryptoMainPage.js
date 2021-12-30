@@ -11,12 +11,15 @@ import busd from "../assets/img/busd.svg"
 
 
 
+
+
+
 const CryptoMainPage = () => {
     return (
         <div>
             
 
-            <div className="container-fluid">
+            {/* <div className="container-fluid">
         <nav className="custom-padding custom-padd-mobile">
             <div className="d-j-flex align-items-center">
                 <a href="index.html">
@@ -28,7 +31,7 @@ const CryptoMainPage = () => {
                 </div>
             </div>
         </nav>
-    </div>
+    </div> */}
     <div className="top-bar">
         <h1>PRESALE STARTS IN: <span id="days"></span> DAYS <span id="hours"></span> H <span id="minutes"></span> Minutes <span id="seconds"></span> SEC</h1>
     </div>
