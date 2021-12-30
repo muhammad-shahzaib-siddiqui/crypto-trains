@@ -2,6 +2,8 @@ import { useWeb3React } from "@web3-react/core";
 import { connectWallet } from "../utils/connectWallet";
 import logo from "../assets/img/logo.png";
 import metamask from "../assets/img/metamask.png"
+import { Link } from "react-router-dom";
+
 
 function Header(props) {
   const { active, activate } = useWeb3React();
@@ -46,13 +48,21 @@ function Header(props) {
       <div className="container-fluid">
         <nav className="custom-padding custom-padd-mobile">
           <div className="d-j-flex align-items-center">
-            <a href="index.html">
+            <Link to="/">
               <img className="logo" src={logo} alt="" />
-            </a>
+            </Link>
             <div className="d-flex ">
-              <a className="custom-btn btn-white" href="nfts.html">
-                MY NFTS
-              </a>
+              <div className="bg-white"  style={{marginRight:"20px", padding:"15px 20px 15px 20px", borderRadius:"20px"}}>
+              <Link to="myNft" style={{color:"black", textDecoration:"none", fontWeight:"bold"}}>
+              MY NFTS
+              </Link>   
+             </div>
+             <div className="bg-white" style={{ padding:"15px 20px 15px 20px", borderRadius:"20px"}}>
+             <Link to="airDrop" style={{color:"black", textDecoration:"none", fontWeight:"bold"}}>
+                AirDrop
+              </Link>
+             </div>
+                
               <a
                 className="custom-btn btn-white justify-content-center"
                 onclick="loadWeb3();"
@@ -60,8 +70,7 @@ function Header(props) {
                 {/* <img height="27" src="./assets/img/metamask.png" alt="" />{" "} */}
                 {active ? (
                   <div
-                    // className="custom-btn btn-white justify-content-center"
-                    // style={{border:"1px solid red"}}
+                   style={{display:"flex", flexDirection:"row", alignItems:"center"}}
                     
                   >
                     <img height="27" src={metamask} alt="" />
