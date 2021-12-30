@@ -1,5 +1,4 @@
-import React from 'react'
-import logo from "../assets/img/logo.png"
+import React, { useEffect, useState } from 'react'
 import train1 from "../assets/img/train1.jpg"
 import train2 from "../assets/img/train2.jpg"
 import train3 from "../assets/img/train3.jpg"
@@ -8,13 +7,110 @@ import train5 from "../assets/img/train5.jpg"
 import train6 from "../assets/img/train6.jpg"
 import train7 from "../assets/img/train7.jpg"
 import busd from "../assets/img/busd.svg"
+import { ethers } from 'ethers'
+import {nft_addr} from "../contract/addresses"
+import NFT from "../contract/NFT.json";
+import Web3Modal from 'web3modal'
+import { useWeb3React } from "@web3-react/core";
 
 
 
 
+export default function CryptoMainPage() {
 
+    const [Train_common_limit, setTrain_common_limit] = useState()
+    const [Train_rare_limit, setTrain_rare_limit] = useState()
+    const [Train_epic_limit, setTrain_epic_limit] = useState()
+    const [Train_legendary_limit, setTrain_legendary_limit] = useState()
+    const [Station_common_limit, setStation_common_limit] = useState()
+    const [Station_mitic_limit, setStation_mitic_limit] = useState()
+    const [Station_Legendary_limit, setStation_Legendary_limit] = useState()
 
-const CryptoMainPage = () => {
+    const [Train_common, setTrain_common] = useState()
+    const [Train_rare, setTrain_rare] = useState()
+    const [Train_epic, setTrain_epic] = useState()
+    const [Train_legendary, setTrain_legendary] = useState()
+    const [Station_common, setStation_common] = useState()
+    const [Station_mitic, setStation_mitic] = useState()
+    const [Station_Legendary, setStation_Legendary] = useState()
+
+    const [] = useState()
+
+    const {
+        connector,
+        library,
+        account,
+        chainId,
+        activate,
+        deactivate,
+        active,
+        errorWeb3Modal
+    } = useWeb3React();
+    const [balance, setBalance] = useState();
+    const loadData = async () => {
+        try {
+            const web3Modal = new Web3Modal();
+            const connection = await web3Modal.connect();
+            const provider = new ethers.providers.Web3Provider(connection);
+            let signer = provider.getSigner();
+            let NFTcontract = new ethers.Contract(nft_addr, NFT, signer);
+            let Train_common_limit = await NFTcontract.Train_common_limit()
+            let Train_rare_limit = await NFTcontract.Train_rare_limit()
+            let Train_epic_limit = await NFTcontract.Train_epic_limit()
+            let Train_legendary_limit = await NFTcontract.Train_legendary_limit()
+            let Station_common_limit = await NFTcontract.Station_common_limit()
+            let Station_mitic_limit = await NFTcontract.Station_mitic_limit()
+            let Station_Legendary_limit = await NFTcontract.Station_Legendary_limit()
+
+            setTrain_common_limit(parseInt(Train_common_limit.toString()))
+            setTrain_rare_limit(parseInt(Train_rare_limit.toString()))
+            setTrain_epic_limit(parseInt(Train_epic_limit.toString()))
+            setTrain_legendary_limit(parseInt(Train_legendary_limit.toString()))
+            setStation_common_limit(parseInt(Station_common_limit.toString()))
+            setStation_mitic_limit(parseInt(Station_mitic_limit.toString()))
+            setStation_Legendary_limit(parseInt(Station_Legendary_limit.toString()))
+
+            let Train_common = await NFTcontract.Train_common()
+            let Train_rare = await NFTcontract.Train_rare()
+            let Train_epic = await NFTcontract.Train_epic()
+            let Train_legendary = await NFTcontract.Train_legendary()
+            let Station_common = await NFTcontract.Station_common()
+            let Station_mitic = await NFTcontract.Station_mitic()
+            let Station_Legendary = await NFTcontract.Station_Legendary()
+
+            setTrain_common(parseInt(Train_common.toString()))
+            setTrain_rare(parseInt(Train_rare.toString()))
+            setTrain_epic(parseInt(Train_epic.toString()))
+            setTrain_legendary(parseInt(Train_legendary.toString()))
+            setStation_common(parseInt(Station_common.toString()))
+            setStation_mitic(parseInt(Station_mitic.toString()))
+            setStation_Legendary(parseInt(Station_Legendary.toString()))
+
+            
+            
+            
+            // console.log("taaaaaaaaaaaaiiiiiiiiiiiiinnnnnnnnnnn: ", data.toString())
+        } catch (error) {
+            console.log("data :", error)
+        }
+    }
+    useEffect(() => {
+        (async () => {
+            if (account) {
+                try {
+                    loadData()
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        })()
+    }, [account]);
+    if (!account) {
+        return <h1>Kindly connect wallet</h1>
+    }
+
+    
+
     return (
         <div>
             
@@ -27,7 +123,7 @@ const CryptoMainPage = () => {
                 </a>
                 <div className="d-flex ">
                     <a className="custom-btn btn-white" href="nfts.html">MY NFTS</a>
-                    <a className="custom-btn btn-white justify-content-center" onclick="loadWeb3();"><img height="27" src="./assets/img/metamask.png" alt=""/> Connect Metamask</a>
+                    <a className="custom-btn btn-white justify-content-center" ="loadWeb3();"><img height="27" src="./assets/img/metamask.png" alt=""/> Connect Metamask</a>
                 </div>
             </div>
         </nav>
@@ -42,7 +138,7 @@ const CryptoMainPage = () => {
                 <h1 className="white-head">TRAINS</h1>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">2500/2500</h6>
+                        <h6 className="nft-box-head">{`${Train_common_limit - Train_common}/${Train_common_limit}`}</h6>
                         <img className="nft-box" src={train1} alt="" />
                         <div className="text-section">
                             <div className="tag-section">
@@ -66,7 +162,7 @@ const CryptoMainPage = () => {
                 </div>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">1500/1500</h6>
+                        <h6 className="nft-box-head">{`${Train_rare_limit - Train_rare}/${Train_rare_limit}`}</h6>
                         <img className="nft-box" src={train2} alt="" />
                         <div className="text-section">
                             <div className="tag-section">
@@ -90,7 +186,7 @@ const CryptoMainPage = () => {
                 </div>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">500/500</h6>
+                        <h6 className="nft-box-head">{`${Train_epic_limit - Train_epic}/${Train_epic_limit}`}</h6>
                         <img className="nft-box" src={train3} alt="" />
                         <div className="text-section">
                             <div className="tag-section">
@@ -114,7 +210,7 @@ const CryptoMainPage = () => {
                 </div>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">160/160</h6>
+                        <h6 className="nft-box-head">{`${Train_legendary_limit - Train_legendary}/${Train_legendary_limit}`}</h6>
                         <img className="nft-box" src={train4} alt="" />
                         <div className="text-section">
                             <div className="tag-section">
@@ -144,7 +240,7 @@ const CryptoMainPage = () => {
                 <h1 className="white-head">STATIONS</h1>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">300/300</h6>
+                        <h6 className="nft-box-head">{`${Station_common_limit - Station_common}/${Station_common_limit}`}</h6>
                         <img className="nft-box" src={train5} alt="" />
                         <div className="text-section">
                             <div className="tag-section">
@@ -168,7 +264,7 @@ const CryptoMainPage = () => {
                 </div>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">200/200</h6>
+                        <h6 className="nft-box-head">{`${Station_mitic_limit - Station_mitic}/${Station_mitic_limit}`}</h6>
                         <img className="nft-box" src={train6} alt=""/>
                         <div className="text-section">
                             <div className="tag-section">
@@ -192,7 +288,7 @@ const CryptoMainPage = () => {
                 </div>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">100/100</h6>
+                        <h6 className="nft-box-head">{`${Station_Legendary_limit- Station_Legendary}/${Station_Legendary_limit}`}</h6>
                         <img className="nft-box" src={train7} alt="" />
                         <div className="text-section">
                             <div className="tag-section">
@@ -231,7 +327,7 @@ const CryptoMainPage = () => {
         </div>
     </div>
 
-    <div className="modal fade custom-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div className="modal fade custom-modal" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
@@ -258,4 +354,4 @@ const CryptoMainPage = () => {
     )
 }
 
-export default CryptoMainPage
+
