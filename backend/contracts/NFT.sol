@@ -12,11 +12,12 @@ contract NFT is ERC721URIStorage , Ownable{
     Counters.Counter private _tokenIds;
     address contractAddress;
 
-     uint256 public maxSupply = 2559;
-     uint256 public nftPerAddressLimit = 3;
+     uint256 public maxSupply = 5260;
+     uint256 public nftPerAddressLimit = 5;
      address[] public whitelistedAddresses;
 
-    uint256 public Train_common;
+    uint256 public Train_common_55;
+    uint256 public Train_common_20;
     uint256 public Train_rare;
     uint256 public Train_epic;
     uint256 public Train_legendary;
@@ -34,11 +35,11 @@ contract NFT is ERC721URIStorage , Ownable{
     mapping(uint256=>NftDetails) private _NftDetails;
     mapping(address => uint256) public addressMintedBalance;
 //,address pubSale
-    constructor(address preSale,address pubSale) ERC721("MyNFTs", "METT") {
+    constructor(address preSale) ERC721("MyNFTs", "METT") {
         
         _owner[_msgSender()] = true;
         _owner[preSale] = true;
-        _owner[pubSale] = true;
+        
 
     }
 
@@ -58,8 +59,8 @@ contract NFT is ERC721URIStorage , Ownable{
 
     function createToken(string memory tokenURI , address account) public returns(uint) {
         require(_owner[_msgSender()]==true,"Not authorized to mint");
-        require(_tokenIds.current() < 2559 ,"all NFTs Minted");
-        require(addressMintedBalance[account] < 3 , "You cannot have more than 3 NFTs");
+        require(_tokenIds.current() < 5260 ,"all NFTs Minted");
+        require(addressMintedBalance[account] < 5 , "You cannot have more than 5 NFTs");
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
         setNftDetails(newItemId,account);
@@ -72,6 +73,7 @@ contract NFT is ERC721URIStorage , Ownable{
 
     
 
+
     //returns the total number of Nfts minted from this contract
     function totalSupply() private view returns(uint256){
         return _tokenIds.current();
@@ -82,27 +84,27 @@ contract NFT is ERC721URIStorage , Ownable{
     }
 
 
-    //INC functions
-    function  TCommonInc ()private {
-        Train_common= Train_common + 1;
-        }
-    function TRareInc() private{
-        Train_rare= Train_rare + 1;
-    }
-    function TEpicInc() private{
-       Train_epic= Train_epic + 1;
-    }
-    function TLegendaryInc() private{
-       Train_legendary= Train_legendary + 1;
-    }
+    // //INC functions
+    // function  TCommonInc() private{
+    //     Train_common= Train_common + 1;
+    //     }
+    // function TRareInc() private{
+    //     Train_rare= Train_rare + 1;
+    // }
+    // function TEpicInc() private{
+    //    Train_epic= Train_epic + 1;
+    // }
+    // function TLegendaryInc() private{
+    //    Train_legendary= Train_legendary + 1;
+    // }
 
-     function SCommonInc() private{
-      Station_common= Station_common +1;
-    }  
-    function SMiticInc() private{
-      Station_mitic= Station_mitic +1;
-    } 
-    function SLegendaryInc() private{
-      Station_Legendary= Station_Legendary +1;
-    } 
+    //  function SCommonInc() private{
+    //   Station_common= Station_common +1;
+    // }  
+    // function SMiticInc() private{
+    //   Station_mitic= Station_mitic +1;
+    // } 
+    // function SLegendaryInc() private{
+    //   Station_Legendary= Station_Legendary +1;
+    // } 
 }

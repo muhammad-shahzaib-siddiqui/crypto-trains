@@ -3,10 +3,7 @@ const { ethers } = require("hardhat");
 
 describe("LASM",  function ()  {
 
-  let LASM
-  let lasm
-  let Manager
-  let manager
+  
   let NFT
   let nft
   let NFTCrowdsale
@@ -16,28 +13,17 @@ describe("LASM",  function ()  {
 
   it("Should return the new greeting once it's changed", async function () {
     [_,per1,per2,per3] = await ethers.getSigners()
-     LASM = await ethers.getContractFactory("LASM");
-     lasm = await LASM.deploy();
-    await lasm.deployed();
+    
 
-    let manager_addr = await lasm.manager_addr()
-    console.log(manager_addr)
+   
 
     NFTCrowdsale = await ethers.getContractFactory("NFTCrowdsale");
     nftPreSale = await NFTCrowdsale.deploy();
      await nftPreSale.deployed();
 
-     nftPubSale = await NFTCrowdsale.deploy();
-     await nftPubSale.deployed();
-
-    
-
       NFT = await ethers.getContractFactory("NFT");
-      nft = await NFT.deploy(nftPreSale.address,nftPubSale.address);
+      nft = await NFT.deploy(nftPreSale.address);
       await nft.deployed();
-
-     Manager = await ethers.getContractFactory("Manager");
-     manager = await Manager.attach(manager_addr)
 
   
      
@@ -45,19 +31,14 @@ describe("LASM",  function ()  {
 
    //  create_NftPreSale
   });
-  it("Should return the new greeting once it's changed", async function () {
+  it("Should start preSale", async function () {
 
     let tx = await nftPreSale.startSale([per1.address,per2.address],_.address,nft.address)
     await tx.wait()
-     tx = await nftPubSale.startSale([],_.address,nft.address)
-    await tx.wait()
-    
-    
-   
 
  });
- it("Should return the new greeting once it's changed", async function () {
-   for(i=0;i<1;i++){
+ it("Should buy multiple nfts", async function () {
+   for(i=0;i<6;i++){
     let _value = await ethers.utils.parseEther('0.2')
     console.log(await _.getBalance())
     let tx = await nftPreSale.connect(per1).buyNFT({value:_value})
@@ -66,21 +47,11 @@ describe("LASM",  function ()  {
    }
   
 });
-it("Should return the new greeting once it's changed", async function () {
-  for(i=0;i<2;i++){
-   let _value = await ethers.utils.parseEther('0.3')
-   console.log(await _.getBalance())
-   let tx = await nftPubSale.connect(per1).buyNFT({value:_value})
-  await tx.wait()
-  console.log(await _.getBalance())
-  }
- 
-});
-it("Should return the new greeting once it's changed", async function () {
+it("fail Should buy multiple nfts", async function () {
   for(i=0;i<3;i++){
-   let _value = await ethers.utils.parseEther('0.3')
+   let _value = await ethers.utils.parseEther('0.2')
    console.log(await _.getBalance())
-   let tx = await nftPubSale.connect(per3).buyNFT({value:_value})
+   let tx = await nftPreSale.connect(per3).buyNFT({value:_value})
   await tx.wait()
   console.log(await _.getBalance())
   }
