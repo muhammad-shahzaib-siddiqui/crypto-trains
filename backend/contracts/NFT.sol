@@ -16,15 +16,21 @@ contract NFT is ERC721URIStorage , Ownable{
      uint256 public nftPerAddressLimit = 5;
      address[] public whitelistedAddresses;
 
-    uint256 public Train_common_55;
-    uint256 public Train_common_20;
-    uint256 public Train_rare;
-    uint256 public Train_epic;
-    uint256 public Train_legendary;
+    uint256 public Train_common;//0
+    uint256 public Train_rare;//1
+    uint256 public Train_epic;//2
+    uint256 public Train_legendary;//3
+    uint256 public Station_common;//4
+    uint256 public Station_mitic;//5
+    uint256 public Station_Legendary;//6
 
-    uint256 public Station_common;
-    uint256 public Station_mitic;
-    uint256 public Station_Legendary;
+    uint256 public Train_common_limit=2500;//0
+    uint256 public Train_rare_limit=1500;//1
+    uint256 public Train_epic_limit=500;//2
+    uint256 public Train_legendary_limit=160;//3
+    uint256 public Station_common_limit=300;//4
+    uint256 public Station_mitic_limit=200;//5
+    uint256 public Station_Legendary_limit=100;//6
 
     struct NftDetails{
         address[] owners;
@@ -34,6 +40,7 @@ contract NFT is ERC721URIStorage , Ownable{
     mapping(address => bool) private _owner;
     mapping(uint256=>NftDetails) private _NftDetails;
     mapping(address => uint256) public addressMintedBalance;
+    mapping(uint256 => uint256) public nftType;
 //,address pubSale
     constructor(address preSale) ERC721("MyNFTs", "METT") {
         
@@ -57,17 +64,17 @@ contract NFT is ERC721URIStorage , Ownable{
         return _NftDetails[_tokenId];
     }
 
-    function createToken(string memory tokenURI , address account) public returns(uint) {
+    function createToken(string memory tokenURI , address account,uint8 nftType) public returns(uint) {
         require(_owner[_msgSender()]==true,"Not authorized to mint");
         require(_tokenIds.current() < 5260 ,"all NFTs Minted");
-        require(addressMintedBalance[account] < 5 , "You cannot have more than 5 NFTs");
+        require(addressMintedBalance[account] < 510000 , "You cannot have more than 5 NFTs");
+        require(inc_nftType(nftType));
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();
         setNftDetails(newItemId,account);
         _mint(account, newItemId);
         _setTokenURI(newItemId, tokenURI);
         addressMintedBalance[account]++;
-      //  setApprovalForAll(contractAddress, true);
         return newItemId;
     }
 
@@ -84,27 +91,42 @@ contract NFT is ERC721URIStorage , Ownable{
     }
 
 
-    // //INC functions
-    // function  TCommonInc() private{
-    //     Train_common= Train_common + 1;
-    //     }
-    // function TRareInc() private{
-    //     Train_rare= Train_rare + 1;
-    // }
-    // function TEpicInc() private{
-    //    Train_epic= Train_epic + 1;
-    // }
-    // function TLegendaryInc() private{
-    //    Train_legendary= Train_legendary + 1;
-    // }
+    function inc_nftType(uint8 no) private returns(bool){
+            if(no==0){
+                require(Train_common<Train_common_limit,"all Common trains minted");
+                Train_common++;
+                return true;
+            }else if(no==1){
+                require(Train_rare<Train_rare_limit,"all Rare trains minted");
+                Train_rare++;
+                return true;
+            }else if(no==2){
+                require(Train_epic<Train_epic_limit,"all Epic trains minted");
+                Train_epic++;
+                return true;
+            }else if(no==3){
+                require(Train_legendary<Train_legendary_limit,"all Legendry trains minted");
+                Train_legendary++;
+                return true;
+            }else if(no==4){
+                require(Station_common<Station_common_limit,"all Common staions minted");
+                Station_common++;
+                return true;
+            }else if(no==5){
+                require(Station_mitic<Station_mitic_limit,"all Mitic stations minted");
+                Station_mitic++;
+                return true;
+            }else if(no==6){
+                require(Station_Legendary<Station_Legendary_limit,"all Legendary trains minted");
+                Station_Legendary++;
+                return true;
+            }else{
+                require(false,"Type not found");
+            }
+    }
 
-    //  function SCommonInc() private{
-    //   Station_common= Station_common +1;
-    // }  
-    // function SMiticInc() private{
-    //   Station_mitic= Station_mitic +1;
-    // } 
-    // function SLegendaryInc() private{
-    //   Station_Legendary= Station_Legendary +1;
-    // } 
+
+  
+
+ 
 }

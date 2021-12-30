@@ -30,10 +30,29 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     uint256 public max;
     uint256 public whitePrice = 0.2 ether;
     uint256 public pubPrice = 0.3 ether;
+
+    //dicounted price
+    uint256 public discounted_Train_common=0.2 ether;//0
+    uint256 public discounted_Train_rare=0.2 ether;//1
+    uint256 public discounted_Train_epic=0.2 ether;//2
+    uint256 public discounted_Train_legendary=0.2 ether;//3
+    uint256 public discounted_Station_common=0.2 ether;//4
+    uint256 public discounted_Station_mitic=0.2 ether;//5
+    uint256 public discounted_Station_Legendary=0.2 ether;//6
+
+    //noraml price
+    uint256 public Train_common= 0.3 ether;//0
+    uint256 public Train_rare= 0.3 ether;//1
+    uint256 public Train_epic= 0.3 ether;//2
+    uint256 public Train_legendary= 0.3 ether;//3
+    uint256 public Station_common= 0.3 ether;//4
+    uint256 public Station_mitic= 0.3 ether;//5
+    uint256 public Station_Legendary= 0.3 ether;//6
     
 
     // Amount of wei raised
     uint256 private _weiRaised;
+    uint256 public _busdRaised;
     uint256 private _nftPurchased;
     bool public success;
     bool public finalized;
@@ -47,17 +66,21 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     
     mapping (address => uint256) purchase;
     mapping (address => uint256) msgValue;
-    uint256 current = block.timestamp * 1 seconds;
-    uint256 limitationtime = block.timestamp + 7776000   * 1 seconds;
-     mapping(address => bool) private _whitelist;
+    uint256 public start = 0;
+    uint256 public limitationtime = block.timestamp + 7776000   * 1 seconds;
+    mapping(address => bool) private _whitelist;
    
+    constructor( address payable wallet_ ){
+        _wallet = wallet_;
+        }
     
 
     
-    function startSale(address[] memory accounts, address payable wallet_ ,address _nft) public onlyOwner {
+    function startSale(address[] memory accounts,address _nft,uint256 startTime) public onlyOwner {
         //NFT(_nft) req
         require(address(_nft) != address(0), "NFT: token is the zero address");
         nft = NFT(_nft);
+        require(accounts.length!=0,"please provide whitelist addresses");
         if(accounts.length==0){
         pub = true;
         }
@@ -67,15 +90,14 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
                 _addPayee(accounts[i]);
             }
         }
-        _wallet = wallet_;
+       
+        start = block.timestamp + startTime * 1 seconds;
     }
  
-    fallback () external payable {
-        buyNFT();
+    fallback () external payable { 
     }
 
     receive () external payable {
-        buyNFT();
     }
 
 
@@ -101,22 +123,25 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     }
 
     
-    function buyNFT() public nonReentrant payable {
+    function buyNFT(uint8 no) public nonReentrant payable {
+        require(start<block.timestamp || start !=0,"Sale not started");
         uint256 price;
-        if(!pub){
-            require (purchase[_msgSender()] < 5,"cant buy more nft");
+        if(block.timestamp<start+ 14400 * 1 seconds){
+            price = discount_price(no);
+        }else{
+            price = normal_price(no);
+        }
+      
+            require (purchase[_msgSender()] < 500000000,"cant buy more nft");
             require (_whitelist[_msgSender()] == true,"you are not whitelisted");
             require(_nftPurchased < limit,"All nft Sold");
-            price = whitePrice;
-        }
-        else{
-            price = pubPrice;
-        }
+    
+       
         require (!finalized,"Sale Ended");
         uint256 weiAmount = msg.value;
         require (weiAmount ==  price,"please provide exact amount for one NFT");
 
-        nft.createToken("4321",_msgSender());
+        nft.createToken("4321",_msgSender(),no);
 
         
         _nftPurchased ++;
@@ -141,6 +166,48 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         require(account != address(0), "PaymentSplitter: account is the zero address");
         _whitelist[account]=true;
        
+    }
+    
+
+
+    function normal_price(uint8 no) private view returns(uint256){
+        if(no==0){
+                return Train_common;
+            }else if(no==1){
+                return Train_rare;
+            }else if(no==2){
+                return Train_epic;
+            }else if(no==3){
+                return Train_legendary;
+            }else if(no==4){
+                return Station_common;
+            }else if(no==5){
+                return Station_mitic;
+            }else if(no==6){
+                return Station_Legendary;
+            }else{
+                require(false,"price :: Type not found");
+            }
+    }
+
+    function discount_price(uint8 no) private view returns(uint256){
+        if(no==0){
+                return discounted_Train_common;
+            }else if(no==1){
+                return discounted_Train_rare;
+            }else if(no==2){
+                return discounted_Train_epic;
+            }else if(no==3){
+                return discounted_Train_legendary;
+            }else if(no==4){
+                return discounted_Station_common;
+            }else if(no==5){
+                return discounted_Station_mitic;
+            }else if(no==6){
+                return discounted_Station_Legendary;
+            }else{
+                require(false,"price :: Type not found");
+            }
     }
       
 }
