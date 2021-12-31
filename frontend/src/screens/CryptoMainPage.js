@@ -44,7 +44,7 @@ export default function CryptoMainPage() {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const [] = useState()
+    const [purchased, setPurchased] = useState()
 
     const {
         connector,
@@ -147,6 +147,9 @@ export default function CryptoMainPage() {
             let _value = await ethers.utils.parseEther('0.2')
             let buy = await NFTCrowdsaleContract.buyNFT(no, {value:_value})
             let tx =  await buy.wait()
+            let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
+            setPurchased(parseInt(userPurchased.toString()))
+            console.log("userPurchased", userPurchased)
             if(tx.confirmations == 1){
                 loadLimit()
                 handleShow()
@@ -437,7 +440,7 @@ export default function CryptoMainPage() {
         </Modal.Header>
         <Modal.Body>
             <h1>You can buy 5 NFT per WALLET!</h1>
-              <h1>1/5 NFT</h1>
+              <h1>{`${purchased}/5 NFT`}</h1>
               <div className="d-flex justify-content-center">
                   <a className="custom-btn btn-white"  onClick={handleClose}>KEEP BUYING</a>
                   <a className="custom-btn btn-white"  onClick={handleClose}>VIEW MY NFTS</a>
