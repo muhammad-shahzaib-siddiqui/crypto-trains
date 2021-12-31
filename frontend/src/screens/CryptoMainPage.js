@@ -7,13 +7,14 @@ import train5 from "../assets/img/train5.jpg"
 import train6 from "../assets/img/train6.jpg"
 import train7 from "../assets/img/train7.jpg"
 import busd from "../assets/img/busd.svg"
-import { ethers } from 'ethers'
+import { ethers,BigNumber } from 'ethers'
 import {nft_addr, nftPreSale_addr} from "../contract/addresses"
 import NFT from "../contract/NFT.json";
 import NFTCrowdsale from "../contract/NFTCrowdsale.json"
 import Web3Modal from 'web3modal'
 import { useWeb3React } from "@web3-react/core";
 import { Button, Modal } from 'react-bootstrap'
+// import Countdown from 'react-countdown';
 
 
 
@@ -45,6 +46,7 @@ export default function CryptoMainPage() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [purchased, setPurchased] = useState()
+    const [startTime, setStartTime] = useState()
 
     const {
         connector,
@@ -128,9 +130,15 @@ export default function CryptoMainPage() {
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer);
             let _whitelist = await NFTCrowdsaleContract.whitelist(account)
             let start = await NFTCrowdsaleContract.start()
-            console.log("start", start)
+            let total = start.toNumber()*2000
+            setStartTime(total)
             setiswhitelist(_whitelist)
-            console.log("whiteList", _whitelist)
+            
+            
+           console.log("time", total)
+           
+           
+
 
             // console.log("signer", signer)
 
@@ -144,7 +152,7 @@ export default function CryptoMainPage() {
             let signer = await loadProvider()
             console.log("number", no)
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
-            let _value = await ethers.utils.parseEther('0.2')
+            let _value = await NFTCrowdsaleContract.getPrice(no)
             let buy = await NFTCrowdsaleContract.buyNFT(no, {value:_value})
             let tx =  await buy.wait()
             let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
@@ -171,6 +179,7 @@ export default function CryptoMainPage() {
                 try {
                     loadLimit()
                     loadWhiteList()
+
                 } catch (error) {
                     console.log(error)
                 }
