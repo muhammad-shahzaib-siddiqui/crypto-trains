@@ -52,25 +52,25 @@ function Header(props) {
               <img className="logo" src={logo} alt="" />
             </Link>
             <div className="d-flex ">
-              <div className="bg-white"  style={{marginRight:"20px", padding:"15px 20px 15px 20px", borderRadius:"20px"}}>
-              <Link to="myNft" style={{color:"black", textDecoration:"none", fontWeight:"bold"}}>
+              <div>
+              <Link to="myNft" className="custom-btn btn-white" >
               MY NFTS
               </Link>   
              </div>
-             <div className="bg-white" style={{ padding:"15px 20px 15px 20px", borderRadius:"20px"}}>
-             <Link to="airDrop" style={{color:"black", textDecoration:"none", fontWeight:"bold"}}>
+             <div >
+             <Link to="airDrop" className="custom-btn btn-white" >
                 AirDrop
               </Link>
              </div>
                 
               <a
                 className="custom-btn btn-white justify-content-center"
-                onclick="loadWeb3();"
+                
               >
-                {/* <img height="27" src="./assets/img/metamask.png" alt="" />{" "} */}
+                { <img height="27" src="./assets/img/metamask.png" alt="" />}
                 {active ? (
                   <div
-                   style={{display:"flex", flexDirection:"row", alignItems:"center"}}
+                   style={{display:"flex", flexDirection:"row", alignItems:"center",justifyContent:"center"}}
                     
                   >
                     <img height="27" src={metamask} alt="" />
@@ -83,7 +83,7 @@ function Header(props) {
                       connectWallet(activate, props.setErrorMessage);
                     }}
                   >
-                    {/* <img height="27" src="./assets/img/metamask.png" alt="" /> */}
+                    { <img height="27" src="./assets/img/metamask.png" alt="" /> }
                     Connect Wallet
                   </div>
                 )}

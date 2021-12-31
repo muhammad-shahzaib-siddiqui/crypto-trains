@@ -26,9 +26,29 @@ const Airdrop = () => {
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Wallet Address</Form.Label>
-                <Form.Control type="text" placeholder="Wallet Address" />
+                <Form.Label>Start Time</Form.Label>
+                <Form.Control type="text" placeholder="Start Time" />
             </Form.Group>
+            <button class="custom-btn btn-white">Submit</button>
+            </Form>
+            </div>
+                </Col>
+            </Row>
+
+            </div>
+
+			<div className="container-fluid">
+            <Row>
+                <Col lg={5} className='m-auto'>
+			<div className='custom-form'>
+                <h1 className='text-white'>Air-Drop</h1>
+                <Form>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Whitelist Addresses</Form.Label>
+                <Form.Control type="text" placeholder="Whitelist Addresses" />
+            </Form.Group>
+
+            
             <button class="custom-btn btn-white">Submit</button>
             </Form>
             </div>

@@ -26,15 +26,6 @@ function App() {
       <Route path="/myNft" element={<Nfts />} />
       <Route path="/airDrop" element={<Airdrop />} />
       </Routes>
-      
-        
-      
-      
-        {/* <Route path="/" exact component={Home} /> */}
-      {/* </Router> */}
-      
-      {/* <Home /> */}
-      {/* <MainPage /> */}
       </BrowserRouter>
     </div>
   );

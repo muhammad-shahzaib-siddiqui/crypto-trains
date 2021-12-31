@@ -12,6 +12,7 @@
   "function Train_rare() view returns (uint256)",
   "function _busdRaised() view returns (uint256)",
   "function _manager() view returns (address)",
+  "function _whitelist(address) view returns (bool)",
   "function buyNFT(uint8) payable",
   "function discounted_Station_Legendary() view returns (uint256)",
   "function discounted_Station_common() view returns (uint256)",

@@ -8,8 +8,9 @@ import train6 from "../assets/img/train6.jpg"
 import train7 from "../assets/img/train7.jpg"
 import busd from "../assets/img/busd.svg"
 import { ethers } from 'ethers'
-import {nft_addr} from "../contract/addresses"
+import {nft_addr, nftPreSale_addr} from "../contract/addresses"
 import NFT from "../contract/NFT.json";
+import NFTCrowdsale from "../contract/NFTCrowdsale.json"
 import Web3Modal from 'web3modal'
 import { useWeb3React } from "@web3-react/core";
 
@@ -33,6 +34,9 @@ export default function CryptoMainPage() {
     const [Station_common, setStation_common] = useState()
     const [Station_mitic, setStation_mitic] = useState()
     const [Station_Legendary, setStation_Legendary] = useState()
+    const [balance, setBalance] = useState();
+    const [issalestart,setissalestart] = useState(true);
+    const [iswhitelist,setiswhitelist] = useState();
 
     const [loading, setLoading] = useState("loading")
 
@@ -48,13 +52,24 @@ export default function CryptoMainPage() {
         active,
         errorWeb3Modal
     } = useWeb3React();
-    const [balance, setBalance] = useState();
-    const loadData = async () => {
-        try {
+    
+
+    const loadProvider = async () => {
+        try{
             const web3Modal = new Web3Modal();
             const connection = await web3Modal.connect();
             const provider = new ethers.providers.Web3Provider(connection);
-            let signer = provider.getSigner();
+            return provider.getSigner();
+        }
+        catch(e){
+            console.log("loadProvider: ", e)
+        }
+    }
+    
+    const loadLimit = async () => {
+        try {
+           
+            let signer = await loadProvider()
             let NFTcontract = new ethers.Contract(nft_addr, NFT, signer);
             let Train_common_limit = await NFTcontract.Train_common_limit()
             let Train_rare_limit = await NFTcontract.Train_rare_limit()
@@ -98,11 +113,34 @@ export default function CryptoMainPage() {
             console.log("data :", error)
         }
     }
+
+    
+
+
+    const loadWhiteList = async () => {
+        try {
+            
+            let signer = await loadProvider()
+            let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer);
+            let _whitelist = await NFTCrowdsaleContract._whitelist(account)
+            setiswhitelist(_whitelist)
+            console.log("whiteList", _whitelist)
+
+            console.log("signer", signer)
+
+        } catch (error) {
+            console.log("data :", error)
+        }
+    }
+
+    loadWhiteList()
+
     useEffect(() => {
         (async () => {
             if (account) {
                 try {
-                    loadData()
+                    loadLimit()
+                    // loadWhiteList()
                 } catch (error) {
                     console.log(error)
                 }
@@ -132,10 +170,21 @@ export default function CryptoMainPage() {
             </div>
         </nav>
     </div> */}
-    <div className="top-bar">
+ {
+        issalestart == true &&
+        <div className="top-bar">
         <h1>PRESALE STARTS IN: <span id="days"></span> DAYS <span id="hours"></span> H <span id="minutes"></span> Minutes <span id="seconds"></span> SEC</h1>
     </div>
+    
+    }
+    {
+        iswhitelist == true ? <>
     <h1 className="green-head">You are WHITELISTED</h1>
+    </>
+    :<>
+    <h1 className="red-head">You are not WHITELISTED</h1>
+    </>
+    }
     <div className="container-fluid">
         <div className="custom-padding">
             <div className="row nft-section">
