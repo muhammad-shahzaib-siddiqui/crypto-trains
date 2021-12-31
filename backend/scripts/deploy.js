@@ -19,7 +19,7 @@ async function main() {
   // }
 
   // ethers is avaialble in the global scope
-  const [deployer] = await ethers.getSigners();
+  const [deployer,per1,per2] = await ethers.getSigners();
   console.log(
     "Deploying the contracts with the account:",
     await deployer.getAddress()
@@ -41,9 +41,12 @@ async function main() {
   nft = await NFT.deploy(nftPreSale.address);
   await nft.deployed();
 
+  let tx = await nftPreSale.startSale([per1.address,per2.address],nft.address,100)
+  await tx.wait()
+
   // Manager = await ethers.getContractFactory("Manager");
   // manager = await Manager.attach(manager_addr)
-
+  console.log("address : ", per1.address)
   console.log("paymentSplitter deployed to:", nFTpaymentSplitter.address);
   console.log("nftPreSale deployed to:", nftPreSale.address);
   console.log("nft deployed to:", nft.address);
