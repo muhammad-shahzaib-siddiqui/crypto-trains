@@ -68,7 +68,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     mapping (address => uint256) msgValue;
     uint256 public start = 0;
     uint256 public limitationtime = 0;
-    mapping(address => bool) private _whitelist;
+    mapping(address => bool) public _whitelist;
    
     constructor( address payable wallet_ ){
         _wallet = wallet_;
