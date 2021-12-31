@@ -36,7 +36,7 @@ export default function CryptoMainPage() {
     const [Station_Legendary, setStation_Legendary] = useState()
     const [balance, setBalance] = useState();
     const [issalestart,setissalestart] = useState(true);
-    const [iswhitelist,setiswhitelist] = useState();
+    const [iswhitelist,setiswhitelist] = useState(false);
 
     const [loading, setLoading] = useState("loading")
 
@@ -122,25 +122,27 @@ export default function CryptoMainPage() {
             
             let signer = await loadProvider()
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer);
-            let _whitelist = await NFTCrowdsaleContract._whitelist(account)
+            let _whitelist = await NFTCrowdsaleContract.whitelist(account)
+            let start = await NFTCrowdsaleContract.start()
+            console.log("start", start)
             setiswhitelist(_whitelist)
             console.log("whiteList", _whitelist)
 
-            console.log("signer", signer)
+            // console.log("signer", signer)
 
-        } catch (error) {
-            console.log("data :", error)
+        } catch (e) {
+            console.log("data", e)
         }
     }
 
-    loadWhiteList()
+    
 
     useEffect(() => {
         (async () => {
             if (account) {
                 try {
                     loadLimit()
-                    // loadWhiteList()
+                    loadWhiteList()
                 } catch (error) {
                     console.log(error)
                 }
