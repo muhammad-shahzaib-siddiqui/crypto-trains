@@ -33,6 +33,7 @@
   "function startSale(address[],address,uint256)",
   "function success() view returns (bool)",
   "function transferOwnership(address)",
+  "function userPurchased(address) view returns (uint256)",
   "function wallet() view returns (address)",
   "function weiRaised() view returns (uint256)",
   "function whitePrice() view returns (uint256)",

@@ -78,7 +78,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         return _whitelist[account];
     }
 
-    function userPurchased(address account)public view returns(uint8){
+    function userPurchased(address account)public view returns(uint256){
         return purchase[account];
     }
     
