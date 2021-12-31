@@ -122,7 +122,7 @@ export default function CryptoMainPage() {
             
             let signer = await loadProvider()
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer);
-            let _whitelist = await NFTCrowdsaleContract._whitelist(account)
+            let _whitelist = await NFTCrowdsaleContract.whitelist(account)
             setiswhitelist(_whitelist)
             console.log("whiteList", _whitelist)
 
@@ -140,7 +140,7 @@ export default function CryptoMainPage() {
             if (account) {
                 try {
                     loadLimit()
-                    // loadWhiteList()
+                    loadWhiteList()
                 } catch (error) {
                     console.log(error)
                 }
