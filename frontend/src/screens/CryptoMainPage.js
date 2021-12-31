@@ -13,6 +13,7 @@ import NFT from "../contract/NFT.json";
 import NFTCrowdsale from "../contract/NFTCrowdsale.json"
 import Web3Modal from 'web3modal'
 import { useWeb3React } from "@web3-react/core";
+import { Button, Modal } from 'react-bootstrap'
 
 
 
@@ -39,7 +40,10 @@ export default function CryptoMainPage() {
     const [iswhitelist,setiswhitelist] = useState(false);
 
     const [loading, setLoading] = useState("loading")
+    const [show, setShow] = useState(false);
 
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     const [] = useState()
 
     const {
@@ -135,6 +139,27 @@ export default function CryptoMainPage() {
         }
     }
 
+    const buynft = async (no) => {
+        try{
+            let signer = await loadProvider()
+            console.log("number", no)
+            let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
+            let _value = await ethers.utils.parseEther('0.2')
+            let buy = await NFTCrowdsaleContract.buyNFT(no, {value:_value})
+            let tx =  await buy.wait()
+            if(tx.confirmations == 1){
+                loadLimit()
+                handleShow()
+            }
+            console.log("tx", tx)
+            
+        }
+        catch(e){
+            console.log("error", e)
+        }
+    }
+    
+
     
 
     useEffect(() => {
@@ -209,7 +234,11 @@ export default function CryptoMainPage() {
                                 <img src={busd} alt=""/>
                             </div>
                             <div className="d-flex justify-content-center">
-                                <button className="custom-btn btn-green" data-bs-toggle="modal" data-bs-target="#exampleModal">Buy NFT</button>
+                                <button  onClick={()=> {
+                                    buynft(0)
+                                    
+                                } } className="custom-btn btn-green" >Buy NFT</button>
+                                
                             </div>
                         </div>
                     </div>
@@ -233,7 +262,10 @@ export default function CryptoMainPage() {
                                 <img src={busd} alt=""/>
                             </div>
                             <div className="d-flex justify-content-center">
-                                <button className="custom-btn btn-green" data-bs-toggle="modal" data-bs-target="#exampleModal">Buy NFT</button>
+                                <button onClick={()=> {
+                                    buynft(1)
+                                    
+                                } } className="custom-btn btn-green" >Buy NFT</button>
                             </div>
                         </div>
                     </div>
@@ -257,7 +289,10 @@ export default function CryptoMainPage() {
                                 <img src={busd} alt=""/>
                             </div>
                             <div className="d-flex justify-content-center">
-                                <button className="custom-btn btn-green" data-bs-toggle="modal" data-bs-target="#exampleModal">Buy NFT</button>
+                                <button onClick={()=> {
+                                    buynft(2)
+                                    
+                                } } className="custom-btn btn-green" >Buy NFT</button>
                             </div>
                         </div>
                     </div>
@@ -281,7 +316,10 @@ export default function CryptoMainPage() {
                                 <img src={busd} alt=""/>
                             </div>
                             <div className="d-flex justify-content-center">
-                                <button className="custom-btn btn-green" data-bs-toggle="modal" data-bs-target="#exampleModal">Buy NFT</button>
+                                <button onClick={()=> {
+                                    buynft(3)
+                                    
+                                } } className="custom-btn btn-green" >Buy NFT</button>
                             </div>
                         </div>
                     </div>
@@ -311,7 +349,10 @@ export default function CryptoMainPage() {
                                 <img src={busd} alt=""/>
                             </div>
                             <div className="d-flex justify-content-center">
-                                <button className="custom-btn btn-green" data-bs-toggle="modal" data-bs-target="#exampleModal">Buy NFT</button>
+                                <button onClick={()=> {
+                                    buynft(4)
+                                    
+                                } } className="custom-btn btn-green" >Buy NFT</button>
                             </div>
                         </div>
                     </div>
@@ -335,7 +376,10 @@ export default function CryptoMainPage() {
                                 <img src={busd} alt=""/>
                             </div>
                             <div className="d-flex justify-content-center">
-                                <button className="custom-btn btn-green" data-bs-toggle="modal" data-bs-target="#exampleModal">Buy NFT</button>
+                                <button onClick={()=> {
+                                    buynft(5)
+                                    
+                                } } className="custom-btn btn-green" >Buy NFT</button>
                             </div>
                         </div>
                     </div>
@@ -359,7 +403,10 @@ export default function CryptoMainPage() {
                                 <img src={busd} alt=""/>
                             </div>
                             <div className="d-flex justify-content-center">
-                                <button className="custom-btn btn-green" data-bs-toggle="modal" data-bs-target="#exampleModal">Buy NFT</button>
+                                <button onClick={()=> {
+                                    buynft(6)
+                                    
+                                } } className="custom-btn btn-green" >Buy NFT</button>
                             </div>
                         </div>
                     </div>
@@ -381,8 +428,25 @@ export default function CryptoMainPage() {
             </div>
         </div>
     </div>
-
-    <div className="modal fade custom-modal" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <Modal show={show} onHide={handleClose} className='custom-modal' size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered>
+        <Modal.Header closeButton>
+        <h3 className="modal-title" id="exampleModalLabel">CONGRATULATIONS! YOU HAVE PURCHASED YOUR NFT</h3>
+        <button type="button" className="btn-close" ></button> 
+        </Modal.Header>
+        <Modal.Body>
+            <h1>You can buy 5 NFT per WALLET!</h1>
+              <h1>1/5 NFT</h1>
+              <div className="d-flex justify-content-center">
+                  <a className="custom-btn btn-white"  onClick={handleClose}>KEEP BUYING</a>
+                  <a className="custom-btn btn-white"  onClick={handleClose}>VIEW MY NFTS</a>
+              </div>
+        </Modal.Body>
+        <Modal.Footer>
+        </Modal.Footer>
+      </Modal>
+    {/* <div className="modal fade custom-modal" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
@@ -402,7 +466,7 @@ export default function CryptoMainPage() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
 
         </div>
