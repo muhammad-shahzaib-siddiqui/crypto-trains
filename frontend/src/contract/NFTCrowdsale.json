@@ -21,6 +21,7 @@
   "function discounted_Train_legendary() view returns (uint256)",
   "function discounted_Train_rare() view returns (uint256)",
   "function finalized() view returns (bool)",
+  "function getPrice(uint8) view returns (uint256)",
   "function limitationtime() view returns (uint256)",
   "function max() view returns (uint256)",
   "function min() view returns (uint256)",

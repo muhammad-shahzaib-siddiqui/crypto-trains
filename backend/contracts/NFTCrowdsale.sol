@@ -129,6 +129,16 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         return _weiRaised;
     }
 
+    function getPrice(uint8 no) public view returns(uint256){
+        uint256 price;
+         if(block.timestamp<limitationtime){
+            price = discount_price(no);
+        }else{
+            price = normal_price(no);
+        }
+        return price;
+    }
+
     
     function buyNFT(uint8 no) public nonReentrant payable {
         require(start<block.timestamp || start !=0,"Sale not started");
