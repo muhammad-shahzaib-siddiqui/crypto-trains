@@ -1,12 +1,53 @@
+import React, { useEffect, useState } from "react";
 import { useWeb3React } from "@web3-react/core";
 import { connectWallet } from "../utils/connectWallet";
 import logo from "../assets/img/logo.png";
-import metamask from "../assets/img/metamask.png"
+import metamask from "../assets/img/metamask.png";
 import { Link } from "react-router-dom";
-
+import Countdown from "react-countdown";
+import Web3Modal from "web3modal";
+import { ethers } from "ethers";
+import { nft_addr, nftPreSale_addr } from "../contract/addresses";
+import NFT from "../contract/NFT.json";
+import NFTCrowdsale from "../contract/NFTCrowdsale.json";
 
 function Header(props) {
   const { active, activate } = useWeb3React();
+  const [startTime, setStartTime] = useState()
+
+
+  const loadProvider = async () => {
+    try {
+      const web3Modal = new Web3Modal();
+      const connection = await web3Modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      return provider.getSigner();
+    } catch (e) {
+      console.log("loadProvider: ", e);
+    }
+  };
+
+  const Count = async () => {
+    try {
+      let signer = await loadProvider();
+      let NFTCrowdsaleContract = new ethers.Contract(
+        nftPreSale_addr,
+        NFTCrowdsale,
+        signer
+      );
+      
+      let start = await NFTCrowdsaleContract.start();
+      setStartTime(start);
+      console.log("start", startTime.toString());
+      // console.log("signer", signer)
+    } catch (e) {
+      console.log("data", e);
+    }
+  };
+
+  useEffect(() => {
+    Count()
+  }, [])
 
   console.log("is active check = ", active);
   return (
@@ -53,25 +94,26 @@ function Header(props) {
             </Link>
             <div className="d-flex ">
               <div>
-              <Link to="myNft" className="custom-btn btn-white" >
-              MY NFTS
-              </Link>   
-             </div>
-             <div >
-             <Link to="airDrop" className="custom-btn btn-white" >
-                AirDrop
-              </Link>
-             </div>
-                
-              <a
-                className="custom-btn btn-white justify-content-center"
-                
-              >
-                { <img height="27" src="./assets/img/metamask.png" alt="" />}
+                <Link to="myNft" className="custom-btn btn-white">
+                  MY NFTS
+                </Link>
+              </div>
+              <div>
+                <Link to="airDrop" className="custom-btn btn-white">
+                  AirDrop
+                </Link>
+              </div>
+
+              <a className="custom-btn btn-white justify-content-center">
+                {<img height="27" src="./assets/img/metamask.png" alt="" />}
                 {active ? (
                   <div
-                   style={{display:"flex", flexDirection:"row", alignItems:"center",justifyContent:"center"}}
-                    
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
                     <img height="27" src={metamask} alt="" />
                     Connected
@@ -83,7 +125,7 @@ function Header(props) {
                       connectWallet(activate, props.setErrorMessage);
                     }}
                   >
-                    { <img height="27" src="./assets/img/metamask.png" alt="" /> }
+                    {<img height="27" src="./assets/img/metamask.png" alt="" />}
                     Connect Wallet
                   </div>
                 )}
