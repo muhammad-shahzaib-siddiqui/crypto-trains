@@ -48,14 +48,23 @@ describe("LASM",  function ()  {
   
 });
 it("Should release payment", async function () {
-  console.log("myadd : ", nFTpaymentSplitter);
-//   let add = await _.address;
-console.log(await _.getBalance())
+ 
+   console.log("myadd : ", nFTpaymentSplitter);
+   //let add = await _.address;
+   console.log(await _.getBalance())
    let rel  = await nFTpaymentSplitter.release(_.address)
     await rel.wait()
-    console.log(await _.getBalance())
+   console.log(await _.getBalance())
 
- 
+});
+it("Should release payment", async function () {
+
+  let bal = await nft.balanceOf(per1.address);
+  
+  console.log("balance",bal.toString());
+   indexes = await nft.tokenOfOwnerByIndex(per1.address,1);
+   console.log("all indexes",indexes.toString());
+
 });
 // it("fail Should buy multiple nfts", async function () {
 //   for(i=0;i<3;i++){
