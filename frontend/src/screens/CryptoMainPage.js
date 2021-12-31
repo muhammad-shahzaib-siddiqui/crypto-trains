@@ -34,6 +34,8 @@ export default function CryptoMainPage() {
     const [Station_mitic, setStation_mitic] = useState()
     const [Station_Legendary, setStation_Legendary] = useState()
 
+    const [loading, setLoading] = useState("loading")
+
     const [] = useState()
 
     const {
@@ -85,6 +87,8 @@ export default function CryptoMainPage() {
             setStation_common(parseInt(Station_common.toString()))
             setStation_mitic(parseInt(Station_mitic.toString()))
             setStation_Legendary(parseInt(Station_Legendary.toString()))
+
+            setLoading("loaded")
 
             
             
@@ -138,7 +142,7 @@ export default function CryptoMainPage() {
                 <h1 className="white-head">TRAINS</h1>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">{`${Train_common_limit - Train_common}/${Train_common_limit}`}</h6>
+                        <h6 className="nft-box-head">{loading === "loading"? (<p>loading</p>): `${Train_common_limit - Train_common}/${Train_common_limit}` }</h6>
                         <img className="nft-box" src={train1} alt="" />
                         <div className="text-section">
                             <div className="tag-section">
@@ -162,7 +166,7 @@ export default function CryptoMainPage() {
                 </div>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">{`${Train_rare_limit - Train_rare}/${Train_rare_limit}`}</h6>
+                        <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Train_rare_limit - Train_rare}/${Train_rare_limit}`}</h6>
                         <img className="nft-box" src={train2} alt="" />
                         <div className="text-section">
                             <div className="tag-section">
@@ -186,7 +190,7 @@ export default function CryptoMainPage() {
                 </div>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">{`${Train_epic_limit - Train_epic}/${Train_epic_limit}`}</h6>
+                        <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Train_epic_limit - Train_epic}/${Train_epic_limit}`}</h6>
                         <img className="nft-box" src={train3} alt="" />
                         <div className="text-section">
                             <div className="tag-section">
@@ -210,7 +214,7 @@ export default function CryptoMainPage() {
                 </div>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">{`${Train_legendary_limit - Train_legendary}/${Train_legendary_limit}`}</h6>
+                        <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Train_legendary_limit - Train_legendary}/${Train_legendary_limit}`}</h6>
                         <img className="nft-box" src={train4} alt="" />
                         <div className="text-section">
                             <div className="tag-section">
@@ -240,7 +244,7 @@ export default function CryptoMainPage() {
                 <h1 className="white-head">STATIONS</h1>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">{`${Station_common_limit - Station_common}/${Station_common_limit}`}</h6>
+                        <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Station_common_limit - Station_common}/${Station_common_limit}`}</h6>
                         <img className="nft-box" src={train5} alt="" />
                         <div className="text-section">
                             <div className="tag-section">
@@ -264,7 +268,7 @@ export default function CryptoMainPage() {
                 </div>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">{`${Station_mitic_limit - Station_mitic}/${Station_mitic_limit}`}</h6>
+                        <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Station_mitic_limit - Station_mitic}/${Station_mitic_limit}`}</h6>
                         <img className="nft-box" src={train6} alt=""/>
                         <div className="text-section">
                             <div className="tag-section">
@@ -288,7 +292,7 @@ export default function CryptoMainPage() {
                 </div>
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
-                        <h6 className="nft-box-head">{`${Station_Legendary_limit- Station_Legendary}/${Station_Legendary_limit}`}</h6>
+                        <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Station_Legendary_limit- Station_Legendary}/${Station_Legendary_limit}`}</h6>
                         <img className="nft-box" src={train7} alt="" />
                         <div className="text-section">
                             <div className="tag-section">
