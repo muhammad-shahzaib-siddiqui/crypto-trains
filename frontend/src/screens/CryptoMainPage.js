@@ -14,7 +14,7 @@ import NFTCrowdsale from "../contract/NFTCrowdsale.json"
 import Web3Modal from 'web3modal'
 import { useWeb3React } from "@web3-react/core";
 import { Button, Modal } from 'react-bootstrap'
-// import Countdown from 'react-countdown';
+import Countdown from 'react-countdown';
 
 
 
@@ -213,6 +213,7 @@ export default function CryptoMainPage() {
         issalestart == true &&
         <div className="top-bar">
         <h1>PRESALE STARTS IN: <span id="days"></span> DAYS <span id="hours"></span> H <span id="minutes"></span> Minutes <span id="seconds"></span> SEC</h1>
+        {startTime}
     </div>
     
     }

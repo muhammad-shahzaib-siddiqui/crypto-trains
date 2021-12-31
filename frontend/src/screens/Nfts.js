@@ -16,7 +16,6 @@ import telegram from "../assets/img/telegram.png"
 // import {} from "../assets/img"
 // import {} from "../assets/img"
 // import {} from "../assets/img"
-import Header from '../components/Header'
 
 
 const Nfts = () => {
