@@ -64,8 +64,8 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
 
     
     
-    mapping (address => uint256) purchase;
-    mapping (address => uint256) msgValue;
+    mapping (address => uint256) private purchase;
+    mapping (address => uint256) private msgValue;
     uint256 public start = 0;
     uint256 public limitationtime = 0;
     mapping(address => bool) private _whitelist;
@@ -76,6 +76,10 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     
     function whitelist(address account)public view returns(bool){
         return _whitelist[account];
+    }
+
+    function userPurchased(address account)public view returns(uint8){
+        return purchase[account];
     }
     
     function startSale(address[] memory accounts,address _nft,uint256 startTime) public onlyOwner {
