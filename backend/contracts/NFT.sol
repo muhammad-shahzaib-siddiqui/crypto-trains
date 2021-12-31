@@ -54,6 +54,9 @@ contract NFT is ERC721 , Ownable{
     // Mapping from token ID to index of the owner tokens list
     mapping(uint256 => uint256) private _ownedTokensIndex;
 
+    // Mapping from token ID to index of the owner tokens list
+    mapping(uint256 => uint256) private _tokenIdType;
+
     // Array with all token ids, used for enumeration
     uint256[] private _allTokens;
 
@@ -66,6 +69,10 @@ contract NFT is ERC721 , Ownable{
         _owner[preSale] = true;
         
 
+    }
+
+    function tokenType(uint256 id)public view returns(uint256){
+        return _tokenIdType[id];
     }
 
       function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
@@ -115,6 +122,7 @@ contract NFT is ERC721 , Ownable{
         setNftDetails(newItemId,account);
         _mint(account, newItemId);
         _setTokenURI(newItemId, tokenURI);
+        _tokenIdType[newItemId]=nftType;
         addressMintedBalance[account]++;
         return newItemId;
     }

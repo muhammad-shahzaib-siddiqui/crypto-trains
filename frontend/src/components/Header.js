@@ -4,7 +4,7 @@ import { connectWallet } from "../utils/connectWallet";
 import logo from "../assets/img/logo.png";
 import metamask from "../assets/img/metamask.png";
 import { Link } from "react-router-dom";
-import Countdown from "react-countdown";
+// import Countdown from "react-countdown";
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 import { nft_addr, nftPreSale_addr } from "../contract/addresses";
