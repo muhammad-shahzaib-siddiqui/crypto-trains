@@ -17,6 +17,7 @@ import NFT from "../contract/NFT.json";
 import NFTCrowdsale from "../contract/NFTCrowdsale.json"
 import Web3Modal from 'web3modal'
 import { useWeb3React } from "@web3-react/core";
+import MyNft from '../components/MyNft'
 
 
 
@@ -33,7 +34,19 @@ const Nfts = () => {
         active,
         errorWeb3Modal
     } = useWeb3React();
-
+    
+let journal = [
+    {"name":"GOODS TRAIN", "category":"COMMON", "image": train1},
+    {"name":"VILLAGE TRAIN", "category":"RARE", "image": train2},
+    {"name":"CITY TRAIN", "category":"EPIC", "image": train3},
+    {"name":"HIGH-SPEED TRAIN", "category":"LEGENDARY", "image": train4},
+     {"name":"GOODS STATION", "category":"COMMON", "image": train5},
+     {"name":"CITY STATION", "category":"EPIC", "image": train6},
+     {"name":"HIGH-SPEED-STATION", "category":"LEGENDARY", "image": train7},
+     
+ 
+    
+  ];
     const [balance, setBalance] = useState()
     const [nftType, setNftType] = useState([])
 
@@ -64,10 +77,11 @@ const Nfts = () => {
                 let token = tokenType.toNumber()
                 arr.push(token)
                 console.log("type", token)
+                setNftType(arr)
             }
             console.log("array : " , arr)
 
-            setNftType(arr)
+            
             setBalance(balance)
             console.log("nftType", nftType)
             console.log("balanceOf", balance) 
@@ -96,6 +110,12 @@ const Nfts = () => {
         return <h1>Kindly connect wallet</h1>
     }
 
+    const hello = {
+        hello: "klghkjhg"
+    }
+        let type1 = nftType[0];
+
+    
 
     return (
         <div>
@@ -108,852 +128,48 @@ const Nfts = () => {
         <div className="custom-padding">
             <div className="row nft-section">
                 <h1 className="white-head">MY NFTS</h1>
-                
-                   {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[0] == 0 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train1} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>GOODS TRAIN</h5>
-                                <div className="tag">
-                                    <h6 >COMMON</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[0] == 1 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train2} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>VILLAGE STATION</h5>
-                                <div className="tag">
-                                    <h6 >RARE</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[0] == 2 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train3} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>CITY STATION</h5>
-                                <div className="tag">
-                                    <h6 >EPIC</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[0] == 3 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train4} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>HIGH-SPEED STATION</h5>
-                                <div className="tag">
-                                    <h6 >LEGENDARY</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[0] == 4 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train5} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>GOODS STATION</h5>
-                                <div className="tag">
-                                    <h6 >COMMON</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[0] == 5 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train6} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>CITY STATION</h5>
-                                <div className="tag">
-                                    <h6 >EPIC</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[0] == 6 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train7} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>HIGH-SPEED STATION</h5>
-                                <div className="tag">
-                                    <h6 >LEGENDARY</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[1] == 0 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train1} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>GOODS TRAIN</h5>
-                                <div className="tag">
-                                    <h6 >COMMON</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[1] == 1 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train2} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>VILLAGE STATION</h5>
-                                <div className="tag">
-                                    <h6 >RARE</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[1] == 2 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train3} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>CITY STATION</h5>
-                                <div className="tag">
-                                    <h6 >EPIC</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[1] == 3 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train4} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>HIGH-SPEED STATION</h5>
-                                <div className="tag">
-                                    <h6 >LEGENDARY</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[1] == 4 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train5} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>GOODS STATION</h5>
-                                <div className="tag">
-                                    <h6 >COMMON</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[1] == 5 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train6} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>CITY STATION</h5>
-                                <div className="tag">
-                                    <h6 >EPIC</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[1] == 6 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train7} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>HIGH-SPEED STATION</h5>
-                                <div className="tag">
-                                    <h6 >LEGENDARY</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[2] == 0 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train1} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>GOODS TRAIN</h5>
-                                <div className="tag">
-                                    <h6 >COMMON</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[2] == 1 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train2} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>VILLAGE STATION</h5>
-                                <div className="tag">
-                                    <h6 >RARE</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[2] == 2 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train3} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>CITY STATION</h5>
-                                <div className="tag">
-                                    <h6 >EPIC</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[2] == 3 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train4} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>HIGH-SPEED STATION</h5>
-                                <div className="tag">
-                                    <h6 >LEGENDARY</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[2] == 4 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train5} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>GOODS STATION</h5>
-                                <div className="tag">
-                                    <h6 >COMMON</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[2] == 5 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train6} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>CITY STATION</h5>
-                                <div className="tag">
-                                    <h6 >EPIC</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[2] == 6 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train7} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>HIGH-SPEED STATION</h5>
-                                <div className="tag">
-                                    <h6 >LEGENDARY</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[3] == 0 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train1} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>GOODS TRAIN</h5>
-                                <div className="tag">
-                                    <h6 >COMMON</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[3] == 1 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train2} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>VILLAGE STATION</h5>
-                                <div className="tag">
-                                    <h6 >RARE</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[3] == 2 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train3} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>CITY STATION</h5>
-                                <div className="tag">
-                                    <h6 >EPIC</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[3] == 3 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train4} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>HIGH-SPEED STATION</h5>
-                                <div className="tag">
-                                    <h6 >LEGENDARY</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[3] == 4 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train5} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>GOODS STATION</h5>
-                                <div className="tag">
-                                    <h6 >COMMON</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[3] == 5 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train6} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>CITY STATION</h5>
-                                <div className="tag">
-                                    <h6 >EPIC</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[3] == 6 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train7} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>HIGH-SPEED STATION</h5>
-                                <div className="tag">
-                                    <h6 >LEGENDARY</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[4] == 0 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train1} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>GOODS TRAIN</h5>
-                                <div className="tag">
-                                    <h6 >COMMON</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[4] == 1 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train2} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>VILLAGE STATION</h5>
-                                <div className="tag">
-                                    <h6 >RARE</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[4] == 2 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train3} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>CITY STATION</h5>
-                                <div className="tag">
-                                    <h6 >EPIC</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[4] == 3 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train4} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>HIGH-SPEED STATION</h5>
-                                <div className="tag">
-                                    <h6 >LEGENDARY</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[4] == 4 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train5} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>GOODS STATION</h5>
-                                <div className="tag">
-                                    <h6 >COMMON</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[4] == 5 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train6} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>CITY STATION</h5>
-                                <div className="tag">
-                                    <h6 >EPIC</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
-                    {
-                        // nftType.length[2] == 2 ? (commonTrain) :null
-                        nftType[4] == 6 ? (
-                            <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                        <div>
-                            <div className="nft">
-                        <div className="tag-top">
-                            <h6>x1</h6>
-                        </div>
-                        <img className="nft-box" src={train7} alt="" />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>HIGH-SPEED STATION</h5>
-                                <div className="tag">
-                                    <h6 >LEGENDARY</h6>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                        </div>
-               </div> ) :null
-               
-                    }
 
-                    
-    
+
                 
+                {
+                    journal[nftType[0]] && <MyNft image={journal[nftType[0]].image} name={journal[nftType[0]].name} qty={2} category={journal[nftType[0]].category}/>
+                
+                }
+                {
+                    journal[nftType[1]] && <MyNft image={journal[nftType[1]].image} name={journal[nftType[1]].name} qty={2} category={journal[nftType[1]].category}/>
+                
+                }
+                {
+                    journal[nftType[2]] && <MyNft image={journal[nftType[2]].image} name={journal[nftType[2]].name} qty={2} category={journal[nftType[2]].category}/>
+                
+                }
+                {
+                    journal[nftType[3]] && <MyNft image={journal[nftType[3]].image} name={journal[nftType[3]].name} qty={2} category={journal[nftType[3]].category}/>
+                
+                }
+                {
+                    journal[nftType[4]] && <MyNft image={journal[nftType[4]].image} name={journal[nftType[4]].name} qty={2} category={journal[nftType[4]].category}/>
+                
+                }
+                {/* {
+                    nftType[5] !==0 ?(journal[nftType[5]] && <MyNft image={journal[nftType[5]].image} name={journal[nftType[5]].name} qty={2} category={journal[nftType[5]].category}/>) :null
+                
+                }
+                {
+                    nftType[6] !==0 ?(journal[nftType[6]] && <MyNft image={journal[nftType[6]].image} name={journal[nftType[6]].name} qty={2} category={journal[nftType[6]].category}/>) :null
+                
+                } */}
                
+                {/* {journal[nftType[0]] && <MyNft image={train1} name={journal[nftType[0]].name} qty={2} category={journal[nftType[0]].category}/>} */}
+
+
+             {/* {
+                 console.log('test  ' + type1)
+             } */}
+
+                  
+                
+               { console.log('====>',journal[type1] && journal[type1].name)}
                 
             </div>
         </div>

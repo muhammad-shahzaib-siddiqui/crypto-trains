@@ -157,6 +157,8 @@ export default function CryptoMainPage() {
             let tx =  await buy.wait()
             let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
             setPurchased(parseInt(userPurchased.toString()))
+            console.log("purchased", purchased)
+
             console.log("userPurchased", userPurchased)
             if(tx.confirmations == 1){
                 loadLimit()
