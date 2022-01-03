@@ -108,38 +108,38 @@ for (let index = 0; index < 1; index++) {
     if(_type == 0){
       const commonType = randomWeight(Common);
       if(commonType==="55"){
-        return "Qmbpomdpbmr31xijTnnamKjYyd1ZnBckfTbPcFfBnyY44W"
+        return "QmaNpwdJpxzkJ7BVtqTTW3HsahHfq9Z37yWzSGszdu41c6"
       }
       else if(commonType === "20"){
-       return "QmWspYZguTWHnZfiyZZ4zB1uUp7UfqvrSk93PGgwkh7zB5"
+       return "QmUUtJGDsBMQSBMLTUDUGsQWUJ5iLmcyEGv766LQFCMaK3"
       }
       else if(commonType === "15"){
-        return "QmUmbEmV5eiN2T7thAB8XcSX82Yh5g6eYpcArJam5aLX2g"
+        return "Qmax1fg2TuksK3N5qzxnGGsTqE8dfAa9kdLf8tkwN7DHM1"
       }
       else if(commonType === "9"){
-       return "QmWjVWC6nQ8dkK9AA8BM8YndpAbB5CgjLo7uA9PyLJP32x"
+       return "Qme55qdQu2HABgvoCzonEHFEWQkzpHUC2btmigYL8xPBkh"
       }
       else{
-       return "QmZiCk4oTm9NEEuqd45DcVNu6GvYSwgv12SyS82jKa7c5x"
+       return "QmRSaj6rt4oXoBWwAm8RiH3f1o3k6B73NNFsa4S1xU8nKc"
     }}
 
     else if(_type == 1) {
 
       const rareType = randomWeight(Rare);
       if(rareType==="55"){
-      return "QmWmk4vA9n7LehiyW9Rs3VTeNF4Kv7e1hrzjuj8PyGYU5y"
+      return "QmPPgfHXq4ET8omXNCP8B6LjJpkP89C2Y7QcEQkZKUQpzN"
       }
       else if(rareType === "20"){
-      return "QmNNoUaVTMKur2vJwRmjGGZuHc22Mod2DUs2n47mjGwGFS"
+      return "QmZd3m1A6quAVhfJBzm3mFwN8kUnZe29enHABsnXEn3icy "
       }
       else if(rareType === "15"){
-       return "QmXQUenhizpsxRqdmNBYWqEkRuagaH2iHMK53tNHaxArns"
+       return "QmSjbSbPvdTXv4JWKkajNE93c5cQRUWRw9VwR6nPbQjDp2"
       }
       else if(rareType === "9"){
-       return "QmSaDNChv1GyEmfeNvkMr5tPVzjgNSEDC5q5TJKazKtec6"
+       return "QmQ9L77iorMPq2hHbT4bQeB5SGVaFCW8xebEqN1p6QG9Hd"
       }
       else{
-        return "Qmf5rirnZAiC51aJQQi77VEZGccaz8qxeuP3z4bWqQwvXY"
+        return "QmZwM4Rvd5hftBxzhk4tjhtrqLdkcReUCa8KLyHVcpHYk3"
       }
 
 
@@ -148,19 +148,19 @@ for (let index = 0; index < 1; index++) {
     else if(_type == 2) {
         const epicType = randomWeight(Rare);
       if(epicType==="55"){
-        return "QmSC47BqVeVT1qy9cugAqoNytWY2N1XCr4vCdp5HGBJ4BQ"
+        return "QmXVgTKi9FHLPRQ2E2bzHjbfHgfm5xAv7qHKhcnZNVvnuZ"
       }
       else if(epicType === "20"){
        return "QmZC3SErS9ghydnbze8YZY3ubvHCLQ35vQ37AuHkNCTRT8"
       }
       else if(epicType === "15"){
-        return "Qmd3R7PZiGPpLuHpS7sVHiZiEyp6vv9DPVu1s8W48egEtC"
+        return "QmRRiNL5nDLdkpwnQHWsPJzdy3k9tVsq8x7HXewCHejsLE"
       }
       else if(epicType === "9"){
-        return "QmdSwp1aXjaoWZm1DPpiwUmNpzG1gu52K5pbdvoqYg8ewW"
+        return "QmTcaqxVhYuDbmHTzpyEwNcjW4mA2dUFmBevDQjKLHRvSR"
       }
       else {
-        return "QmWWQWaXQaqKaW5CnES6F8QLTjw1LfaFmNJhyUrh6jo19Y"
+        return "QmdXr2FrtHqRXPbRG8TYCPHHaFCEKYSXqTfycq3geXdiXA"
       }
 
 
@@ -173,33 +173,33 @@ for (let index = 0; index < 1; index++) {
 
       const legendType = randomWeight(Legend);
       if(legendType==="55"){
-       return "QmW9smtXX3sCm25668b7dBQJTdqVVQ2Q2Z7y888C8ihGvM"
+       return "QmNuJf1feEokrXrcbo5e2BYM7fVuRsw4CCeBRhNjtKec9C"
       }
       else if(legendType === "20"){
-        return "QmNzebMiwwtxMRD1p3Z5WL1yWjyh4L3gjr7eYYJg2CBGun"
+        return "QmeSTaGnsDTvk11YVpjYUzvsSgJhMtkMFukFRoJt7iyuHm"
       }
       else if(legendType === "15"){
-       return "QmZ3T3btJkaMij4qskS5RsRdkRQZGrSNdo9vJ9UUp589vP"
+       return "QmQPxHhRVXHKGGvSEfPcdzqHMnQc8Yzq593ffG6iEbig4e"
       }
       else if(legendType === "9"){
-        return "QmYxoFw16mjx8XAAJ3tSRGtS9YVWyXEczkeoDNoDTQRfnE"
+        return "QmdeE53tnHnSYR4aXXZVJYJFzoswRGbM62GGLdCu2QqjhW"
       }
       else{
-       return "QmT7A6rTz7kfiPWoDFawRtKsXtJAm8YP1pPGYhzNhyuWQj"
+       return "QmPErzKSkbX9u8qvdBQr2gxhzrpEcZ9tqhGFJyJnr1nMXg"
       }
 
 
     }
 
    else if(_type == 4) {
-    return "QmYYVvHDZXQEiLJqD57dssbxeSCuZcVf3YuqUHarqfxdBT"
+    return "QmdZsQBoiEMWMg5Pw4PYChDtSNknKrtiVHfdfuVRd6dStD"
   }
 
   else if(_type == 5) {
-    return "QmQbhCCrqMs9NQuyCt9AisdaHHsxeMMuKBw2paQrvqdw9s"
+    return "QmQtps4qWfop8Qyt62pErg6uZe7MMoSyrnmQA31YuNL8P6"
   }
   else if(_type == 6) {
-    return "QmZcYwn9bGAtmuTXkaFNJyXfTkzMtf9F6ZHJmvPU1zcATq"
+    return "QmTC1s4wuJQsS4FJSrCfrwLrDYmnGRhMi2WqD7NY7thsLM"
   } 
   
   

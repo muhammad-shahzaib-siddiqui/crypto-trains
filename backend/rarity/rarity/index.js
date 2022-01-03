@@ -144,7 +144,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'GOODS TRAINS',
 					image: 'https://ipfs.io/ipfs/QmUwTQneLsH7LzztzKN5umZY6rP1D7Wisuf6wsKNkbtth4',
 					description:'At least it has wheels.',
           attributes: attr,
@@ -169,7 +169,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'GOODS TRAINS',
           image: 'https://ipfs.io/ipfs/QmUwTQneLsH7LzztzKN5umZY6rP1D7Wisuf6wsKNkbtth4',
 					description:'At least it has wheels.',
           attributes: attr,
@@ -195,7 +195,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'GOODS TRAINS',
           image: 'https://ipfs.io/ipfs/QmUwTQneLsH7LzztzKN5umZY6rP1D7Wisuf6wsKNkbtth4',
 					description:'At least it has wheels.',
           attributes: attr,
@@ -220,7 +220,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'GOODS TRAINS',
           image: 'https://ipfs.io/ipfs/QmUwTQneLsH7LzztzKN5umZY6rP1D7Wisuf6wsKNkbtth4',
 					description:'At least it has wheels.',
           attributes: attr,
@@ -245,7 +245,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'GOODS TRAINS',
 					image: 'https://ipfs.io/ipfs/QmUwTQneLsH7LzztzKN5umZY6rP1D7Wisuf6wsKNkbtth4',
 					description:'At least it has wheels.',
           attributes: attr,
@@ -281,7 +281,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'VILLAGE TRAINS',
 					image: 'https://ipfs.io/ipfs/QmbJEzUBU2egisPqXon3NrfR4FRZTYLPXmHb8zJHhnsAKJ',
 					description:"It's amazing that something so heavy can move so fast.",
           attributes: attr,
@@ -306,7 +306,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'VILLAGE TRAINS',
 					image: 'https://ipfs.io/ipfs/QmbJEzUBU2egisPqXon3NrfR4FRZTYLPXmHb8zJHhnsAKJ',
 					description:"It's amazing that something so heavy can move so fast.",
           attributes: attr,
@@ -331,7 +331,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'VILLAGE TRAINS',
 					image: 'https://ipfs.io/ipfs/QmbJEzUBU2egisPqXon3NrfR4FRZTYLPXmHb8zJHhnsAKJ',
 					description:"It's amazing that something so heavy can move so fast.",
           attributes: attr,
@@ -356,7 +356,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'VILLAGE TRAINS',
 					image: 'https://ipfs.io/ipfs/QmbJEzUBU2egisPqXon3NrfR4FRZTYLPXmHb8zJHhnsAKJ',
 					description:"It's amazing that something so heavy can move so fast.",
           attributes: attr,
@@ -381,7 +381,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'VILLAGE TRAINS',
 					image: 'https://ipfs.io/ipfs/QmbJEzUBU2egisPqXon3NrfR4FRZTYLPXmHb8zJHhnsAKJ',
 					description:"It's amazing that something so heavy can move so fast.",
           attributes: attr,
@@ -418,8 +418,8 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
-					image: 'https://ipfs.io/ipfs/QmbJEzUBU2egisPqXon3NrfR4FRZTYLPXmHb8zJHhnsAKJ',
+          name: 'CITY TRAINS',
+					image: 'https://ipfs.io/ipfs/QmS4CL8BKdtU3NF8veAfUW3txzQhs8WLyvRPYCS1DgJeih',
 					description:'Sit down and fasten your seat belt.',
           attributes: attr,
           rarity: "EPIC TRAIN"
@@ -443,8 +443,8 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
-					image: 'https://ipfs.io/ipfs/QmbJEzUBU2egisPqXon3NrfR4FRZTYLPXmHb8zJHhnsAKJ',
+          name: 'CITY TRAINS',
+					image: 'https://ipfs.io/ipfs/QmS4CL8BKdtU3NF8veAfUW3txzQhs8WLyvRPYCS1DgJeih',
 					description:'Sit down and fasten your seat belt.',
           attributes: attr,
           rarity: "EPIC TRAIN"
@@ -468,8 +468,8 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
-					image: 'https://ipfs.io/ipfs/QmbJEzUBU2egisPqXon3NrfR4FRZTYLPXmHb8zJHhnsAKJ',
+          name: 'CITY TRAINS',
+					image: 'https://ipfs.io/ipfs/QmS4CL8BKdtU3NF8veAfUW3txzQhs8WLyvRPYCS1DgJeih',
 					description:'Sit down and fasten your seat belt.',
           attributes: attr,
           rarity: "EPIC TRAIN"
@@ -493,8 +493,8 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
-					image: 'https://ipfs.io/ipfs/QmbJEzUBU2egisPqXon3NrfR4FRZTYLPXmHb8zJHhnsAKJ',
+          name: 'CITY TRAINS',
+					image: 'https://ipfs.io/ipfs/QmS4CL8BKdtU3NF8veAfUW3txzQhs8WLyvRPYCS1DgJeih',
 					description:'Sit down and fasten your seat belt.',
           attributes: attr,
           rarity: "EPIC TRAIN"
@@ -518,8 +518,8 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
-					image: 'https://ipfs.io/ipfs/QmbJEzUBU2egisPqXon3NrfR4FRZTYLPXmHb8zJHhnsAKJ',
+          name: 'CITY TRAINS',
+					image: 'https://ipfs.io/ipfs/QmS4CL8BKdtU3NF8veAfUW3txzQhs8WLyvRPYCS1DgJeih',
 					description:'Sit down and fasten your seat belt.',
           attributes: attr,
           rarity: "EPIC TRAIN"
@@ -539,9 +539,9 @@ for (let index = 0; index < 100; index++) {
 
       const legendType = randomWeight(Legend);
       if(legendType==="55"){
-        Speed = 220
-        Power = 170
-        Hardness = 39
+        Speed = 200
+        Power = 150
+        Hardness = 31
         let attr = [{
           trait_type: 'Speed',
           value: Speed 
@@ -556,7 +556,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'HIGH-SPEED TRAINS',
 					image: 'https://ipfs.io/ipfs/QmQjsBA1cnJ9dJMbwVwsVFf29EaT9GYTEGAt9QcBTy9kBo',
 					description:'From 0 to 1000 in ten seconds.',
           attributes: attr,
@@ -581,7 +581,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'HIGH-SPEED TRAINS',
 					image: 'https://ipfs.io/ipfs/QmQjsBA1cnJ9dJMbwVwsVFf29EaT9GYTEGAt9QcBTy9kBo',
 					description:'From 0 to 1000 in ten seconds.',
           attributes: attr,
@@ -606,7 +606,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'HIGH-SPEED TRAINS',
 					image: 'https://ipfs.io/ipfs/QmQjsBA1cnJ9dJMbwVwsVFf29EaT9GYTEGAt9QcBTy9kBo',
 					description:'From 0 to 1000 in ten seconds.',
           attributes: attr,
@@ -631,7 +631,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'HIGH-SPEED TRAINS',
 					image: 'https://ipfs.io/ipfs/QmQjsBA1cnJ9dJMbwVwsVFf29EaT9GYTEGAt9QcBTy9kBo',
 					description:'From 0 to 1000 in ten seconds.',
           attributes: attr,
@@ -656,7 +656,7 @@ for (let index = 0; index < 100; index++) {
         },
         ]
         nftData = {
-          name: 'CRYPTO TRAINS',
+          name: 'HIGH-SPEED TRAINS',
 					image: 'https://ipfs.io/ipfs/QmQjsBA1cnJ9dJMbwVwsVFf29EaT9GYTEGAt9QcBTy9kBo',
 					description:'From 0 to 1000 in ten seconds.',
           attributes: attr,
@@ -679,8 +679,8 @@ for (let index = 0; index < 100; index++) {
     
    else if(_type == 4) {
     nftData = {
-      name: 'CRYPTO TRAINS',
-      image: 'https://ipfs.io/ipfs/',
+      name: 'GOODS STATION',
+      image: 'https://ipfs.io/ipfs/Qmeg4WNTutafGHPHrSMhAtL1V5miPLsqPfAYCuqdyBU9Fo',
       description:"Don't lose the trains that pass by, there aren't many.",
       rarity: "COMMON TRAIN STATION"
     };
@@ -688,7 +688,7 @@ for (let index = 0; index < 100; index++) {
 
   else if(_type == 5) {
     nftData = {
-      name: 'CRYPTO TRAINS',
+      name: 'CITY STATION',
       image: 'https://ipfs.io/ipfs/QmNoGepeZRukQQHvS4VvxM4cdwzcELHS1Y3REMiwBczbd4',
       description:'Hello cosmopolitan, you have arrived at your destination.',
       rarity: "EPIC TRAIN STATION"
@@ -696,7 +696,7 @@ for (let index = 0; index < 100; index++) {
   }
   else if(_type == 6) {
     nftData = {
-      name: 'CRYPTO TRAINS',
+      name: 'HIGH-SPEED STATION',
       image: 'https://ipfs.io/ipfs/QmaHVMg7qzn9fG6n2mvgYG5kvh8QyDmVQ2fqwTSeNTJ3zs',
       description:'Only the brave arrive here.',
       rarity: "LEGENDARY TRAIN STATION"
