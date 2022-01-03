@@ -35,8 +35,11 @@ const Nfts = () => {
         errorWeb3Modal
     } = useWeb3React();
     
+    const [count, setCount] = useState()
+
+    
 let journal = [
-    {"name":"GOODS TRAIN", "category":"COMMON", "image": train1},
+    {"name":"GOODS TRAIN", "category":"COMMON", "image": train1, "qty": count},
     {"name":"VILLAGE TRAIN", "category":"RARE", "image": train2},
     {"name":"CITY TRAIN", "category":"EPIC", "image": train3},
     {"name":"HIGH-SPEED TRAIN", "category":"LEGENDARY", "image": train4},
@@ -49,6 +52,7 @@ let journal = [
   ];
     const [balance, setBalance] = useState()
     const [nftType, setNftType] = useState([])
+
 
     const loadProvider = async () => {
         try{
@@ -70,21 +74,33 @@ let journal = [
             let balanceOf = await NFTCrowdsaleContract.balanceOf(account)
             let balance = balanceOf.toNumber()
             let arr= [] 
+            let counter = 0
             for(var i = 0; i < balanceOf; i++) {
               let id = await NFTCrowdsaleContract.tokenOfOwnerByIndex(account,i);
                 console.log("all indexes",id.toString());
                 let tokenType = await NFTCrowdsaleContract.tokenType(id)
                 let token = tokenType.toNumber()
+                console.log("tokenType", token)
                 arr.push(token)
-                console.log("type", token)
+                console.log("arr", arr)
+                if(token == 0) {
+                    counter += 1
+                    setCount(counter)
+                }
+                else{
+                    console.log("sorry")
+                }
                 setNftType(arr)
+                
             }
-            console.log("array : " , arr)
+
+            
+            
 
             
             setBalance(balance)
-            console.log("nftType", nftType)
-            console.log("balanceOf", balance) 
+            
+            console.log("balanceOf", balance)
            
             // console.log("signer", signer)
 
@@ -113,7 +129,11 @@ let journal = [
     const hello = {
         hello: "klghkjhg"
     }
-        let type1 = nftType[0];
+    let type1 = nftType[0];
+
+    
+    
+   
 
     
 
@@ -130,9 +150,10 @@ let journal = [
                 <h1 className="white-head">MY NFTS</h1>
 
 
+                {<div>{count}</div>}
                 
                 {
-                    journal[nftType[0]] && <MyNft image={journal[nftType[0]].image} name={journal[nftType[0]].name} qty={2} category={journal[nftType[0]].category}/>
+                    journal[nftType[0]] && <MyNft image={journal[nftType[0]].image} name={journal[nftType[0]].name} qty={journal[nftType[0]].qty} category={journal[nftType[0]].category}/>
                 
                 }
                 {
