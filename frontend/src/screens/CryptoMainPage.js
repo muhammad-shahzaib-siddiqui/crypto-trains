@@ -130,7 +130,7 @@ export default function CryptoMainPage() {
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer);
             let _whitelist = await NFTCrowdsaleContract.whitelist(account)
             let start = await NFTCrowdsaleContract.start()
-            let total = start.toNumber()*2000
+            let total = start.toNumber()
             setStartTime(total)
             setiswhitelist(_whitelist)          
             console.log("time", total)
@@ -149,6 +149,8 @@ export default function CryptoMainPage() {
             let tx =  await buy.wait()
             let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
             setPurchased(parseInt(userPurchased.toString()))
+            console.log("purchased", purchased)
+
             console.log("userPurchased", userPurchased)
             if(tx.confirmations == 1){
                 loadLimit()
@@ -181,9 +183,20 @@ export default function CryptoMainPage() {
     if (!account) {
         return <h1>Kindly connect wallet</h1>
     }
-
+    const Completionist = () =><h1>PRESALE STARTS IN: 00 DAYS 00 H 00 Minutes 00 SEC</h1>;
     
-
+    const renderer = ({days, hours, minutes, seconds, completed }) => {
+        if (completed) {
+          // Render a completed state
+          return <Completionist />;
+        } else {
+          // Render a countdown
+        return <>
+        <h1>PRESALE STARTS IN: {days} DAYS {hours} H {minutes} Minutes {seconds} SEC</h1>
+        </>
+        
+        }
+      };
     return (
         <div>
             
@@ -202,10 +215,10 @@ export default function CryptoMainPage() {
         </nav>
     </div> */}
  {
-        issalestart == true &&
-        <div className="top-bar">
-        <h1>PRESALE STARTS IN: <span id="days"></span> DAYS <span id="hours"></span> H <span id="minutes"></span> Minutes <span id="seconds"></span> SEC</h1>
-        {startTime}
+     issalestart == true &&
+     <div className="top-bar">
+            <Countdown date={Date.now() + startTime} renderer={renderer}/>
+        {/* <h1>PRESALE STARTS IN: <span id="days"></span> DAYS <span id="hours"></span> H <span id="minutes"></span> Minutes <span id="seconds"></span> SEC</h1> */}
     </div>
     
     }

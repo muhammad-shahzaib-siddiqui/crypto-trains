@@ -83,7 +83,7 @@ contract NFT is ERC721 , Ownable{
         require(_exists(tokenId), "ERC721URIStorage: URI query for nonexistent token");
 
         string memory _tokenURI = _tokenURIs[tokenId];
-        string memory base = _baseURI();
+        string memory base = baseURI();
 
         // If there is no base URI, return the token URI.
         if (bytes(base).length == 0) {

@@ -140,7 +140,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     }
 
     
-    function buyNFT(uint8 no) public nonReentrant payable {
+    function buyNFT(uint8 no,string memory uri) public nonReentrant payable {
         require(start<block.timestamp || start !=0,"Sale not started");
         uint256 price;
         if(block.timestamp<limitationtime){
@@ -158,7 +158,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         uint256 weiAmount = msg.value;
         require (weiAmount ==  price,"please provide exact amount for one NFT");
 
-        nft.createToken("4321",_msgSender(),no);
+        nft.createToken(uri,_msgSender(),no);
 
         
         _nftPurchased ++;
