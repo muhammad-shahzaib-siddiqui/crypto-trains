@@ -1,18 +1,72 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'
 import logo from '../assets/img/logo.png';
 import { Col, Form, Row } from 'react-bootstrap';
 import { Button } from 'bootstrap';
 
+import { ethers,BigNumber } from 'ethers'
+import {nft_addr, nftPreSale_addr} from "../contract/addresses"
+import NFT from "../contract/NFT.json";
+import NFTCrowdsale from "../contract/NFTCrowdsale.json"
+import Web3Modal from 'web3modal'
+import { useWeb3React } from "@web3-react/core";
+
 const Airdrop = () => {
+
+	const {
+        connector,
+        library,
+        account,
+        chainId,
+        activate,
+        deactivate,
+        active,
+        errorWeb3Modal
+    } = useWeb3React();
+
+	const loadProvider = async () => {
+        try{
+            const web3Modal = new Web3Modal();
+            const connection = await web3Modal.connect();
+            const provider = new ethers.providers.Web3Provider(connection);
+            return provider.getSigner();
+        }
+        catch(e){
+            console.log("loadProvider: ", e)
+        }
+    }
+
+	const startSale = async () => {
+        try {
+            
+            let signer = await loadProvider()
+            let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer);
+			console.log("account", account)
+            let startSale = await NFTCrowdsaleContract.startSale([account], nft_addr, 100)
+			await startSale.wait()        
+            console.log("startSale", startSale)
+        } catch (e) {
+            console.log("data", e)
+        }
+    }
+
+	
+
+	useEffect(() => {
+        (async () => {
+            if (account) {
+                try {
+                    startSale()
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        })()
+    }, [account]);
+
+
 	return (
 		<div>
 			
-			<div className="top-bar">
-				<h1>
-					PRESALE STARTS IN: <span id="days" /> DAYS <span id="hours" /> H <span id="minutes" /> Minutes{' '}
-					<span id="seconds" /> SEC
-				</h1>
-			</div>
 			<h1 className="green-head">You are WHITELISTED</h1>
             <div className="container-fluid">
             <Row>
@@ -29,8 +83,9 @@ const Airdrop = () => {
                 <Form.Label>Start Time</Form.Label>
                 <Form.Control type="text" placeholder="Start Time" />
             </Form.Group>
-            <button class="custom-btn btn-white">Submit</button>
+            
             </Form>
+			<button   >Submit</button>
             </div>
                 </Col>
             </Row>
@@ -49,7 +104,7 @@ const Airdrop = () => {
             </Form.Group>
 
             
-            <button class="custom-btn btn-white">Submit</button>
+            <button className="custom-btn btn-white">Submit</button>
             </Form>
             </div>
                 </Col>

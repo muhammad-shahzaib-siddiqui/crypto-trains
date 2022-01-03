@@ -121,10 +121,6 @@ let journal = [
         })()
     }, [account]);
 
-    
-    if (!account) {
-        return <h1>Kindly connect wallet</h1>
-    }
 
     const hello = {
         hello: "klghkjhg"
@@ -140,7 +136,6 @@ let journal = [
     return (
         <div>
     <div className="top-bar">
-        <h1>PRESALE STARTS IN: 01 DAYS 12 H 30 SEC</h1>
         {balance}
     </div>
     <h1 className="green-head">You are WHITELISTED</h1>

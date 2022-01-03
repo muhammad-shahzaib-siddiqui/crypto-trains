@@ -47,7 +47,7 @@ export default function CryptoMainPage() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [purchased, setPurchased] = useState()
-    const [startTime, setStartTime] = useState()
+    const [startTime, setStartTime] = useState(10000)
 
     const {
         connector,
@@ -184,54 +184,36 @@ export default function CryptoMainPage() {
             }
         })()
     }, [account]);
-    if (!account) {
-        return <h1>Kindly connect wallet</h1>
-    }
-    const Completionist = () =><h1>PRESALE STARTS IN: 00 DAYS 00 H 00 Minutes 00 SEC</h1>;
+
+    // const Completionist = () =><h1>PRESALE STARTS IN: 00 DAYS 00 H 00 Minutes 00 SEC</h1>;
     
-    const renderer = ({days, hours, minutes, seconds, completed }) => {
-        if (completed) {
-          // Render a completed state
-          return <Completionist />;
-        } else {
-          // Render a countdown
-        return <>
-        <h1>PRESALE STARTS IN: {days} DAYS {hours} H {minutes} Minutes {seconds} SEC</h1>
-        </>
-        
-        }
-      };
+    // const renderer = ({days, hours, minutes, seconds, completed }) => {
+    //     if (completed) {
+    //       // Render a completed state
+    //       return <Completionist />;
+    //     } else {
+    //       // Render a countdown
+    //     return <>
+    //     <h1>PRESALE STARTS IN: {days} DAYS {hours} H {minutes} Minutes {seconds} SEC</h1>
+    //     </>
+    //     }
+    //   };
+
     return (
         <div>
-            
-
-            {/* <div className="container-fluid">
-        <nav className="custom-padding custom-padd-mobile">
-            <div className="d-j-flex align-items-center">
-                <a href="index.html">
-                    <img className="logo" src={logo} alt=""/>
-                </a>
-                <div className="d-flex ">
-                    <a className="custom-btn btn-white" href="nfts.html">MY NFTS</a>
-                    <a className="custom-btn btn-white justify-content-center" ="loadWeb3();"><img height="27" src="./assets/img/metamask.png" alt=""/> Connect Metamask</a>
-                </div>
-            </div>
-        </nav>
-    </div> */}
- {
+ {/* {
      issalestart == true &&
      <div className="top-bar">
-            <Countdown date={Date.now() + startTime} renderer={renderer}/>
-        {/* <h1>PRESALE STARTS IN: <span id="days"></span> DAYS <span id="hours"></span> H <span id="minutes"></span> Minutes <span id="seconds"></span> SEC</h1> */}
+            <Countdown date={Date.now() + startTime} renderer={renderer} autoStart />
     </div>
     
-    }
+    } */}
     {
         iswhitelist == true ? <>
     <h1 className="green-head">You are WHITELISTED</h1>
     </>
     :<>
-    <h1 className="red-head">You are not WHITELISTED</h1>
+    <h1 className="red-head">Connect to Your Wallet</h1>
     </>
     }
     <div className="container-fluid">
