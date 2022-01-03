@@ -132,16 +132,8 @@ export default function CryptoMainPage() {
             let start = await NFTCrowdsaleContract.start()
             let total = start.toNumber()*2000
             setStartTime(total)
-            setiswhitelist(_whitelist)
-            
-            
-           console.log("time", total)
-           
-           
-
-
-            // console.log("signer", signer)
-
+            setiswhitelist(_whitelist)          
+            console.log("time", total)
         } catch (e) {
             console.log("data", e)
         }

@@ -61,7 +61,7 @@ it("Should release payment", async function () {
 
   let bal = await nft.balanceOf(per1.address);
   
-  console.log("balance",bal.toString());
+   console.log("balance",bal.toString());
    indexes = await nft.tokenOfOwnerByIndex(per1.address,1);
    console.log("all indexes",indexes.toString());
 
