@@ -25,11 +25,11 @@ contract NFTpaymentSplitter is Context {
     mapping(IERC20 => uint256) private _erc20TotalReleased;
     mapping(IERC20 => mapping(address => uint256)) private _erc20Released;
 
-address Marketing = address(0x6424f2C32134473Bb362F4F6b21d4481eadCf4DC) ;
-address Development = address(0xCFcfcb9553F5A49ac983C50e24C6443f325Dd7d1) ;
-address Pool = address(0xd0cFcBB99a9CC54c13ceCA88e710351248f68654) ;
-address Contingencies =address(0xeefE7bde6E77e448441a998b63452c8057FD7548) ;
-address PreDevelopment = address(0x0259FC8c828255fA7b90D928b3939f6944475ba7) ;
+    address Marketing = address(0x6424f2C32134473Bb362F4F6b21d4481eadCf4DC) ;
+    address Development = address(0xCFcfcb9553F5A49ac983C50e24C6443f325Dd7d1) ;
+    address Pool = address(0xd0cFcBB99a9CC54c13ceCA88e710351248f68654) ;
+    address Contingencies =address(0xeefE7bde6E77e448441a998b63452c8057FD7548) ;
+    address PreDevelopment = address(0x0259FC8c828255fA7b90D928b3939f6944475ba7) ;
 
 uint256[] shares_ = [2375,2375,2375,2375,500];
 address[] payees = [address(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266),Development,Pool,Contingencies,PreDevelopment];
@@ -118,15 +118,15 @@ address[] payees = [address(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266),Developm
         return (totalReceived * _shares[account]) / _totalShares - alreadyReleased;
     }
 
-      function _addPayee(address account, uint256 shares_) private {
+      function _addPayee(address account, uint256 shares) private {
         require(account != address(0), "PaymentSplitter: account is the zero address");
-        require(shares_ > 0, "PaymentSplitter: shares are 0");
+        require(shares > 0, "PaymentSplitter: shares are 0");
         require(_shares[account] == 0, "PaymentSplitter: account already has shares");
 
         _payees.push(account);
-        _shares[account] = shares_;
-        _totalShares = _totalShares + shares_;
-        emit PayeeAdded(account, shares_);
+        _shares[account] = shares;
+        _totalShares = _totalShares + shares;
+        emit PayeeAdded(account, shares);
     }
 
 }
