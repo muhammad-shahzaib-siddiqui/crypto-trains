@@ -178,39 +178,7 @@ contract NFT is ERC721 , Ownable{
             }
     }
 
-    function uri_nftType(uint8 no) private returns(string memory){
-            if(no==0){
-                require(Train_common<Train_common_limit,"all Common trains minted");
-                Train_common++;
-                return true;
-            }else if(no==1){
-                require(Train_rare<Train_rare_limit,"all Rare trains minted");
-                Train_rare++;
-                return true;
-            }else if(no==2){
-                require(Train_epic<Train_epic_limit,"all Epic trains minted");
-                Train_epic++;
-                return true;
-            }else if(no==3){
-                require(Train_legendary<Train_legendary_limit,"all Legendry trains minted");
-                Train_legendary++;
-                return true;
-            }else if(no==4){
-                require(Station_common<Station_common_limit,"all Common staions minted");
-                Station_common++;
-                return true;
-            }else if(no==5){
-                require(Station_mitic<Station_mitic_limit,"all Mitic stations minted");
-                Station_mitic++;
-                return true;
-            }else if(no==6){
-                require(Station_Legendary<Station_Legendary_limit,"all Legendary trains minted");
-                Station_Legendary++;
-                return true;
-            }else{
-                require(false,"Type not found");
-            }
-    }
+    
 
     function _burn(uint256 tokenId) internal virtual override {
         super._burn(tokenId);

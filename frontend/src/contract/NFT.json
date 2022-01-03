@@ -22,6 +22,7 @@
   "function addressMintedBalance(address) view returns (uint256)",
   "function approve(address,uint256)",
   "function balanceOf(address) view returns (uint256)",
+  "function baseURI() view returns (string)",
   "function createToken(string,address,uint8) returns (uint256)",
   "function getApproved(uint256) view returns (address)",
   "function isApprovedForAll(address,address) view returns (bool)",

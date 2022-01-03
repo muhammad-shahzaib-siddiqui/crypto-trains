@@ -15,6 +15,7 @@ import Web3Modal from 'web3modal'
 import { useWeb3React } from "@web3-react/core";
 import { Button, Modal } from 'react-bootstrap'
 import Countdown from 'react-countdown';
+import {generate} from "../components/metadata"
 
 
 
@@ -145,7 +146,10 @@ export default function CryptoMainPage() {
             console.log("number", no)
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
             let _value = await NFTCrowdsaleContract.getPrice(no)
-            let buy = await NFTCrowdsaleContract.buyNFT(no, {value:_value})
+            let uri = generate(no)
+            console.log("uri>>>", uri)
+            let buy = await NFTCrowdsaleContract.buyNFT(no, uri, {value:_value})
+
             let tx =  await buy.wait()
             let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
             setPurchased(parseInt(userPurchased.toString()))

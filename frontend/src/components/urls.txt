@@ -1,0 +1,36 @@
+common
+55 : https://ipfs.io/ipfs/Qmbpomdpbmr31xijTnnamKjYyd1ZnBckfTbPcFfBnyY44W
+20 : https://ipfs.io/ipfs/QmWspYZguTWHnZfiyZZ4zB1uUp7UfqvrSk93PGgwkh7zB5
+15 : https://ipfs.io/ipfs/QmUmbEmV5eiN2T7thAB8XcSX82Yh5g6eYpcArJam5aLX2g
+9  : https://ipfs.io/ipfs/QmWjVWC6nQ8dkK9AA8BM8YndpAbB5CgjLo7uA9PyLJP32x
+1  : https://ipfs.io/ipfs/QmZiCk4oTm9NEEuqd45DcVNu6GvYSwgv12SyS82jKa7c5x
+
+Rare
+55 : https://ipfs.io/ipfs/QmWmk4vA9n7LehiyW9Rs3VTeNF4Kv7e1hrzjuj8PyGYU5y
+20 : https://ipfs.io/ipfs/QmNNoUaVTMKur2vJwRmjGGZuHc22Mod2DUs2n47mjGwGFS
+15 : https://ipfs.io/ipfs/QmXQUenhizpsxRqdmNBYWqEkRuagaH2iHMK53tNHaxArns
+9  : https://ipfs.io/ipfs/QmSaDNChv1GyEmfeNvkMr5tPVzjgNSEDC5q5TJKazKtec6
+1  : https://ipfs.io/ipfs/Qmf5rirnZAiC51aJQQi77VEZGccaz8qxeuP3z4bWqQwvXY
+
+Epic
+55 : https://ipfs.io/ipfs/QmSC47BqVeVT1qy9cugAqoNytWY2N1XCr4vCdp5HGBJ4BQ
+20 : https://ipfs.io/ipfs/QmZC3SErS9ghydnbze8YZY3ubvHCLQ35vQ37AuHkNCTRT8
+15 : https://ipfs.io/ipfs/Qmd3R7PZiGPpLuHpS7sVHiZiEyp6vv9DPVu1s8W48egEtC
+9  : https://ipfs.io/ipfs/QmdSwp1aXjaoWZm1DPpiwUmNpzG1gu52K5pbdvoqYg8ewW
+1  : https://ipfs.io/ipfs/QmWWQWaXQaqKaW5CnES6F8QLTjw1LfaFmNJhyUrh6jo19Y
+
+Legendary
+55 : https://ipfs.io/ipfs/QmW9smtXX3sCm25668b7dBQJTdqVVQ2Q2Z7y888C8ihGvM
+20 : https://ipfs.io/ipfs/QmNzebMiwwtxMRD1p3Z5WL1yWjyh4L3gjr7eYYJg2CBGun
+15 : https://ipfs.io/ipfs/QmZ3T3btJkaMij4qskS5RsRdkRQZGrSNdo9vJ9UUp589vP
+9  : https://ipfs.io/ipfs/QmYxoFw16mjx8XAAJ3tSRGtS9YVWyXEczkeoDNoDTQRfnE
+1  : https://ipfs.io/ipfs/QmT7A6rTz7kfiPWoDFawRtKsXtJAm8YP1pPGYhzNhyuWQj
+
+Common station
+https://ipfs.io/ipfs/QmYYVvHDZXQEiLJqD57dssbxeSCuZcVf3YuqUHarqfxdBT
+
+Epic station
+https://ipfs.io/ipfs/QmQbhCCrqMs9NQuyCt9AisdaHHsxeMMuKBw2paQrvqdw9s
+
+lagendary station
+https://ipfs.io/ipfs/QmZcYwn9bGAtmuTXkaFNJyXfTkzMtf9F6ZHJmvPU1zcATq

@@ -9,10 +9,13 @@ import Nfts from './screens/Nfts';
 import Airdrop from './screens/Airdrop';
 
 
+
 function App() {
   const [errorMessage, setErrorMessage] = useState();
   useEagerConnect(setErrorMessage);
   useInactiveListener();
+
+  
 
   return (
     <div className="App">
