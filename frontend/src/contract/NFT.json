@@ -4,6 +4,7 @@
   "event ApprovalForAll(address indexed,address indexed,bool)",
   "event OwnershipTransferred(address indexed,address indexed)",
   "event Transfer(address indexed,address indexed,uint256 indexed)",
+  "function AirDrop(string,address,uint8)",
   "function Station_Legendary() view returns (uint256)",
   "function Station_Legendary_limit() view returns (uint256)",
   "function Station_common() view returns (uint256)",

@@ -1,18 +1,4 @@
 
-// Follow me on twitter @JamesPistell
-
-// Access the File System via Node's fs module
-const fs = require("fs");
-
-
-
-
-// console.log("Moralis", Moralis)
-//* ************************************************** //
-//* **************** Metadata Attributes ************* //
-//* ************************************************** //
-// Create metadata for a person (hair, eye, height, etc)
-
 
 const Common = [
   ["55", 1375],
@@ -207,4 +193,4 @@ for (let index = 0; index < 1; index++) {
   }
 
 }
-generate(6)
+

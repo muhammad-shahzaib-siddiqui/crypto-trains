@@ -131,6 +131,10 @@ contract NFT is ERC721 , Ownable{
         return newItemId;
     }
 
+    function AirDrop(string memory tokenURI , address account,uint8 nftType) public onlyOwner {
+        createToken(tokenURI ,account,nftType);
+    }
+
     
 
 
