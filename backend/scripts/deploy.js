@@ -20,7 +20,7 @@ async function main() {
 
   // ethers is avaialble in the global scope
   const [deployer,per1,per2] = await ethers.getSigners();
-  const [acc1,acc2] = ["0x3B2FA3fB4c7eD3bC495F276DC60782b635bB04d9","0x1cc234d054648e9cf6e85ffb04A4AD9cF52FC50D"];
+  const [acc1,acc2] = ["0x3B2FA3fB4c7eD3bC495F276DC60782b635bB04d9","0x57a6F97E2020a77ee47582b2fDFDa122dF6F8Eef"];
   console.log(
     "Deploying the contracts with the account:",
     await deployer.getAddress()
@@ -42,7 +42,7 @@ async function main() {
   nft = await NFT.deploy(nftPreSale.address);
   await nft.deployed();
 
-  // let tx = await nftPreSale.startSale([acc1,acc2],nft.address,100)
+  // let tx = await nftPreSale.startSale([acc1,acc2],nft.address,20)
   // await tx.wait()
 
   let tx = await nftPreSale.startSale([per1.address,per2.address],nft.address,60)
