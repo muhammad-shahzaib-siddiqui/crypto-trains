@@ -130,11 +130,8 @@ export default function CryptoMainPage() {
             let signer = await loadProvider()
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer);
             let _whitelist = await NFTCrowdsaleContract.whitelist(account)
-            let start = await NFTCrowdsaleContract.start()
-            let total = start.toNumber()
-            setStartTime(total)
+            
             setiswhitelist(_whitelist)          
-            console.log("time", total)
         } catch (e) {
             console.log("data", e)
         }

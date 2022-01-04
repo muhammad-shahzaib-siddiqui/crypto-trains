@@ -60,7 +60,7 @@ function Header(props) {
       } else {
         let start = await NFTCrowdsaleContract.start();
         let total = start.toNumber();
-        console.log("total", total);
+        console.log("startSaleTimeTotal", total);
         setStartTime(total)
 
       }
@@ -78,29 +78,38 @@ function Header(props) {
         NFTCrowdsale,
         signer
       );
-      let start = await NFTCrowdsaleContract.limitationtime();
-      let total = start.toNumber();
-      let hello;
-      let time;
-      console.log("total", total);
-
-      let currentTime = currentDate / 1000;
-      currentTime = parseInt(currentTime);
-      console.log("currentTime", parseInt(currentTime));
-      if (total - currentTime > 0) {
-        hello = total - currentTime;
-        time = parseInt(hello);
-        console.log("discountTime", time);
-        setDiscountTime(hello);
-        setLoading(1);
+      let limitationTime = await NFTCrowdsaleContract.limitationTime();
+      if (limitationTime == 0) {
+        setDiscountTime(0);
       } else {
-        hello = 0;
-        setDiscountTime(hello);
+        let limitationtime = await NFTCrowdsaleContract.limitationtime();
+        let total = limitationtime.toNumber();
+        console.log("startSaleTimeTotal", total);
+        setDiscountTime(total)
+        
+
       }
+      setLoading(1);
     } catch (e) {
       console.log("data", e);
     }
   };
+
+  const blockTimeStoamp = async () => {
+    try{
+      let signer = await loadProvider();
+      let NFTCrowdsaleContract = new ethers.Contract(
+        nftPreSale_addr,
+        NFTCrowdsale,
+        signer
+      );
+      // let blockTime = await NFTCrowdsaleContract.blocktime();
+      // console.log("blockTime", blockTime.toString())
+    }
+    catch(e){
+      console.log("error", e)
+    }
+  }
 
   useEffect(() => {
     (async () => {
@@ -108,6 +117,7 @@ function Header(props) {
         try {
           startSaleTime();
           limitationTime();
+          blockTimeStoamp();
         } catch (error) {
           console.log(error);
         }
@@ -124,7 +134,7 @@ function Header(props) {
   // const Completionist = () =><h1>PRESALE STARTS IN: 00 DAYS 00 H 00 Minutes 00 SEC</h1>;
 
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    if (startTime <= 0) {
+    if (startTime == 0) {
       // Render a completed state
       return (
         <>
@@ -202,29 +212,31 @@ function Header(props) {
 
       <div>
         <div className="top-bar">
+          {console.log("startTime1", startTime)}
           {loading == 1 && startTime > 0 ? (
             <div>
               <Countdown
-                date={(startTime * 1000)-60000}
+                date={(startTime * 1000)}
                 renderer={renderer}
                 autoStart
               />
             </div>
           ) : null}
+          {console.log("startTime2", discountTime)}
           {loading == 1 && startTime <= 0 && discountTime > 0 ? (
             <div>
               <Countdown
-                date={Date.now() + (discountTime * 1000)-60000}
+                date={Date.now() + (discountTime * 1000)}
                 renderer={renderer}
                 autoStart
               />
             </div>
           ) : null}
-          {loading == 1 && startTime <= 0 && discountTime <= 0 ? (
+          {/* {loading == 1 && startTime <= 0 && discountTime <= 0 ? (
             <div>
               <h1>PRE-SALE HAS STARTED</h1>
             </div>
-          ) : null}
+          ) : null} */}
         </div>
       </div>
     </div>

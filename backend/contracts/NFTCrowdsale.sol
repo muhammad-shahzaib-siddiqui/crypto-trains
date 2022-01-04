@@ -117,7 +117,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         }
        
         start = block.timestamp + (startTime * 1 seconds);
-        limitationtime = start +  1 seconds;
+        limitationtime = start +14400+  1 seconds;
     }
  
     fallback () external payable { 
@@ -179,6 +179,18 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
             time = start-block.timestamp;
         }
         return time; 
+    }
+
+    function limitationTime()public view returns(uint256){
+        uint256 time=0;
+        if(start !=0 && start>block.timestamp){
+            time = start-block.timestamp;
+        }
+        return time; 
+    }
+
+    function blocktime()public view returns(uint256){
+        return block.timestamp * 1 seconds;
     }
 
     
