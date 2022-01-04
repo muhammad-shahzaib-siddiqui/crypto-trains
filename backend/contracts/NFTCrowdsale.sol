@@ -57,6 +57,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     bool public success;
     bool public finalized;
     bool public pub;
+    bool private discount;
 
 
     
@@ -131,24 +132,35 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
 
     function getPrice(uint8 no) public view returns(uint256){
         uint256 price;
-         if(block.timestamp<limitationtime){
-            price = discount_price(no);
-        }else{
+        if(block.timestamp>limitationtime && start !=0){
             price = normal_price(no);
+        }else{
+            price = discount_price(no);
         }
         return price;
+
+    }
+
+    function startTime()public view returns(uint256){
+        uint256 time=0;
+        if(start !=0 && start>block.timestamp){
+            time = start-block.timestamp;
+        }
+        return time; 
     }
 
     
     function buyNFT(uint8 no,string memory uri) public nonReentrant payable {
-        require(start<block.timestamp || start !=0,"Sale not started");
+        require(start<block.timestamp && start !=0,"Sale not started");
         uint256 price;
         if(block.timestamp<limitationtime){
             price = discount_price(no);
+            
         }else{
             price = normal_price(no);
+            
         }
-      
+
             require (purchase[_msgSender()] < 500000000,"cant buy more nft");
             require (_whitelist[_msgSender()] == true,"you are not whitelisted");
             require(_nftPurchased < limit,"All nft Sold");
