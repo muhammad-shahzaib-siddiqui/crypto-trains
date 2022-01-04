@@ -1,4 +1,4 @@
 
- export const nft_addr = "0xB0D4afd8879eD9F52b28595d31B441D079B2Ca07"
- export const nftPreSale_addr = "0x1429859428C0aBc9C2C47C8Ee9FBaf82cFA0F20f"
- export const nFTpaymentSplitter_addr = "0xcbEAF3BDe82155F56486Fb5a1072cb8baAf547cc"
+ export const nft_addr = "0x610178dA211FEF7D417bC0e6FeD39F05609AD788"
+ export const nftPreSale_addr = "0x8A791620dd6260079BF849Dc5567aDC3F2FdC318"
+ export const nFTpaymentSplitter_addr = "0x2279B7A0a67DB372996a5FaB50D91eAA73d2eBe6"

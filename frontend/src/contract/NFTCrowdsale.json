@@ -32,6 +32,7 @@
   "function renounceOwnership()",
   "function start() view returns (uint256)",
   "function startSale(address[],address,uint256)",
+  "function startTime() view returns (uint256)",
   "function success() view returns (bool)",
   "function transferOwnership(address)",
   "function userPurchased(address) view returns (uint256)",
