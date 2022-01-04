@@ -28,7 +28,9 @@ function Header(props) {
 
   // const [issalestart,setissalestart] = useState(true);
   const [startTime, setStartTime] = useState()
+  const [discountTime, setDiscountTime] = useState()
   const [issalestart,setissalestart] = useState(true);
+  const [loading, setLoading] = useState(0)
 
   const [currentDate, setCurrentDate] = useState(Date.now)
   // console.log("currentDate", currentDate)
@@ -54,35 +56,80 @@ function Header(props) {
       );
       let start = await NFTCrowdsaleContract.start()
       let total = start.toNumber()
+      let hello
+      let time
       console.log("total", total)
-      setStartTime(total)
       
+      let currentTime = currentDate / 1000
+      currentTime = parseInt(currentTime)
+      console.log("currentTime", parseInt(currentTime))
+      if(total - currentTime > 0){
+         hello = total - currentTime
+         time = parseInt(hello)
+        console.log("time", time)
+        setStartTime(hello)
+        setLoading(1)
+
+      }
+      else{
+        hello = 0
+        setStartTime(hello)
+      }
     } catch (e) {
       console.log("data", e);
     }
   };
 
+
+
+  const limitationTime = async () => {
+    try {
+      let signer = await loadProvider();
+      let NFTCrowdsaleContract = new ethers.Contract(
+        nftPreSale_addr,
+        NFTCrowdsale,
+        signer
+      );
+      let start = await NFTCrowdsaleContract.limitationtime()
+      let total = start.toNumber()
+      let hello
+      let time
+      console.log("total", total)
+      
+      let currentTime = currentDate / 1000
+      currentTime = parseInt(currentTime)
+      console.log("currentTime", parseInt(currentTime))
+      if(total - currentTime > 0){
+         hello = total - currentTime
+         time = parseInt(hello)
+        console.log("discountTime", time)
+        setDiscountTime(hello)
+        setLoading(1)
+
+      }
+      else{
+        hello = 0
+        setDiscountTime(hello)
+      }
+    
+      
+    
+      
+      
+    } catch (e) {
+      console.log("data", e);
+    }
+  };
   
 
-  const Completionist = () =><h1>PRESALE STARTS IN: 00 DAYS 00 H 00 Minutes 00 SEC</h1>;
-    
-    const renderer = ({days, hours, minutes, seconds, completed }) => {
-        if (completed) {
-          // Render a completed state
-          return <Completionist />;
-        } else {
-          // Render a countdown
-        return <>
-        <h1>PRESALE STARTS IN: {days} DAYS {hours} H {minutes} Minutes {seconds} SEC</h1>
-        </>
-        }
-      };
+  
 
   useEffect(() => {
     (async () => {
       if (account) {
         try {
           startSaleTime();
+          limitationTime()
         } catch (error) {
           console.log(error);
         }
@@ -91,24 +138,34 @@ function Header(props) {
   }, [account]);
 
 
-  let currentTime = currentDate / 1000
-  // console.log("currentTime", parseInt(currentTime))
 
-  let hello = startTime - currentTime
 
-  let time = hello
 
-  
 
-  console.log("hello", time)
+  // const Completionist = () =><h1>PRESALE STARTS IN: 00 DAYS 00 H 00 Minutes 00 SEC</h1>;
+    
+    const renderer = ({days, hours, minutes, seconds, completed }) => {
+        if (startTime <= 0) {
+          // Render a completed state
+          return <>
+           <h1>DISCOUNT PERIOD ENDS IN: {days} DAYS {hours} H {minutes} Minutes {seconds} SEC</h1>
+          </>
+        } else {
+          // Render a countdown
+        return <>
+        <h1>PRESALE STARTS IN: {days} DAYS {hours} H {minutes} Minutes {seconds} SEC</h1>
+        </>
+        }
+      };
+
+ 
 
   // console.log("hello", parseInt(hello))
 
 
   console.log("is active check = ", active);
   return (
-    <div>
-      <div className="container-fluid">
+      <div >
         <nav className="custom-padding custom-padd-mobile">
           <div className="d-j-flex align-items-center">
             <Link to="/">
@@ -154,18 +211,25 @@ function Header(props) {
               </a>
             </div>
           </div>
+          <div>
+          </div>
         </nav>
-        {
-     issalestart == true &&
-     <div className="top-bar">
-            <Countdown date={Date.now() + 100000} renderer={renderer} autoStart />
+
+        <div>
+        
+    
+     <div className="top-bar" >
+                {loading == 1 && startTime > 0 ? (<div><Countdown date={Date.now() + startTime*1000} renderer={renderer} autoStart /></div>) : (<div><h1>PRE-SALE</h1></div>)}
+                {loading == 1 && startTime <= 0 ? (<div><Countdown date={Date.now() + discountTime*1000} renderer={renderer} autoStart /></div>) : (<div><h1>PRE-SALE</h1></div>)}
+                
     </div>
     
-    }
+    
+        </div>
+        
       </div>
 
       
-    </div>
   );
 }
 

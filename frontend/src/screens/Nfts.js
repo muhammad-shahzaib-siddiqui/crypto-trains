@@ -135,7 +135,7 @@ let journal = [
 
     return (
         <div>
-    <div className="top-bar">
+    <div >
         {balance}
     </div>
     <h1 className="green-head">You are WHITELISTED</h1>
@@ -143,9 +143,6 @@ let journal = [
         <div className="custom-padding">
             <div className="row nft-section">
                 <h1 className="white-head">MY NFTS</h1>
-
-
-                {<div>{count}</div>}
                 
                 {
                     journal[nftType[0]] && <MyNft image={journal[nftType[0]].image} name={journal[nftType[0]].name} qty={journal[nftType[0]].qty} category={journal[nftType[0]].category}/>
