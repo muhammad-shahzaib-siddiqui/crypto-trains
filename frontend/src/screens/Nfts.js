@@ -90,9 +90,10 @@ let journal = [
                 else{
                     console.log("sorry")
                 }
-                setNftType(arr)
+                
                 
             }
+            setNftType(arr)
 
             
             
@@ -164,21 +165,6 @@ let journal = [
                     journal[nftType[4]] && <MyNft image={journal[nftType[4]].image} name={journal[nftType[4]].name} qty={2} category={journal[nftType[4]].category}/>
                 
                 }
-                {/* {
-                    nftType[5] !==0 ?(journal[nftType[5]] && <MyNft image={journal[nftType[5]].image} name={journal[nftType[5]].name} qty={2} category={journal[nftType[5]].category}/>) :null
-                
-                }
-                {
-                    nftType[6] !==0 ?(journal[nftType[6]] && <MyNft image={journal[nftType[6]].image} name={journal[nftType[6]].name} qty={2} category={journal[nftType[6]].category}/>) :null
-                
-                } */}
-               
-                {/* {journal[nftType[0]] && <MyNft image={train1} name={journal[nftType[0]].name} qty={2} category={journal[nftType[0]].category}/>} */}
-
-
-             {/* {
-                 console.log('test  ' + type1)
-             } */}
 
                   
                 
