@@ -45,7 +45,7 @@ async function main() {
   // let tx = await nftPreSale.startSale([acc1,acc2],nft.address,100)
   // await tx.wait()
 
-  let tx = await nftPreSale.startSale([per1.address,per2.address],nft.address,100)
+  let tx = await nftPreSale.startSale([per1.address,per2.address],nft.address,60)
   await tx.wait()
 
 

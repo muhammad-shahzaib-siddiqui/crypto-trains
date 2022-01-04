@@ -140,14 +140,33 @@ export default function CryptoMainPage() {
         }
     }
 
+    // const getPrice = async  (no) => {
+    //     try{
+    //         let signer = await loadProvider()
+    //         console.log("number", no)
+    //         let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
+    //         let _value = await NFTCrowdsaleContract.getPrice(no)
+    //         // let _value = await ethers.utils.parseEther('0.3')
+    //         console.log("getPrice", _value.toString())
+    //     }
+    //     catch(e){
+    //         console.log("error", e)
+    //     }
+    // }
+
+
+
     const buynft = async (no) => {
         try{
             let signer = await loadProvider()
             console.log("number", no)
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
             let _value = await NFTCrowdsaleContract.getPrice(no)
+            let _value1 = await NFTCrowdsaleContract.Train_common()
+            // let _value = await ethers.utils.parseEther('0.3')
             let uri = generate(no)
             console.log("uri>>>", uri)
+            console.log("value>>", _value.toString())
             let buy = await NFTCrowdsaleContract.buyNFT(no, uri, {value:_value})
 
             let tx =  await buy.wait()
@@ -177,6 +196,7 @@ export default function CryptoMainPage() {
                 try {
                     loadLimit()
                     loadWhiteList()
+                  
 
                 } catch (error) {
                     console.log(error)

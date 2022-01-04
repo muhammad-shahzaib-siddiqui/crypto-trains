@@ -32,22 +32,22 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     uint256 public pubPrice = 0.3 ether;
 
     //dicounted price
-    uint256 public discounted_Train_common=0.2 ether;//0
-    uint256 public discounted_Train_rare=0.2 ether;//1
-    uint256 public discounted_Train_epic=0.2 ether;//2
-    uint256 public discounted_Train_legendary=0.2 ether;//3
-    uint256 public discounted_Station_common=0.2 ether;//4
-    uint256 public discounted_Station_mitic=0.2 ether;//5
-    uint256 public discounted_Station_Legendary=0.2 ether;//6
+    uint256 public discounted_Train_common;
+    uint256 public discounted_Train_rare;//1
+    uint256 public discounted_Train_epic;//2
+    uint256 public discounted_Train_legendary;//3
+    uint256 public discounted_Station_common;//4
+    uint256 public discounted_Station_mitic;//5
+    uint256 public discounted_Station_Legendary;//6
 
     //noraml price
-    uint256 public Train_common= 0.3 ether;//0
-    uint256 public Train_rare= 0.3 ether;//1
-    uint256 public Train_epic= 0.3 ether;//2
-    uint256 public Train_legendary= 0.3 ether;//3
-    uint256 public Station_common= 0.3 ether;//4
-    uint256 public Station_mitic= 0.3 ether;//5
-    uint256 public Station_Legendary= 0.3 ether;//6
+    uint256 public Train_common;//0
+    uint256 public Train_rare;//1
+    uint256 public Train_epic;//2
+    uint256 public Train_legendary;//3
+    uint256 public Station_common;//4
+    uint256 public Station_mitic;//5
+    uint256 public Station_Legendary;//6
     
 
     // Amount of wei raised
@@ -67,12 +67,30 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     
     mapping (address => uint256) private purchase;
     mapping (address => uint256) private msgValue;
-    uint256 public start = 0;
-    uint256 public limitationtime = 0;
+    uint256 public start;
+    uint256 public limitationtime;
     mapping(address => bool) private _whitelist;
    
     constructor( address payable wallet_ ){
         _wallet = wallet_;
+        start = 0;
+        limitationtime = 0;
+        discounted_Train_common=0.2 ether;//0
+    discounted_Train_rare=0.2 ether;//1
+   discounted_Train_epic=0.2 ether;//2
+     discounted_Train_legendary=0.2 ether;//3
+   discounted_Station_common=0.2 ether;//4
+    discounted_Station_mitic=0.2 ether;//5
+    discounted_Station_Legendary=0.2 ether;//6
+
+
+    Train_common=0.3 ether;//0
+    Train_rare=0.3 ether;//1
+    Train_epic=0.3 ether;//2
+    Train_legendary=0.3 ether;//3
+    Station_common=0.3 ether;//4
+     Station_mitic=0.3 ether;//5
+     Station_Legendary=0.3 ether;
         }
     
     function whitelist(address account)public view returns(bool){
@@ -98,8 +116,8 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
             }
         }
        
-        start = block.timestamp + startTime * 1 seconds;
-        limitationtime = start + 14400   * 1 seconds;
+        start = block.timestamp + (startTime * 1 seconds);
+        limitationtime = start +  1 seconds;
     }
  
     fallback () external payable { 
@@ -140,6 +158,20 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         return price;
 
     }
+    function TimeCheck()public view returns(bool){
+        if(limitationtime>block.timestamp){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    function blocktimestamp()public view returns(uint256){
+        return block.timestamp * 1 seconds;
+    }
+  
+
 
     function startTime()public view returns(uint256){
         uint256 time=0;
