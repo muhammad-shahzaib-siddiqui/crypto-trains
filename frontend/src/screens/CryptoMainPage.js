@@ -240,12 +240,12 @@ export default function CryptoMainPage() {
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
                         <h6 className="nft-box-head">{loading === "loading"? (<p>loading</p>): `${Train_common_limit - Train_common}/${Train_common_limit}` }</h6>
-                        <img className="nft-box" src={train1} alt="" />
+                        <img className="nft-box" src={train1} alt="" style={{borderColor: "#258fad"}}/>
                         <div className="text-section">
                             <div className="tag-section">
                                 <h5>GOODS TRAIN</h5>
-                                <div className="tag">
-                                    <h6 >COMMON</h6>
+                                <div className="tag" >
+                                    <h6 style={{background: "#258fad"}}>COMMON</h6>
                                 </div>
                             </div>
                         </div>
@@ -268,12 +268,12 @@ export default function CryptoMainPage() {
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
                         <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Train_rare_limit - Train_rare}/${Train_rare_limit}`}</h6>
-                        <img className="nft-box" src={train2} alt="" />
+                        <img className="nft-box" src={train2} alt="" style={{borderColor:'#4AA41F'}}/>
                         <div className="text-section">
                             <div className="tag-section">
                                 <h5>VILLAGE TRAIN</h5>
                                 <div className="tag">
-                                    <h6 >RARE</h6>
+                                    <h6 style={{background: "#4AA41F"}}>RARE</h6>
                                 </div>
                             </div>
                         </div>
@@ -295,12 +295,12 @@ export default function CryptoMainPage() {
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
                         <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Train_epic_limit - Train_epic}/${Train_epic_limit}`}</h6>
-                        <img className="nft-box" src={train3} alt="" />
+                        <img className="nft-box" src={train3} alt="" style={{borderColor:"#745ca4"}} />
                         <div className="text-section">
                             <div className="tag-section">
                                 <h5>CITY TRAIN</h5>
                                 <div className="tag">
-                                    <h6 >EPIC</h6>
+                                    <h6 style={{background: "#745ca4"}} >EPIC</h6>
                                 </div>
                             </div>
                         </div>
@@ -322,12 +322,12 @@ export default function CryptoMainPage() {
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
                         <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Train_legendary_limit - Train_legendary}/${Train_legendary_limit}`}</h6>
-                        <img className="nft-box" src={train4} alt="" />
+                        <img className="nft-box" src={train4} alt="" style={{borderColor:"#ECCC43"}} />
                         <div className="text-section">
                             <div className="tag-section">
                                 <h5>HIGH-SPEED TRAIN</h5>
                                 <div className="tag">
-                                    <h6 >LEGENDARY</h6>
+                                    <h6 style={{background: "#ECCC43"}} >LEGENDARY</h6>
                                 </div>
                             </div>
                         </div>
@@ -355,12 +355,12 @@ export default function CryptoMainPage() {
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
                         <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Station_common_limit - Station_common}/${Station_common_limit}`}</h6>
-                        <img className="nft-box" src={train5} alt="" />
+                        <img className="nft-box" src={train5} alt="" style={{borderColor:"#258fad"}} />
                         <div className="text-section">
                             <div className="tag-section">
                                 <h5>GOODS STATION</h5>
                                 <div className="tag">
-                                    <h6 >COMMON</h6>
+                                    <h6 style={{background: "#258fad"}} >COMMON</h6>
                                 </div>
                             </div>
                         </div>
@@ -382,12 +382,12 @@ export default function CryptoMainPage() {
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
                         <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Station_mitic_limit - Station_mitic}/${Station_mitic_limit}`}</h6>
-                        <img className="nft-box" src={train6} alt=""/>
+                        <img className="nft-box" src={train6} alt="" style={{background: "#745ca4"}}/>
                         <div className="text-section">
                             <div className="tag-section">
                                 <h5>CITY STATION</h5>
                                 <div className="tag">
-                                    <h6 >EPIC</h6>
+                                    <h6 style={{background: "#745ca4"}} >EPIC</h6>
                                 </div>
                             </div>
                         </div>
@@ -409,12 +409,12 @@ export default function CryptoMainPage() {
                 <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                     <div className="nft">
                         <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Station_Legendary_limit- Station_Legendary}/${Station_Legendary_limit}`}</h6>
-                        <img className="nft-box" src={train7} alt="" />
+                        <img className="nft-box" src={train7} alt="" style={{background: "#ECCC43"}} />
                         <div className="text-section">
                             <div className="tag-section">
                                 <h5>HIGH-SPEED STATION</h5>
                                 <div className="tag">
-                                    <h6 >LEGENDARY</h6>
+                                    <h6 style={{background: "#ECCC43"}} >LEGENDARY</h6>
                                 </div>
                             </div>
                         </div>
@@ -437,18 +437,7 @@ export default function CryptoMainPage() {
             </div>
         </div>
     </div>
-    <div className="container-fluid">
-        <div className="custom-padding footer">
-            <div className="d-flex flex-end">
-                 <span className="text-black">CryptoTrains &reg; 2022</span> 
-                 <div className="d-flex align-items-center">
-                    <a href=""><img src="./assets/img/discord.png" alt=""/></a>
-                    <a href=""><img src="./assets/img/telegram.png" alt=""/></a>
-                    <a href=""><img src="./assets/img/twitter.png" alt=""/></a>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <Modal show={show} onHide={handleClose} className='custom-modal' size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered>

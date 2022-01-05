@@ -75,17 +75,17 @@ class App extends Component {
 
 		
 			let img_attr = [{
-				trait_type: 'Background',
+				trait_type: 'Hardness',
 				value: "asd" ,
 				rare: "asd"
 			},
 			{
-				trait_type: 'Background',
+				trait_type: 'Power',
 				value: "asd" ,
 				rare: "asd"
 			},
 			{
-				trait_type: 'Background',
+				trait_type: 'Speed',
 				value: "asd" ,
 				rare: "asd"
 			},];
@@ -139,7 +139,7 @@ class App extends Component {
 		return (
 			<div style={{ padding: 20 }}>
 				<nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow container">
-					<h1>Create IPFS & META</h1>
+					<h1>Create IPFS & s</h1>
 				</nav>
 				<div className="container mt-5">
 					<div className="row">

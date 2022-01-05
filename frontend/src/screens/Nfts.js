@@ -51,6 +51,15 @@ let journal = [
     
   ];
     const [balance, setBalance] = useState()
+
+    const [zero, setzero] = useState()
+    const [one, setOne] = useState()
+    const [two, setTwo] = useState()
+    const [three, setThree] = useState()
+    const [four, setFour] = useState()
+    const [five, setFive] = useState()
+    const [six, setSix] = useState()
+
     const [nftType, setNftType] = useState([])
 
 
@@ -95,8 +104,41 @@ let journal = [
             }
             setNftType(arr)
 
+            let _zero = 0
+            let _one =0
+            let _two=0
+            let _three=0
+            let _four=0
+            let _five=0
+            let _six=0
+
+            for(let i = 0 ; i<arr.length;i++){
+                if(arr[i]==0){
+                    _zero++;
+                }else if(arr[i]==1){
+                    _one++;
+                }else if(arr[i]==2){
+                    _two++;
+                }else if(arr[i]==3){
+                    _three++;
+                }else if(arr[i]==4){
+                    _four++;
+                }else if(arr[i]==5){
+                    _five++;
+                }else if(arr[i]==6){
+                    _six++;
+                }
+            }
+            setNftType(arr)
+            setzero(_zero)
+            setOne(_one)
+            setTwo(_two)
+            setThree(_three)
+            setFour(_four)
+            setFour(_five)
+            setSix(_six)
             
-            
+            console.log("QUANTITY ZERO",_two);
 
             
             setBalance(balance)
@@ -123,9 +165,7 @@ let journal = [
     }, [account]);
 
 
-    const hello = {
-        hello: "klghkjhg"
-    }
+    
     let type1 = nftType[0];
 
     
@@ -146,23 +186,27 @@ let journal = [
                 <h1 className="white-head">MY NFTS</h1>
                 
                 {
-                    journal[nftType[0]] && <MyNft image={journal[nftType[0]].image} name={journal[nftType[0]].name} qty={journal[nftType[0]].qty} category={journal[nftType[0]].category}/>
+                    zero>0 ? ( <MyNft image={train1} name={"GOODS TRAIN"} qty={zero} category={"COMMON"}/>):null
                 
                 }
                 {
-                    journal[nftType[1]] && <MyNft image={journal[nftType[1]].image} name={journal[nftType[1]].name} qty={2} category={journal[nftType[1]].category}/>
+                    one>0 ? ( <MyNft image={train2} name={"VILLAGE TRAIN"} qty={one} category={"RARE"}/>):null
                 
                 }
                 {
-                    journal[nftType[2]] && <MyNft image={journal[nftType[2]].image} name={journal[nftType[2]].name} qty={2} category={journal[nftType[2]].category}/>
+                    two>0 ? ( <MyNft image={train3} name={"CITY TRAIN"} qty={two} category={"EPIC"}/>):null
                 
                 }
                 {
-                    journal[nftType[3]] && <MyNft image={journal[nftType[3]].image} name={journal[nftType[3]].name} qty={2} category={journal[nftType[3]].category}/>
+                    three>0 ? ( <MyNft image={train4} name={"HIGH-SPEED TRAIN"} qty={three} category={"LEGENDARY"}/>):null
                 
                 }
                 {
-                    journal[nftType[4]] && <MyNft image={journal[nftType[4]].image} name={journal[nftType[4]].name} qty={2} category={journal[nftType[4]].category}/>
+                    four>0 ? ( <MyNft image={train5} name={"GOODS STATION"} qty={four} category={"COMMON"}/>):null
+                
+                }
+                {
+                    five>0 ? ( <MyNft image={train6} name={"CITY STATION"} qty={five} category={"EPIC"}/>):null
                 
                 }
 
@@ -172,18 +216,7 @@ let journal = [
                 
             </div>
         </div>
-        <div className="container-fluid">
-        <div className="custom-padding footer">
-            <div className="d-j-flex">
-                <span className="text-black">CryptoTrains &reg; 2022</span>
-                <div className="d-flex align-items-center">
-                    <a href=""><img src={discord} alt=""/></a>
-                    <a href=""><img src={telegram} alt=""/></a>
-                    <a href=""><img src={twitter} alt=""/></a>
-                </div>
-            </div>
-        </div>
-    </div>
+     
 
     <div className="modal fade custom-modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-lg modal-dialog-centered">

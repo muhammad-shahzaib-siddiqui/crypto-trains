@@ -64,11 +64,8 @@ contract NFT is ERC721 , Ownable{
     mapping(uint256 => uint256) private _allTokensIndex;
 //,address pubSale
     constructor(address preSale) ERC721("CRYPTO TRAINS", "CT") {
-        
         _owner[_msgSender()] = true;
         _owner[preSale] = true;
-        
-
     }
 
     function tokenType(uint256 id)public view returns(uint256){
@@ -131,6 +128,7 @@ contract NFT is ERC721 , Ownable{
         return newItemId;
     }
 
+    
     function AirDrop(string memory tokenURI , address account,uint8 nftType) public onlyOwner {
         createToken(tokenURI ,account,nftType);
     }

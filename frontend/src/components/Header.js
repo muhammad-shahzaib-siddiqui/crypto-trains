@@ -27,12 +27,15 @@ function Header(props) {
   console.log("is active check = ", active);
 
   // const [issalestart,setissalestart] = useState(true);
-  const [startTime, setStartTime] = useState();
+  const [startTime, setStartTime] = useState(0);
   const [discountTime, setDiscountTime] = useState();
   const [issalestart, setissalestart] = useState(true);
   const [loading, setLoading] = useState(0);
-
   const [currentDate, setCurrentDate] = useState(Date.now);
+
+  // let address = account.toString()
+  // let accountAddress = address.slice(0,3)
+  // console.log("accountAddress", accountAddress)
   // console.log("currentDate", currentDate)
 
   const loadProvider = async () => {
@@ -54,8 +57,8 @@ function Header(props) {
         NFTCrowdsale,
         signer
       );
-      let startTime = await NFTCrowdsaleContract.startTime();
-      if (startTime == 0) {
+      let starttime = await NFTCrowdsaleContract.startTime();
+      if (starttime == 0) {
         setStartTime(0);
       } else {
         let start = await NFTCrowdsaleContract.start();
@@ -84,7 +87,7 @@ function Header(props) {
       } else {
         let limitationtime = await NFTCrowdsaleContract.limitationtime();
         let total = limitationtime.toNumber();
-        console.log("startSaleTimeTotal", total);
+        console.log("startlimitationTotal", total);
         setDiscountTime(total)
         
 
@@ -95,21 +98,21 @@ function Header(props) {
     }
   };
 
-  const blockTimeStoamp = async () => {
-    try{
-      let signer = await loadProvider();
-      let NFTCrowdsaleContract = new ethers.Contract(
-        nftPreSale_addr,
-        NFTCrowdsale,
-        signer
-      );
-      // let blockTime = await NFTCrowdsaleContract.blocktime();
-      // console.log("blockTime", blockTime.toString())
-    }
-    catch(e){
-      console.log("error", e)
-    }
-  }
+  // const blockTimeStoamp = async () => {
+  //   try{
+  //     let signer = await loadProvider();
+  //     let NFTCrowdsaleContract = new ethers.Contract(
+  //       nftPreSale_addr,
+  //       NFTCrowdsale,
+  //       signer
+  //     );
+  //     let blockTime = await NFTCrowdsaleContract.blocktime();
+  //     console.log("blockTime", blockTime.toString())
+  //   }
+  //   catch(e){
+  //     console.log("error", e)
+  //   }
+  // }
 
   useEffect(() => {
     (async () => {
@@ -117,13 +120,13 @@ function Header(props) {
         try {
           startSaleTime();
           limitationTime();
-          blockTimeStoamp();
+          // blockTimeStoamp();
         } catch (error) {
           console.log(error);
         }
       }
     })();
-  }, [account]);
+  }, [account, startTime]);
 
   // useEffect(() => {
   //   if ( startTime - (currentDate/1000)<=0){
@@ -134,27 +137,60 @@ function Header(props) {
   // const Completionist = () =><h1>PRESALE STARTS IN: 00 DAYS 00 H 00 Minutes 00 SEC</h1>;
 
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    if (startTime == 0) {
-      // Render a completed state
+    // if(completed == false){
+    //   startTime > 0
+    // }
+    // else{
+    //   startTime >=0
+    //   console.log("startTimee>>>>", startTime)
+    // }
+    console.log("completed", completed)
+    if(completed === false){
       return (
-        <>
+        <div>
           <h1>
-            DISCOUNT PERIOD ENDS IN: {days} DAYS {hours} H {minutes} Minutes{" "}
-            {seconds} SEC
-          </h1>
-        </>
-      );
-    } else {
-      // Render a countdown
-      return (
-        <>
-          <h1>
-            PRESALE STARTS IN: {days} DAYS {hours} H {minutes} Minutes {seconds}{" "}
+            PRESALE STARTS IN: {days} DAYS {hours} H {minutes} Minutes {seconds}{" "} 
             SEC
           </h1>
-        </>
+        </div>
       );
     }
+    else{
+      
+      return(
+        <>
+          <h1>
+             DISCOUNT PERIOD ENDS IN: {days} DAYS {hours} H {minutes} Minutes{" "}
+             {seconds} SEC
+           </h1>
+        </>
+      )
+
+    }
+    // if (startTime > 0) {
+    //   // Render a completed state
+    //   console.log("PresaleStartIn")
+    //   return (
+    //     <>
+          
+    //       <h1>
+    //         PRESALE STARTS IN: {days} DAYS {hours} H {minutes} Minutes {seconds}{" "} 
+    //         SEC
+    //       </h1>
+    //     </>
+    //   );
+    // } else {
+    //   // Render a countdown
+    //   console.log("DescountPeriod")
+    //   return (
+    //     <>
+    //       <h1>
+    //         DISCOUNT PERIOD ENDS IN: {days} DAYS {hours} H {minutes} Minutes{" "}
+    //         {seconds} SEC
+    //       </h1>
+    //     </>
+    //   );
+    // }
   };
 
   // console.log("hello", parseInt(hello))
@@ -180,7 +216,7 @@ function Header(props) {
             </div>
 
             <a className="custom-btn btn-white justify-content-center">
-              {<img height="27" src="./assets/img/metamask.png" alt="" />}
+              {/* {<img  src="./assets/img/metamask.png" alt="" />} */}
               {active ? (
                 <div
                   style={{
@@ -190,8 +226,8 @@ function Header(props) {
                     justifyContent: "center",
                   }}
                 >
-                  <img height="27" src={metamask} alt="" />
-                  Connected
+                  {/* <img height="27" src={metamask} alt="" /> */}
+                 <p>{account}</p>
                 </div>
               ) : (
                 <div
@@ -212,8 +248,19 @@ function Header(props) {
 
       <div>
         <div className="top-bar">
-          {console.log("startTime1", startTime)}
-          {loading == 1 && startTime > 0 ? (
+          {loading == 1 && startTime > 0 ? (<div>
+              <Countdown
+                date={(startTime * 1000)}
+                renderer={renderer}
+                autoStart
+              />
+            </div>) : loading == 1 /*&& startTime <= 0 && discountTime > 0*/ ? (<div> <Countdown
+                date={Date.now() + 1000/*(discountTime * 1000)*/}
+                renderer={renderer}
+                autoStart
+              /></div>) : null}
+
+          {/* {loading == 1 && startTime > 0 ? (
             <div>
               <Countdown
                 date={(startTime * 1000)}
@@ -222,7 +269,6 @@ function Header(props) {
               />
             </div>
           ) : null}
-          {console.log("startTime2", discountTime)}
           {loading == 1 && startTime <= 0 && discountTime > 0 ? (
             <div>
               <Countdown
@@ -231,7 +277,10 @@ function Header(props) {
                 autoStart
               />
             </div>
-          ) : null}
+          ) : null} */}
+
+
+
           {/* {loading == 1 && startTime <= 0 && discountTime <= 0 ? (
             <div>
               <h1>PRE-SALE HAS STARTED</h1>

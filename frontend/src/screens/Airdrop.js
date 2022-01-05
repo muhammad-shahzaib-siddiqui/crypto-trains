@@ -23,6 +23,10 @@ const Airdrop = () => {
         errorWeb3Modal
     } = useWeb3React();
 
+    const [whitelistAddress, setWhitelistAddress] = useState([])
+    const [startTime, setStartTime ] = useState()
+    // const [addr, setAddr] = useState()
+
 	const loadProvider = async () => {
         try{
             const web3Modal = new Web3Modal();
@@ -35,13 +39,25 @@ const Airdrop = () => {
         }
     }
 
+    const onChangeAddress = (e) =>  {
+        
+        // let arr = whitelistAddress
+        setWhitelistAddress(e.target.value)
+        console.log("whiteListAddress", whitelistAddress)
+    }
+
+    const onChangeStartTime = (e) =>  {
+        setStartTime(e.target.value)
+        console.log("whiteListAddress",startTime )
+    }
+
 	const startSale = async () => {
         try {
             
             let signer = await loadProvider()
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer);
 			console.log("account", account)
-            let startSale = await NFTCrowdsaleContract.startSale([account], nft_addr, 100)
+            let startSale = await NFTCrowdsaleContract.startSale([whitelistAddress], nft_addr, startTime)
 			await startSale.wait()        
             console.log("startSale", startSale)
         } catch (e) {
@@ -55,7 +71,7 @@ const Airdrop = () => {
         (async () => {
             if (account) {
                 try {
-                    startSale()
+                    
                 } catch (error) {
                     console.log(error)
                 }
@@ -76,16 +92,16 @@ const Airdrop = () => {
                 <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Whitelist Addresses</Form.Label>
-                <Form.Control type="text" placeholder="Whitelist Addresses" />
+                <Form.Control type="text" placeholder="Whitelist Addresses"  onChange={onChangeAddress}/>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Start Time</Form.Label>
-                <Form.Control type="text" placeholder="Start Time" />
+                <Form.Control type="number" placeholder="Start Time"  onChange={onChangeStartTime} />
             </Form.Group>
             
             </Form>
-			<button   >Submit</button>
+			<button onClick={startSale} >Submit</button>
             </div>
                 </Col>
             </Row>
@@ -102,9 +118,19 @@ const Airdrop = () => {
                 <Form.Label>Whitelist Addresses</Form.Label>
                 <Form.Control type="text" placeholder="Whitelist Addresses" />
             </Form.Group>
+          
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Select Type</Form.Label>
+                <Form.Select aria-label="Default select example">
+                <option>Select Type</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+                </Form.Select>
+            </Form.Group>
 
             
-            <button className="custom-btn btn-white">Submit</button>
+            <button className="custom-btn btn-white" >Submit</button>
             </Form>
             </div>
                 </Col>
