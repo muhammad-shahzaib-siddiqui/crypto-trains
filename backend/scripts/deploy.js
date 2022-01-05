@@ -45,8 +45,8 @@ async function main() {
   // let tx = await nftPreSale.startSale([acc1,acc2],nft.address,20)
   // await tx.wait()
 
-  let tx = await nftPreSale.startSale([per1.address,per2.address],nft.address,60)
-  await tx.wait()
+  // let tx = await nftPreSale.startSale([per1.address,per2.address],nft.address,60)
+  // await tx.wait()
 
 
   // Manager = await ethers.getContractFactory("Manager");

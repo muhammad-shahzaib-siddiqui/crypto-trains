@@ -24,7 +24,7 @@ function Header(props) {
     errorWeb3Modal,
   } = useWeb3React();
 
-  console.log("is active check = ", active);
+  // console.log("is active check = ", active);
 
   // const [issalestart,setissalestart] = useState(true);
   const [startTime, setStartTime] = useState(0);
@@ -32,6 +32,7 @@ function Header(props) {
   const [issalestart, setissalestart] = useState(true);
   const [loading, setLoading] = useState(0);
   const [currentDate, setCurrentDate] = useState(Date.now);
+  const [presaleStartted, setPresaleStarted] = useState(false)
 
   // let address = account.toString()
   // let accountAddress = address.slice(0,3)
@@ -57,13 +58,24 @@ function Header(props) {
         NFTCrowdsale,
         signer
       );
+      let start = await NFTCrowdsaleContract.start();
       let starttime = await NFTCrowdsaleContract.startTime();
+      let total = start.toNumber();
+        console.log("startSaleTimeTotal", total);
+        if(total > 0){
+          setPresaleStarted(true)
+        console.log("presaleStart")
+
+        }
+        else{
+          setPresaleStarted(false)
+          console.log("presaleFalse")
+        }
+
       if (starttime == 0) {
         setStartTime(0);
       } else {
-        let start = await NFTCrowdsaleContract.start();
-        let total = start.toNumber();
-        console.log("startSaleTimeTotal", total);
+        
         setStartTime(total)
 
       }
@@ -126,7 +138,7 @@ function Header(props) {
         }
       }
     })();
-  }, [account, startTime]);
+  }, [account]);
 
   // useEffect(() => {
   //   if ( startTime - (currentDate/1000)<=0){
@@ -144,8 +156,11 @@ function Header(props) {
     //   startTime >=0
     //   console.log("startTimee>>>>", startTime)
     // }
-    console.log("completed", completed)
-    if(completed === false){
+    
+     if(presaleStartted == true && startTime > 0){
+      
+
+
       return (
         <div>
           <h1>
@@ -155,18 +170,25 @@ function Header(props) {
         </div>
       );
     }
-    else{
-      
+    else if(presaleStartted == true && startTime == 0 && discountTime > 0){
+      console.log("completed", completed)
       return(
         <>
-          <h1>
-             DISCOUNT PERIOD ENDS IN: {days} DAYS {hours} H {minutes} Minutes{" "}
-             {seconds} SEC
+          <div>
+            <h1>
+             DISCOUNT PERIOD ENDS IN: {days} DAYS {hours} H {} Minutess {seconds}{" "} SEC
            </h1>
+          </div>
         </>
       )
 
     }
+
+
+    else{
+      return <h1>hh</h1>
+    }
+  
     // if (startTime > 0) {
     //   // Render a completed state
     //   console.log("PresaleStartIn")
@@ -193,6 +215,7 @@ function Header(props) {
     // }
   };
 
+  
   // console.log("hello", parseInt(hello))
 
   console.log("is active check = ", active);
@@ -248,17 +271,40 @@ function Header(props) {
 
       <div>
         <div className="top-bar">
-          {loading == 1 && startTime > 0 ? (<div>
+          {/* {loading == 1 && presaleStartted == false ? (<div><h1>PRESLAE WILL START SOON</h1></div>) : null} */}
+          {loading == 1 && presaleStartted == false ? (<div><h1>PRESLAE WILL START SOON</h1></div>) : 
+          loading == 1 && startTime > 0 && presaleStartted == true ? (<div>
+            {console.log("hello>>>>>>>>>>>>>>")}
+            <Countdown
+                date={(startTime * 1000)}
+                renderer={renderer}
+                autoStart
+              />
+          </div>) : loading == 1 && startTime <= 0 && presaleStartted == true && discountTime > 0 ? (<div>
+            <Countdown
+                date={(discountTime * 1000)}
+                renderer={renderer}
+                autoStart
+              />
+              ppp
+          </div>): <div>sorry</div>
+          }
+          {/* {loading == 1 && startTime > 0 && presaleStartted == true ? (<div>
               <Countdown
                 date={(startTime * 1000)}
                 renderer={renderer}
                 autoStart
               />
-            </div>) : loading == 1 /*&& startTime <= 0 && discountTime > 0*/ ? (<div> <Countdown
-                date={Date.now() + 1000/*(discountTime * 1000)*/}
+            </div>)   : <div>Error in presale Time</div>} */}
+
+            {/* {loading == 1 && startTime < 0 && presaleStartted == true && discountTime < 0 ? (<div> <Countdown
+                date={Date.now() +  (discountTime * 1000)}
                 renderer={renderer}
                 autoStart
-              /></div>) : null}
+              /></div>) : <div>Error in Discount Time</div>} */}
+
+
+
 
           {/* {loading == 1 && startTime > 0 ? (
             <div>

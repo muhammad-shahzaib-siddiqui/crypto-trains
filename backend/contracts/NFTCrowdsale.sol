@@ -104,6 +104,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     function startSale(address[] memory accounts,address _nft,uint256 startTime) public onlyOwner {
         //NFT(_nft) req
         require(address(_nft) != address(0), "NFT: token is the zero address");
+        require(start == 0 ,"Sale already started");
         nft = NFT(_nft);
         require(accounts.length!=0,"please provide whitelist addresses");
         if(accounts.length==0){

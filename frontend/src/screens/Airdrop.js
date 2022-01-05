@@ -9,6 +9,7 @@ import NFT from "../contract/NFT.json";
 import NFTCrowdsale from "../contract/NFTCrowdsale.json"
 import Web3Modal from 'web3modal'
 import { useWeb3React } from "@web3-react/core";
+import {generate} from "../components/metadata";
 
 const Airdrop = () => {
 
@@ -23,9 +24,16 @@ const Airdrop = () => {
         errorWeb3Modal
     } = useWeb3React();
 
-    const [whitelistAddress, setWhitelistAddress] = useState([])
-    const [startTime, setStartTime ] = useState()
-    // const [addr, setAddr] = useState()
+ 
+
+    const [addr, setAddr] = useState([])
+    const [startTime, setStartTime] = useState()
+    const [select, setSelect] = useState()
+    const [airdropAddr, setAirdropAddr] = useState()
+    console.log(addr)
+
+    const typeSelect = parseInt(select)
+    console.log("select", typeSelect)
 
 	const loadProvider = async () => {
         try{
@@ -39,31 +47,42 @@ const Airdrop = () => {
         }
     }
 
-    const onChangeAddress = (e) =>  {
-        
-        // let arr = whitelistAddress
-        setWhitelistAddress(e.target.value)
-        console.log("whiteListAddress", whitelistAddress)
-    }
-
-    const onChangeStartTime = (e) =>  {
-        setStartTime(e.target.value)
-        console.log("whiteListAddress",startTime )
-    }
-
+    
 	const startSale = async () => {
         try {
             
             let signer = await loadProvider()
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer);
 			console.log("account", account)
-            let startSale = await NFTCrowdsaleContract.startSale([whitelistAddress], nft_addr, startTime)
-			await startSale.wait()        
+            let startSale = await NFTCrowdsaleContract.startSale([addr], nft_addr, startTime)
+            let tx = await startSale.wait()
+              
             console.log("startSale", startSale)
         } catch (e) {
             console.log("data", e)
         }
     }
+
+    
+
+    const airDrop = async () => {
+        try {
+            
+            let signer = await loadProvider()
+            let NFTContract = new ethers.Contract(nft_addr, NFT, signer);
+            let meta = generate(typeSelect)
+            // let acc = ethers.utils.getAddress( addr )
+            console.log("meta", meta)
+
+            let drop = await NFTContract.AirDrop(meta, airdropAddr, typeSelect)
+            let tx = await drop.wait()
+              
+            // console.log("startSale", drop)
+        } catch (e) {
+            console.log("data", e)
+        }
+    }
+    
 
 	
 
@@ -71,7 +90,7 @@ const Airdrop = () => {
         (async () => {
             if (account) {
                 try {
-                    
+                   
                 } catch (error) {
                     console.log(error)
                 }
@@ -83,7 +102,6 @@ const Airdrop = () => {
 	return (
 		<div>
 			
-			<h1 className="green-head">You are WHITELISTED</h1>
             <div className="container-fluid">
             <Row>
                 <Col lg={5} className='m-auto'>
@@ -92,12 +110,12 @@ const Airdrop = () => {
                 <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Whitelist Addresses</Form.Label>
-                <Form.Control type="text" placeholder="Whitelist Addresses"  onChange={onChangeAddress}/>
+                <Form.Control type="text" placeholder="Whitelist Addresses"  onChange={(e)=>setAddr(e.target.value)}/>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Start Time</Form.Label>
-                <Form.Control type="number" placeholder="Start Time"  onChange={onChangeStartTime} />
+                <Form.Control type="number" placeholder="Start Time"  onChange={(e) => setStartTime(e.target.value)} />
             </Form.Group>
             
             </Form>
@@ -116,22 +134,27 @@ const Airdrop = () => {
                 <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Whitelist Addresses</Form.Label>
-                <Form.Control type="text" placeholder="Whitelist Addresses" />
+                <Form.Control type="text" placeholder="Whitelist Addresses" onChange={(e) => setAirdropAddr(e.target.value)} />
             </Form.Group>
           
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Select Type</Form.Label>
-                <Form.Select aria-label="Default select example">
+                <Form.Select aria-label="Default select example" onChange={(e) => setSelect(e.target.value)}>
                 <option>Select Type</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="0">GOODS TRAIN</option>
+                <option value="1">VILLAGE TRAIN</option>
+                <option value="2">CITY TRAIN</option>
+                <option value="3">HIGH-SPEED TRAIN</option>
+                <option value="4">GOODS STATION</option>
+                <option value="5">CITY STATION</option>
+                <option value="6">HIGH-SPEED-STATION</option>
                 </Form.Select>
             </Form.Group>
 
             
-            <button className="custom-btn btn-white" >Submit</button>
+            
             </Form>
+            <button  onClick={airDrop} >Submit</button>
             </div>
                 </Col>
             </Row>
