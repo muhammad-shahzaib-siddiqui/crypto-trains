@@ -148,7 +148,16 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     function weiRaised() public view returns (uint256) {
         return _weiRaised;
     }
-
+    
+    function getTimeStatus() public view returns(bool){
+        if(start<=0){
+            return false;
+        }else if(block.timestamp<=start){
+            return false;
+        }else if(block.timestamp>start){
+            return true;
+        }
+    }
     function getPrice(uint8 no) public view returns(uint256){
         uint256 price;
         if(block.timestamp>limitationtime && start !=0){
@@ -178,6 +187,13 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         uint256 time=0;
         if(start !=0 && start>block.timestamp){
             time = start-block.timestamp;
+        }
+        return time; 
+    }
+    function discountTime()public view returns(uint256){
+        uint256 time=0;
+        if(start !=0 && limitationtime>block.timestamp){
+            time = limitationtime-block.timestamp;
         }
         return time; 
     }
