@@ -27,21 +27,23 @@ function Header(props) {
   // console.log("is active check = ", active);
 
   // const [issalestart,setissalestart] = useState(true);
-  const [startTimer, setStartTimer] = useState(0);
   const [timer, setTimer] = useState(0);
   const [discountTime, setDiscountTime] = useState(0);
-  const [issalestart, setissalestart] = useState(true);
   const [loading, setLoading] = useState(0);
-  const [currentDate, setCurrentDate] = useState(Date.now);
+  const [loading1, setLoading1] = useState(0);
   const [presaleStartted, setPresaleStarted] = useState(false);
-  const [status, setStatus] = useState(false);
+  const [status, setStatus] = useState();
+
+  const startDate = React.useRef(Date.now());
+  
+
+  let Timeee = discountTime
+  console.log("Timeee", Timeee)
 
   // let address = account.toString()
   // let accountAddress = address.slice(0,3)
   // console.log("accountAddress", accountAddress)
   // console.log("currentDate", currentDate)
-
-  let time = 0;
 
   const loadProvider = async () => {
     try {
@@ -64,54 +66,48 @@ function Header(props) {
       );
       let start = await NFTCrowdsaleContract.start();
       let startime = await NFTCrowdsaleContract.startTime();
-      setStatus(await NFTCrowdsaleContract.getTimeStatus()); //
-      let limitationtime = await NFTCrowdsaleContract.discountTime();
-      setDiscountTime(limitationtime.toNumber())
+      setStatus(await NFTCrowdsaleContract.getTimeStatus()); 
+      // let limitationtime = await NFTCrowdsaleContract.discountTime();
+      // setDiscountTime(limitationtime.toNumber());
       if (status == false) {
         console.log("disssss");
 
-        setTimer(startime.toNumber());
-      }
-      if (status == true) {
-        console.log("discountStartted", limitationtime.toNumber());
-        setTimer(limitationtime.toNumber());
+        setTimer(startime);
       }
       console.log("timeStatus", status);
-      let total = start.toNumber();
-      console.log("startSaleTimeTotal", total);
-      if (total > 0) {
-        setPresaleStarted(true);
-        console.log("presaleStart");
-      } else {
-        setPresaleStarted(false);
-        console.log("presaleFalse");
-      }
-
-      if (startime == 0) {
-        setStartTimer(0);
-      } else {
-        setStartTimer(total);
-      }
+      // let total = start.toNumber();
+      // console.log("startSaleTimeTotal", total);
       setLoading(1);
     } catch (e) {
       console.log("data", e);
     }
   };
 
-  // const limitationTime = async () => {
-  //   try {
-  //     let signer = await loadProvider();
-  //     let NFTCrowdsaleContract = new ethers.Contract(
-  //       nftPreSale_addr,
-  //       NFTCrowdsale,
-  //       signer
-  //     );
+  let startDiscountTime;
+  const limitationTime = async () => {
+    try {
+      let signer = await loadProvider();
+      let NFTCrowdsaleContract = new ethers.Contract(
+        nftPreSale_addr,
+        NFTCrowdsale,
+        signer
+      );
 
-  //     setLoading(1);
-  //   } catch (e) {
-  //     console.log("data", e);
-  //   }
-  // };
+      // setStatus(await NFTCrowdsaleContract.getTimeStatus()); 
+      startDiscountTime = await NFTCrowdsaleContract.discountTime();
+      if (status == true) {
+        console.log("disssss");
+         setDiscountTime(startDiscountTime);
+         setLoading1(1)
+      }
+      
+      console.log("DiscounttimeStatus", status);
+      setLoading(1);
+
+    } catch (e) {
+      console.log("data", e);
+    }
+  };
 
   // const blockTimeStoamp = async () => {
   //   try{
@@ -134,14 +130,28 @@ function Header(props) {
       if (account) {
         try {
           startSaleTime();
-          // limitationTime();
-          // blockTimeStoamp();
+          limitationTime()
         } catch (error) {
           console.log(error);
         }
       }
     })();
   }, [account, status]);
+
+  useEffect(() => {
+    (async () => {
+      if (account) {
+        try {
+          
+          // console.log("")
+          // console.log(limitationTime())
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    })();
+  }, [status]);
+
 
   // useEffect(() => {
   //   if ( startTime - (currentDate/1000)<=0){
@@ -151,12 +161,11 @@ function Header(props) {
 
   // const Completionist = () =><h1>PRESALE STARTS IN: 00 DAYS 00 H 00 Minutes 00 SEC</h1>;
 
-  console.log("startTime", startTimer);
   console.log("discount", discountTime);
 
   const renderer = ({ days, hours, minutes, seconds, completed }) => {
     console.log("timestatus test>>>>>>>>>>>>>>>>>>>>>>>>>>>", status);
-    if (status == false) {
+    
       if (!completed) {
         return (
           <>
@@ -166,35 +175,35 @@ function Header(props) {
             </h1>
           </>
         );
-      } else {
+      } else if(completed == true) {
         return (
           <>
             <h1>PRESALE WILL STARTS SOON</h1>
           </>
         );
       }
-    } else if (status == true) {
-      console.log("completed>>>>", completed);
-      if (!completed) {
-      console.log("completed>>>>", completed);
-
-        return (
-          <>
-            <h1>
-              DISCOUNT STARTSa IN: {days} DAYS {hours} H {minutes} Minutes{" "}
-              {seconds} SEC
-            </h1>
-          </>
-        );
-      } else {
-        return (
-          <>
-            <h1>SALE HAS BEEN STARTED</h1>
-          </>
-        );
-      }
-    }
+      
+    
   };
+
+  const renderer2 = ({ days, hours, minutes, seconds, completed }) => {
+    if (!completed) {
+      return (
+        <>
+          <h1>
+        DISCOUNT STARTSa IN: {days} DAYS {hours} H {minutes} Minutes{" "}
+        {seconds} SEC
+      </h1>
+        </>
+      );
+    } else if(completed == true) {
+      return (
+        <>
+          <h1>SALE HAS BEEN STARTED</h1>
+        </>
+      );
+    }
+  }
 
   console.log("is active check = ", active);
   return (
@@ -248,14 +257,18 @@ function Header(props) {
       </nav>
 
       <div>
-        {console.log("timer>>>>>>>>>", timer)}
         <div className="top-bar">
-          <Countdown
-                date={Date.now() + 100 * 1000} 
-                renderer={renderer}
-                
-              />
+          {console.log("timer>>>>>>>>>", parseInt(timer))}
+          {console.log("discountTime>>>>>>>>>",discountTime)}
+          {console.log("Status>>>>>>>>>", status)}
+         {status == false && loading==1 ? (<div> {console.log("timer>>>>>>>>>", timer)} <Countdown date={startDate.current + timer * 1000}  renderer={renderer} autoStart={true} /></div>) :  status == true &&
+          loading1 ==1 &&
+         discountTime > 0 ?(<div>
+          <Countdown date={Date.now() + discountTime * 1000} renderer={renderer2} autoStart={true} />
+          {console.log("Timee>>", Timeee)}
+            </div>): null }
 
+          
           {/* {
             timer > 0   ? (
             <div>
