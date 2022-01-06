@@ -443,7 +443,6 @@ export default function CryptoMainPage() {
       centered>
         <Modal.Header closeButton>
         <h3 className="modal-title" id="exampleModalLabel">CONGRATULATIONS! YOU HAVE PURCHASED YOUR NFT</h3>
-        <button type="button" className="btn-close" ></button> 
         </Modal.Header>
         <Modal.Body>
             <h1>You can buy 5 NFT per WALLET!</h1>

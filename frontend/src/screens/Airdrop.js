@@ -120,12 +120,16 @@ const Airdrop = () => {
             </Form.Group>
           
             <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Select Type</Form.Label>
+                <Form.Label>Select NFT Type</Form.Label>
                 <Form.Select aria-label="Default select example">
                 <option>Select Type</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                <option value="0">GOODS TRAIN</option>
+                <option value="1">VILLAGE TRAIN</option>
+                <option value="2">CITY TRAIN</option>
+                <option value="3">HIGH-SPEED TRAIN</option>
+                <option value="4">GOODS STATION</option>
+                <option value="5">CITY STATION</option>
+                <option value="6">HIGH-SPEED-STATION</option>
                 </Form.Select>
             </Form.Group>
 
