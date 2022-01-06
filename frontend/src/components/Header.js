@@ -175,7 +175,7 @@ function Header(props) {
             </h1>
           </>
         );
-      } else if(completed == true) {
+      } else if(completed === true) {
         return (
           <>
             <h1>PRESALE WILL STARTS SOON</h1>
@@ -196,7 +196,7 @@ function Header(props) {
       </h1>
         </>
       );
-    } else if(completed == true) {
+    } else if(completed === true) {
       return (
         <>
           <h1>SALE HAS BEEN STARTED</h1>
@@ -261,7 +261,7 @@ function Header(props) {
           {console.log("timer>>>>>>>>>", parseInt(timer))}
           {console.log("discountTime>>>>>>>>>",discountTime)}
           {console.log("Status>>>>>>>>>", status)}
-         {status == false && loading==1 ? (<div> {console.log("timer>>>>>>>>>", timer)} <Countdown date={startDate.current + timer * 1000}  renderer={renderer} autoStart={true} /></div>) :  status == true &&
+         {status === false && loading==1 ? (<div> {console.log("timer>>>>>>>>>", timer)} <Countdown date={startDate.current + timer * 1000}  renderer={renderer} autoStart={true} /></div>) :  status == true &&
           loading1 ==1 &&
          discountTime > 0 ?(<div>
           <Countdown date={Date.now() + discountTime * 1000} renderer={renderer2} autoStart={true} />

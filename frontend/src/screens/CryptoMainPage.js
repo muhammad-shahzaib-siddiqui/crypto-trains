@@ -8,7 +8,7 @@ import train6 from "../assets/img/train6.jpg"
 import train7 from "../assets/img/train7.jpg"
 import busd from "../assets/img/busd.svg"
 import { ethers,BigNumber } from 'ethers'
-import {nft_addr, nftPreSale_addr} from "../contract/addresses"
+import {nft_addr, nftPreSale_addr, BUSD_addr} from "../contract/addresses"
 import NFT from "../contract/NFT.json";
 import NFTCrowdsale from "../contract/NFTCrowdsale.json"
 import Web3Modal from 'web3modal'
@@ -16,6 +16,7 @@ import { useWeb3React } from "@web3-react/core";
 import { Button, Modal } from 'react-bootstrap'
 import Countdown from 'react-countdown';
 import {generate} from "../components/metadata"
+import BUSD from "../contract/BUSD.json"
 
 
 
@@ -154,32 +155,49 @@ export default function CryptoMainPage() {
 
 
     const buynft = async (no) => {
-        try{
+        try {
             let signer = await loadProvider()
             console.log("number", no)
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
+            let BUSDContract = new ethers.Contract(BUSD_addr, BUSD, signer)
             let _value = await NFTCrowdsaleContract.getPrice(no)
             let _value1 = await NFTCrowdsaleContract.Train_common()
             // let _value = await ethers.utils.parseEther('0.3')
             let uri = generate(no)
             console.log("uri>>>", uri)
             console.log("value>>", _value.toString())
-            let buy = await NFTCrowdsaleContract.buyNFT(no, uri, {value:_value})
+            let allowance = await BUSDContract.increaseAllowance(nftPreSale_addr, _value)
+            let allowanceTX = await allowance.wait()
+            if (allowanceTX.conformation == 1) {
+                let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri, { value: _value })
 
-            let tx =  await buy.wait()
-            let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
-            setPurchased(parseInt(userPurchased.toString()))
-            console.log("purchased", purchased)
+                let tx = await buy.wait()
+                let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
+                setPurchased(parseInt(userPurchased.toString()))
+                console.log("purchased", purchased)
 
-            console.log("userPurchased", userPurchased)
-            if(tx.confirmations == 1){
-                loadLimit()
-                handleShow()
+                console.log("userPurchased", userPurchased)
+                if (tx.confirmations == 1) {
+                    loadLimit()
+                    handleShow()
+                }
             }
-            console.log("tx", tx)
-            
+            // let buy = await NFTCrowdsaleContract.buyNFT(no, uri, { value: _value })
+
+            // let tx = await buy.wait()
+            // let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
+            // setPurchased(parseInt(userPurchased.toString()))
+            // console.log("purchased", purchased)
+
+            // console.log("userPurchased", userPurchased)
+            // if (tx.confirmations == 1) {
+            //     loadLimit()
+            //     handleShow()
+            // }
+            // console.log("tx", tx)
+
         }
-        catch(e){
+        catch (e) {
             console.log("error", e)
         }
     }
