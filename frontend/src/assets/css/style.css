@@ -6,6 +6,7 @@
     --black:#000000;
     --seagreen:#258fad;
     --purple:#745ca4;
+    --red:red;
 }
 body{
     background-color: var(--yellow);
@@ -44,6 +45,11 @@ body{
     text-align: center;
     padding-top: 15px;
 }
+.red-head{
+    color: var(--red);
+    text-align: center;
+    padding-top: 15px;
+}
 .nft-section{
     background:var(--grey);
     border-radius: 20px;
@@ -63,6 +69,19 @@ body{
     width: 100%;
     top: 42px;
 }
+.nft-section .nft-box {
+    height: 363px;
+    width: 240px;
+    border-top: 6px solid;
+    border-bottom: 6px solid;
+    border-left: 3px solid;
+    border-right: 3px solid;
+    /* border-color: var(--seagreen); */
+    /* border-color: var(--seagreen); */
+    border-radius: 20px;
+    text-align: center;
+}
+
 .tag h6{
     display: inline;
     padding: 5px;
@@ -81,26 +100,19 @@ body{
     color: var(--white);
     font-weight: bold;
 }
-.nft-section .nft-box{
-    /* padding-top: 1rem; */
-    /* background-image: url('.././img/nft1.png'); */
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 363px;
-    width: 240px;
-}
+
 .nft-box-head{
     color: var(--white);
     text-align: center;
 }
 .nft-box{
-    /* background-color: var(--yellow); */
+    /* / background-color: var(--yellow); / */
     border-top: 6px solid;
     border-bottom: 6px solid;
     border-left: 3px solid;
     border-right: 3px solid;
-    /* border-color: var(--seagreen); */
-    /* border-color: var(--seagreen); */
+    /* / border-color: var(--seagreen); / */
+    /* / border-color: var(--seagreen); / */
     border-radius: 20px;
     text-align: center;
 }
@@ -195,4 +207,24 @@ body{
 }
 .flex-end{
     justify-content: flex-end !important;
+}
+
+.custom-form{
+    margin: 5rem 0;
+    background: var(--grey);
+    padding: 3rem;
+    border-radius: 10px;
+}
+.custom-form .form-control,.form-select{
+    border: 2px solid var(--yellow) !important;
+}
+.custom-form .form-control:focus,.form-select:focus{
+    border: 2px solid var(--green)!important;
+    box-shadow: none !important;
+}
+.custom-form .form-label{
+    text-align: left !important;
+    width: 100%;
+    color: white;
+    font-size: 20px;
 }

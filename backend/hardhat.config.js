@@ -23,6 +23,9 @@ const privateKey = `669a00a5dcee6b12e70ec23b4a793b14bcb38a0f657ce29ada80b578e147
 module.exports = {
   solidity: "0.8.0",
   networks: {
+    hardhat: {
+      chainId: 1337,
+    },
     rinkeby: {
       url: `https://eth-rinkeby.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
       accounts: [`0x${privateKey}`],

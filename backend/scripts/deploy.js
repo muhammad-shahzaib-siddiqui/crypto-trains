@@ -19,7 +19,8 @@ async function main() {
   // }
 
   // ethers is avaialble in the global scope
-  const [deployer] = await ethers.getSigners();
+  const [deployer,per1,per2] = await ethers.getSigners();
+  const [acc1,acc2] = ["0x3B2FA3fB4c7eD3bC495F276DC60782b635bB04d9","0x57a6F97E2020a77ee47582b2fDFDa122dF6F8Eef"];
   console.log(
     "Deploying the contracts with the account:",
     await deployer.getAddress()
@@ -41,9 +42,16 @@ async function main() {
   nft = await NFT.deploy(nftPreSale.address);
   await nft.deployed();
 
+  // let tx = await nftPreSale.startSale([acc1,acc2],nft.address,20)
+  // await tx.wait()
+
+  // let tx = await nftPreSale.startSale([per1.address,per2.address],nft.address,60)
+  // await tx.wait()
+
+
   // Manager = await ethers.getContractFactory("Manager");
   // manager = await Manager.attach(manager_addr)
-
+  //console.log("address : ", per1.address)
   console.log("paymentSplitter deployed to:", nFTpaymentSplitter.address);
   console.log("nftPreSale deployed to:", nftPreSale.address);
   console.log("nft deployed to:", nft.address);
@@ -70,45 +78,6 @@ function saveFrontendFiles(nFTpaymentSplitter, nftPreSale, nft) {
     contractsDir + '/addresses.js', JSON.parse(data)
 
   );
-  // fs.writeFileSync(
-  //   contractsDir + "/contract-address.json",
-  //   JSON.stringify({ LASM: lasm.address ,  nftPreSale: nftPreSale.address ,nftPubSale: nftPubSale.address ,nft: nft.address }
-  //     , undefined, 2)
-
-  // );
-  // fs.writeFileSync(
-  //   contractsDir + "/contract-address.json",
-  //    JSON.stringify({ nftPreSale: nftPreSale.address }, undefined, 2)
-  // );
-  // fs.writeFileSync(
-  //   contractsDir + "/contract-address.json",
-  //   JSON.stringify({ nftPubSale: nftPubSale.address }, undefined, 2)
-  // );
-  // fs.writeFileSync(
-  //   contractsDir + "/contract-address.json",
-  //   JSON.stringify({ nft: nft.address }, undefined, 2)
-  // );
-
-
-  // const nftArtifact = artifacts.readArtifactSync("NFT");
-
-
-
-  // let abi
-
-
-
-
-  // abi = `const NFT  = ${JSON.stringify(nftArtifact)}`
-
-  // data = JSON.stringify(abi, null, 2)
-
-  // fs.writeFileSync(
-  //   contractsDir + '/NFT.js', JSON.parse(data)
-
-  // );
-
-
 
 }
 

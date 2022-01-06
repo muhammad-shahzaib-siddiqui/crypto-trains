@@ -6,6 +6,8 @@
   "event PaymentReleased(address,uint256)",
   "function payee(uint256) view returns (address)",
   "function release(address)",
+  "function releaseBUSD(address)",
+  "function released(address,address) view returns (uint256)",
   "function released(address) view returns (uint256)",
   "function shares(address) view returns (uint256)",
   "function totalReleased(address) view returns (uint256)",

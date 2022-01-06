@@ -9,10 +9,13 @@ import Nfts from './screens/Nfts';
 import Airdrop from './screens/Airdrop';
 
 
+
 function App() {
   const [errorMessage, setErrorMessage] = useState();
   useEagerConnect(setErrorMessage);
   useInactiveListener();
+
+  
 
   return (
     <div className="App">
@@ -26,15 +29,6 @@ function App() {
       <Route path="/myNft" element={<Nfts />} />
       <Route path="/airDrop" element={<Airdrop />} />
       </Routes>
-      
-        
-      
-      
-        {/* <Route path="/" exact component={Home} /> */}
-      {/* </Router> */}
-      
-      {/* <Home /> */}
-      {/* <MainPage /> */}
       </BrowserRouter>
     </div>
   );
