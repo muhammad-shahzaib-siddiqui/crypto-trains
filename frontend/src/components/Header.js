@@ -12,6 +12,7 @@ import NFT from "../contract/NFT.json";
 import NFTCrowdsale from "../contract/NFTCrowdsale.json";
 import Web3Modal from "web3modal";
 
+
 function Header(props) {
   const {
     connector,
@@ -33,6 +34,8 @@ function Header(props) {
   const [loading1, setLoading1] = useState(0);
   const [presaleStartted, setPresaleStarted] = useState(false);
   const [status, setStatus] = useState();
+  const [countDown, setCountDown] = React.useState(0);
+const [runTimer, setRunTimer] = React.useState(false);
 
   const startDate = React.useRef(Date.now());
   
@@ -109,21 +112,6 @@ function Header(props) {
     }
   };
 
-  // const blockTimeStoamp = async () => {
-  //   try{
-  //     let signer = await loadProvider();
-  //     let NFTCrowdsaleContract = new ethers.Contract(
-  //       nftPreSale_addr,
-  //       NFTCrowdsale,
-  //       signer
-  //     );
-  //     let blockTime = await NFTCrowdsaleContract.blocktime();
-  //     console.log("blockTime", blockTime.toString())
-  //   }
-  //   catch(e){
-  //     console.log("error", e)
-  //   }
-  // }
 
   useEffect(() => {
     (async () => {
@@ -138,72 +126,67 @@ function Header(props) {
     })();
   }, [account, status]);
 
-  useEffect(() => {
-    (async () => {
-      if (account) {
-        try {
-          
-          // console.log("")
-          // console.log(limitationTime())
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    })();
-  }, [status]);
 
 
-  // useEffect(() => {
-  //   if ( startTime - (currentDate/1000)<=0){
-  //     setStartTime(0)
-  //   }
-  // }, [startTime])
 
-  // const Completionist = () =><h1>PRESALE STARTS IN: 00 DAYS 00 H 00 Minutes 00 SEC</h1>;
+
 
   console.log("discount", discountTime);
 
-  const renderer = ({ days, hours, minutes, seconds, completed }) => {
-    console.log("timestatus test>>>>>>>>>>>>>>>>>>>>>>>>>>>", status);
-    
+
+
+ 
+  
+    React.useEffect(() => {
+      let timerId;
+  
+      if (runTimer) {
+        setCountDown(60 * timer);
+        timerId = setInterval(() => {
+          setCountDown((countDown) => countDown - 1);
+        }, 1000);
+      } else {
+        clearInterval(timerId);
+      }
+  
+      return () => clearInterval(timerId);
+    }, [runTimer]);
+  
+    React.useEffect(() => {
+      if (countDown < 0 && runTimer) {
+        console.log("expired");
+        setRunTimer(false);
+        setCountDown(0);
+      }
+    }, [countDown, runTimer]);
+  
+    const togglerTimer = () => setRunTimer((t) => !t);
+  
+    const seconds = String(countDown % 60).padStart(2, 0);
+    const minutes = String(Math.floor(countDown / 60)).padStart(2, 0);
+
+    useEffect(() => {
+        togglerTimer()
+    }, [])
+
+    const renderer2 = ({ days, hours, minutes, seconds, completed }) => {
       if (!completed) {
         return (
           <>
             <h1>
-              PRESALE STARTS IN: {days} DAYS {hours} H {minutes} Minutes{" "}
-              {seconds} SEC
-            </h1>
+          DISCOUNT STARTSa IN: {days} DAYS {hours} H {minutes} Minutes{" "}
+          {seconds} SEC
+        </h1>
           </>
         );
       } else if(completed === true) {
         return (
           <>
-            <h1>PRESALE WILL STARTS SOON</h1>
+            <h1>SALE HAS BEEN STARTED</h1>
           </>
         );
       }
-      
-    
-  };
-
-  const renderer2 = ({ days, hours, minutes, seconds, completed }) => {
-    if (!completed) {
-      return (
-        <>
-          <h1>
-        DISCOUNT ENDS IN: {days} DAYS {hours} H {minutes} Minutes{" "}
-        {seconds} SEC
-      </h1>
-        </>
-      );
-    } else if(completed === true) {
-      return (
-        <>
-          <h1>SALE HAS BEEN STARTED</h1>
-        </>
-      );
     }
-  }
 
   console.log("is active check = ", active);
   return (
@@ -258,30 +241,17 @@ function Header(props) {
 
       <div>
         <div className="top-bar">
-          {console.log("timer>>>>>>>>>", parseInt(timer))}
-          {console.log("discountTime>>>>>>>>>",discountTime)}
-          {console.log("Status>>>>>>>>>", status)}
-         {status === false && loading==1 ? (<div> {console.log("timer>>>>>>>>>", timer)} <Countdown date={startDate.current + timer * 1000} key="first"  onMount={console.log("first mount")} renderer={renderer} autoStart={true} /></div>) :  status == true &&
+          {console.log("statyus", status)}
+          {console.log("timer>>>", timer)}
+         {status === false && loading==1 ? (<div>PRESALE STARTS IN: {minutes}:{seconds}</div>) :  status == true &&
           loading1 ==1 &&
          discountTime > 0 ?(<div>
-          <Countdown date={Date.now() + discountTime * 1000} key="second" onMount={console.log("second mount")} renderer={renderer2} autoStart={true} />
+          <Countdown date={Date.now() + discountTime * 1000}  renderer={renderer2}  autoStart={true} />
           {console.log("Timee>>", Timeee)}
             </div>): null }
 
           
-          {/* {
-            timer > 0   ? (
-            <div>
-              {console.log("hello>>>>>>>>>>>>>>")}
-              <Countdown
-                date={timer * 1000}
-                renderer={renderer}
-                autoStart
-              />
-            </div>
-          ) :  (
-            <div>sorry</div>
-          )} */}
+      
         </div>
       </div>
     </div>
