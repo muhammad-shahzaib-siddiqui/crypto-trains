@@ -30,6 +30,12 @@ module.exports = {
       url: `https://eth-rinkeby.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
       accounts: [`0x${privateKey}`],
     },
+    mainnet: {
+      url: "https://bsc-dataseed.binance.org/",
+      chainId: 56,
+      gasPrice: 20000000000,
+      accounts: [`0x${privateKey}`],
+    }
   },
   abiExporter: {
     path: '../frontend/src/contract',

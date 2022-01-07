@@ -38,12 +38,23 @@ function Header(props) {
 const [runTimer, setRunTimer] = React.useState(false);
 const [shortAddress,setShortAddress] = useState()
 
+const [hourss,setHours] = useState()
+const [dayss, setDays] = useState()
+const [minutess, setMinutes] = useState()
+const [secondss, setSeconds] = useState()
 
-  const startDate = React.useRef(Date.now());
-  
 
-  let Timeee = discountTime
-  console.log("Timeee", Timeee)
+  var days = Math.floor(timer / (3600*24))
+    var hours = Math.floor(timer % (3600*24) / 3600);
+    var minutes = Math.floor(timer % 3600 / 60);
+    var seconds = Math.floor(timer % 60); 
+    
+    console.log("days", days);
+    console.log("hours", hours);
+    console.log("minutes", minutes);
+    console.log("seconds", seconds);
+
+  // console.log("Timeee", Timeee)
 
   // let address = account.toString()
   // let accountAddress = address.slice(0,3)
@@ -72,16 +83,12 @@ const [shortAddress,setShortAddress] = useState()
       let start = await NFTCrowdsaleContract.start();
       let startime = await NFTCrowdsaleContract.startTime();
       setStatus(await NFTCrowdsaleContract.getTimeStatus()); 
-      // let limitationtime = await NFTCrowdsaleContract.discountTime();
-      // setDiscountTime(limitationtime.toNumber());
       if (status == false) {
         console.log("disssss");
 
         setTimer(startime.toNumber());
       }
       console.log("timeStatus", status);
-      // let total = start.toNumber();
-      // console.log("startSaleTimeTotal", total);
       setLoading(1);
     } catch (e) {
       console.log("data", e);
@@ -133,6 +140,28 @@ const [shortAddress,setShortAddress] = useState()
   }, [account, status]);
 
 
+  useEffect(() => {
+    // exit early when we reach 0
+    if (!timer) return;
+    setDays(days)
+    setHours(hours)
+  setMinutes(minutes)
+  setSeconds(seconds)
+    // save intervalId to clear the interval when the
+    // component re-renders
+    const intervalId = setInterval(() => {
+      setTimer(timer - 1);
+    }, 1000);
+
+    // clear interval on re-render to avoid memory leaks
+    return () => clearInterval(intervalId);
+    // add timeLeft as a dependency to re-rerun the effect
+    // when we update it
+  }, [timer]);
+
+// let Timeee = discountTime
+
+
 
 
 
@@ -142,45 +171,7 @@ const [shortAddress,setShortAddress] = useState()
 
 
  
-  
-    React.useEffect(() => {
-      let timerId;
-  
-      if (runTimer) {
-        setCountDown(timer*1000);
-        timerId = setInterval(() => {
-          setCountDown((countDown) => countDown - 1);
-        }, 1000);
-      } else {
-        clearInterval(timerId);
-      }
-  
-      return () => clearInterval(timerId);
-    }, [runTimer, timer]);
-  
-    React.useEffect(() => {
-      if (countDown < 0 && runTimer) {
-        console.log("expired");
-        setRunTimer(false);
-        setCountDown(0);
-      }
-    }, [countDown, runTimer]);
-  
-    const togglerTimer = () => setRunTimer((t) => !t);
-  
 
-    const seconds = String(countDown % 60).padStart(2, 0);
-    const minutes = String(Math.floor(countDown / 60)).padStart(2, 0);
-    // const hours = String(Math.floor(countDown / 60*60)).padStart(2, 0);
-    // const days = String(Math.floor(countDown / 60*60*24)).padStart(2, 0); 
-    // var days = Math.floor(countDown / (1000 * 60 * 60 * 24))
-    // var hours = Math.floor((countDown / (1000 * 60 * 60)) % 24)
-    // var minutes = Math.floor((countDown / 1000 / 60) % 60)
-    // var seconds = Math.floor((countDown / 1000) % 60)
-
-    useEffect(() => {
-        togglerTimer()
-    }, [])
 
     const renderer2 = ({ days, hours, minutes, seconds, completed }) => {
       if (!completed) {
@@ -256,7 +247,7 @@ const [shortAddress,setShortAddress] = useState()
         <div className="top-bar">
           {console.log("statyus", status)}
           {console.log("timer>>>", timer)}
-          {status == false ? timer <= 0 ? (<div><h1>PRESALE WILL BE START SOON</h1></div>): (<div><h1>PRESALE</h1></div>) : discountTime > 0 ? (<div> <Countdown date={Date.now() + discountTime * 1000} key="discount" renderer={renderer2}  autoStart={true} /></div>) : <div><h1>PRESALE HAS BEEN STARTED</h1></div>}
+          {status == false && discountTime <= 0 ? timer <= 0 ? (<div><h1>PRESALE WILL BE START SOON</h1></div>):  (<div><h1>PRESALE STARTS IN {dayss} dAYS {hourss} HOURS {minutess} MINUTES {secondss} SECONDS</h1></div>) : status == true && discountTime > 0 ? (<div> <Countdown date={Date.now() + discountTime * 1000} key="discount" renderer={renderer2}  autoStart={true} /></div>) : <div><h1>PRESALE HAS BEEN STARTED</h1></div>}
          {/* {status === false && loading==1 && timer > 0 ? (<div>PRESALE STARTS IN: {minutes}:{seconds}</div>) :  status == true &&
           loading1 ==1 &&
          discountTime > 0 ?(<div>
