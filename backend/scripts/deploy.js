@@ -20,7 +20,7 @@ async function main() {
 
   // ethers is avaialble in the global scope
   const [deployer,per1,per2] = await ethers.getSigners();
-  const [acc1,acc2] = ["0x3B2FA3fB4c7eD3bC495F276DC60782b635bB04d9","0x57a6F97E2020a77ee47582b2fDFDa122dF6F8Eef"];
+  const [acc1,acc2,acc3] = ["0x3B2FA3fB4c7eD3bC495F276DC60782b635bB04d9","0x57a6F97E2020a77ee47582b2fDFDa122dF6F8Eef","0x76aB059eb0D26AE8521042becb44FD89ecA8B78E"];
   console.log(
     "Deploying the contracts with the account:",
     await deployer.getAddress()
@@ -42,7 +42,7 @@ async function main() {
   nft = await NFT.deploy(nftPreSale.address);
   await nft.deployed();
 
-  // let tx = await nftPreSale.startSale([acc1,acc2],nft.address,20)
+  // let tx = await nftPreSale.startSale([acc1,acc2,acc3],nft.address,20)
   // await tx.wait()
 
   // let tx = await nftPreSale.startSale([per1.address,per2.address],nft.address,60)
@@ -72,10 +72,34 @@ function saveFrontendFiles(nFTpaymentSplitter, nftPreSale, nft) {
  export const nft_addr = "${nft.address}"
  export const nftPreSale_addr = "${nftPreSale.address}"
  export const nFTpaymentSplitter_addr = "${nFTpaymentSplitter.address}"
+ export const BUSD_addr = "0xA41e502175D8086225B83b77883986C0dA0B04C7"
 `
+//change BUSD address
+
   let data = JSON.stringify(config)
   fs.writeFileSync(
     contractsDir + '/addresses.js', JSON.parse(data)
+
+  );
+    config =`[
+      "constructor()",
+      "event Approval(address indexed,address indexed,uint256)",
+      "event Transfer(address indexed,address indexed,uint256)",
+      "function allowance(address,address) view returns (uint256)",
+      "function approve(address,uint256) returns (bool)",
+      "function balanceOf(address) view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address,uint256) returns (bool)",
+      "function increaseAllowance(address,uint256) returns (bool)",
+      "function name() view returns (string)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address,uint256) returns (bool)",
+      "function transferFrom(address,address,uint256) returns (bool)"
+    ]`
+   data = JSON.stringify(config)
+  fs.writeFileSync(
+    contractsDir + '/BUSD.json', JSON.parse(data)
 
   );
 

@@ -75,7 +75,7 @@ const [runTimer, setRunTimer] = React.useState(false);
       if (status == false) {
         console.log("disssss");
 
-        setTimer(startime);
+        setTimer(startime.toNumber());
       }
       console.log("timeStatus", status);
       // let total = start.toNumber();
@@ -141,7 +141,7 @@ const [runTimer, setRunTimer] = React.useState(false);
       let timerId;
   
       if (runTimer) {
-        setCountDown(60 * timer);
+        setCountDown(timer*1000);
         timerId = setInterval(() => {
           setCountDown((countDown) => countDown - 1);
         }, 1000);
@@ -150,7 +150,7 @@ const [runTimer, setRunTimer] = React.useState(false);
       }
   
       return () => clearInterval(timerId);
-    }, [runTimer]);
+    }, [runTimer, timer]);
   
     React.useEffect(() => {
       if (countDown < 0 && runTimer) {
@@ -162,8 +162,15 @@ const [runTimer, setRunTimer] = React.useState(false);
   
     const togglerTimer = () => setRunTimer((t) => !t);
   
+
     const seconds = String(countDown % 60).padStart(2, 0);
     const minutes = String(Math.floor(countDown / 60)).padStart(2, 0);
+    // const hours = String(Math.floor(countDown / 60*60)).padStart(2, 0);
+    // const days = String(Math.floor(countDown / 60*60*24)).padStart(2, 0); 
+    // var days = Math.floor(countDown / (1000 * 60 * 60 * 24))
+    // var hours = Math.floor((countDown / (1000 * 60 * 60)) % 24)
+    // var minutes = Math.floor((countDown / 1000 / 60) % 60)
+    // var seconds = Math.floor((countDown / 1000) % 60)
 
     useEffect(() => {
         togglerTimer()
@@ -243,12 +250,13 @@ const [runTimer, setRunTimer] = React.useState(false);
         <div className="top-bar">
           {console.log("statyus", status)}
           {console.log("timer>>>", timer)}
-         {status === false && loading==1 ? (<div>PRESALE STARTS IN: {minutes}:{seconds}</div>) :  status == true &&
+          {status == false ? timer <= 0 ? (<div><h1>PRESALE WILL BE START SOON</h1></div>): (<div><h1>PRESALE WILL BE START SOON</h1></div>) : discountTime > 0 ? (<div> <Countdown date={Date.now() + discountTime * 1000}  renderer={renderer2}  autoStart={true} /></div>) : <div>PRESALE HAS BEEN STARTED</div>}
+         {/* {status === false && loading==1 && timer > 0 ? (<div>PRESALE STARTS IN: {minutes}:{seconds}</div>) :  status == true &&
           loading1 ==1 &&
          discountTime > 0 ?(<div>
           <Countdown date={Date.now() + discountTime * 1000}  renderer={renderer2}  autoStart={true} />
           {console.log("Timee>>", Timeee)}
-            </div>): null }
+            </div>): null } */}
 
           
       
