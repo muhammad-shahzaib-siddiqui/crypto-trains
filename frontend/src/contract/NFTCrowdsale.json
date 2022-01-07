@@ -16,6 +16,7 @@
   "function blocktime() view returns (uint256)",
   "function blocktimestamp() view returns (uint256)",
   "function buyNFT(uint8,string) payable",
+  "function buyNFTV1(uint8,string) payable",
   "function discountTime() view returns (uint256)",
   "function discounted_Station_Legendary() view returns (uint256)",
   "function discounted_Station_common() view returns (uint256)",

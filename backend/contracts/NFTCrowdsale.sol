@@ -19,6 +19,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     // The token being sold
     IERC20 private _token;
     NFT private nft;
+    IERC20 private BUSD;
     // Address where funds are collected
     address payable private _wallet;
     address payable public _manager;
@@ -75,22 +76,24 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         _wallet = wallet_;
         start = 0;
         limitationtime = 0;
-        discounted_Train_common=0.2 ether;//0
-    discounted_Train_rare=0.2 ether;//1
-   discounted_Train_epic=0.2 ether;//2
-     discounted_Train_legendary=0.2 ether;//3
-   discounted_Station_common=0.2 ether;//4
-    discounted_Station_mitic=0.2 ether;//5
-    discounted_Station_Legendary=0.2 ether;//6
+        discounted_Train_common=250 ether;//0
+        discounted_Train_rare=550 ether;//1
+        discounted_Train_epic=900 ether;//2
+        discounted_Train_legendary=250 ether;//3
+        discounted_Station_common=1100 ether;//4
+        discounted_Station_mitic=1800 ether;//5
+        discounted_Station_Legendary=900 ether;//6
 
 
-    Train_common=0.3 ether;//0
-    Train_rare=0.3 ether;//1
-    Train_epic=0.3 ether;//2
-    Train_legendary=0.3 ether;//3
-    Station_common=0.3 ether;//4
-     Station_mitic=0.3 ether;//5
-     Station_Legendary=0.3 ether;
+    Train_common=300 ether;//0
+    Train_rare=600 ether;//1
+    Train_epic=1000 ether;//2
+    Train_legendary=1100 ether;//3
+    Station_common=1300 ether;//4
+     Station_mitic=1400 ether;//5
+     Station_Legendary=1500 ether;
+
+     BUSD = IERC20(0xA41e502175D8086225B83b77883986C0dA0B04C7);
         }
     
     function whitelist(address account)public view returns(bool){
@@ -244,12 +247,53 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         _wallet.transfer(weiAmount);   
     }
 
+    function buyNFTV1(uint8 no,string memory uri) public nonReentrant payable {
+        require(start<block.timestamp && start !=0,"Sale not started");
+        uint256 price;
+        if(block.timestamp<limitationtime){
+            price = discount_price(no);    
+        }else{
+            price = normal_price(no);        
+        }
+
+            require (purchase[_msgSender()] < 500000000,"cant buy more nft");
+            require (_whitelist[_msgSender()] == true,"you are not whitelisted");
+            require(_nftPurchased < limit,"All nft Sold");
+        require (!finalized,"Sale Ended");
+        require (BUSD.allowance(_msgSender(), address(this))>=price,"please Approve exact amount for one NFT");
+
+        nft.createToken(uri,_msgSender(),no);
+
+        
+        _nftPurchased ++;
+
+        purchase[_msgSender()]++;
+
+        // update state
+        _busdRaised = _busdRaised.add(price);
+
+        BUSDTransferFrom(
+        _msgSender(),
+        wallet(),
+        price
+    );   
+    }
+
     function Finalize() public  returns(bool) {
         require(!finalized,"already finalized");
         require( limit == _nftPurchased, "the crowdSale is in progress");
             //nft.transferOwnership(_wallet);
         finalized = true;
         return finalized;
+    }
+
+    function BUSDTransferFrom(
+        address from,
+        address to,
+        uint256 value
+    ) private returns(bool){
+       SafeERC20.safeTransferFrom(BUSD, from,to, value);
+     return true;
     }
 
     function _addPayee(address account) private {

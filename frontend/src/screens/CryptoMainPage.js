@@ -11,12 +11,12 @@ import { ethers,BigNumber } from 'ethers'
 import {nft_addr, nftPreSale_addr, BUSD_addr} from "../contract/addresses"
 import NFT from "../contract/NFT.json";
 import NFTCrowdsale from "../contract/NFTCrowdsale.json"
+import BUSD from "../contract/BUSD.json"
 import Web3Modal from 'web3modal'
 import { useWeb3React } from "@web3-react/core";
 import { Button, Modal } from 'react-bootstrap'
 import Countdown from 'react-countdown';
 import {generate} from "../components/metadata"
-import BUSD from "../contract/BUSD.json"
 
 
 
@@ -39,8 +39,16 @@ export default function CryptoMainPage() {
     const [Station_mitic, setStation_mitic] = useState()
     const [Station_Legendary, setStation_Legendary] = useState()
     const [balance, setBalance] = useState();
-    const [issalestart,setissalestart] = useState(true);
-    const [iswhitelist,setiswhitelist] = useState(false);
+    const [issalestart, setissalestart] = useState(true);
+    const [iswhitelist, setiswhitelist] = useState(false);
+
+    const [Train_common_limit_price, setTrain_common_limit_price] = useState()
+    const [Train_rare_limit_price, setTrain_rare_limit_price] = useState()
+    const [Train_epic_limit_price, setTrain_epic_limit_price] = useState()
+    const [Train_legendary_limit_price, setTrain_legendary_limit_price] = useState()
+    const [Station_common_limit_price, setStation_common_limit_price] = useState()
+    const [Station_mitic_limit_price, setStation_mitic_limit_price] = useState()
+    const [Station_Legendary_limit_price, setStation_Legendary_limit_price] = useState()
 
     const [loading, setLoading] = useState("loading")
     const [show, setShow] = useState(false);
@@ -60,23 +68,23 @@ export default function CryptoMainPage() {
         active,
         errorWeb3Modal
     } = useWeb3React();
-    
+
 
     const loadProvider = async () => {
-        try{
+        try {
             const web3Modal = new Web3Modal();
             const connection = await web3Modal.connect();
             const provider = new ethers.providers.Web3Provider(connection);
             return provider.getSigner();
         }
-        catch(e){
+        catch (e) {
             console.log("loadProvider: ", e)
         }
     }
-    
+
     const loadLimit = async () => {
         try {
-           
+
             let signer = await loadProvider()
             let NFTcontract = new ethers.Contract(nft_addr, NFT, signer);
             let Train_common_limit = await NFTcontract.Train_common_limit()
@@ -111,28 +119,55 @@ export default function CryptoMainPage() {
             setStation_mitic(parseInt(Station_mitic.toString()))
             setStation_Legendary(parseInt(Station_Legendary.toString()))
 
-            setLoading("loaded")
+            // let Train_common = await NFTcontract.Train_common()
+            // let Train_rare = await NFTcontract.Train_rare()
+            // let Train_epic = await NFTcontract.Train_epic()
+            // let Train_legendary = await NFTcontract.Train_legendary()
+            // let Station_common = await NFTcontract.Station_common()
+            // let Station_mitic = await NFTcontract.Station_mitic()
+            // let Station_Legendary = await NFTcontract.Station_Legendary() 
+            
+            let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
+            let Train_common_Price = await NFTCrowdsaleContract.getPrice(0)
+            let Train_rare_Price = await NFTCrowdsaleContract.getPrice(1)
+            let Train_epic_Price = await NFTCrowdsaleContract.getPrice(2)
+            let Train_legendary_Price = await NFTCrowdsaleContract.getPrice(3)
+            let Station_common_Price = await NFTCrowdsaleContract.getPrice(4)
+            let Station_mitic_Price = await NFTCrowdsaleContract.getPrice(5)
+            let Station_Legendary_Price = await NFTCrowdsaleContract.getPrice(6)
+
+            setTrain_common_limit_price(ethers.utils.formatEther(Train_common_Price))
+            setTrain_rare_limit_price(ethers.utils.formatEther(Train_rare_Price))
+            setTrain_epic_limit_price(ethers.utils.formatEther(Train_epic_Price))
+            setTrain_legendary_limit_price(ethers.utils.formatEther(Train_legendary_Price))
+            setStation_common_limit_price(ethers.utils.formatEther(Station_common_Price))
+            setStation_mitic_limit_price(ethers.utils.formatEther(Station_mitic_Price))
+            setStation_Legendary_limit_price(ethers.utils.formatEther(Station_Legendary_Price))
 
             
-            
-            
+
+            setLoading("loaded")
+
+
+
+
             // console.log("taaaaaaaaaaaaiiiiiiiiiiiiinnnnnnnnnnn: ", data.toString())
         } catch (error) {
             console.log("data :", error)
         }
     }
 
-    
 
+    console.log("Train_common_limit", Train_common_limit_price)
 
     const loadWhiteList = async () => {
         try {
-            
+
             let signer = await loadProvider()
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer);
             let _whitelist = await NFTCrowdsaleContract.whitelist(account)
-            
-            setiswhitelist(_whitelist)          
+
+            setiswhitelist(_whitelist)
         } catch (e) {
             console.log("data", e)
         }
@@ -168,10 +203,28 @@ export default function CryptoMainPage() {
             console.log("value>>", _value.toString())
             let allowance = await BUSDContract.increaseAllowance(nftPreSale_addr, _value)
             let allowanceTX = await allowance.wait()
+            console.log("allowanceTX>>", allowanceTX)
             if (allowanceTX.conformation == 1) {
-                let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri, { value: _value })
+                console.log("started")
+                // let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri, { value: _value })
+
+                // let tx = await buy.wait()
+                // console.log("tx>>>", tx)
+                // let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
+                // setPurchased(parseInt(userPurchased.toString()))
+                // console.log("purchased", purchased)
+
+                // console.log("userPurchased", userPurchased)
+                // if (tx.confirmations == 1) {
+                //     loadLimit()
+                //     handleShow()
+                // }
+            }
+            else{
+                 let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri, { value: _value })
 
                 let tx = await buy.wait()
+                console.log("tx>>>", tx)
                 let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
                 setPurchased(parseInt(userPurchased.toString()))
                 console.log("purchased", purchased)
@@ -201,9 +254,9 @@ export default function CryptoMainPage() {
             console.log("error", e)
         }
     }
-    
 
-    
+
+
 
     useEffect(() => {
         (async () => {
@@ -211,7 +264,7 @@ export default function CryptoMainPage() {
                 try {
                     loadLimit()
                     loadWhiteList()
-                  
+
 
                 } catch (error) {
                     console.log(error)
@@ -221,7 +274,7 @@ export default function CryptoMainPage() {
     }, [account]);
 
     // const Completionist = () =><h1>PRESALE STARTS IN: 00 DAYS 00 H 00 Minutes 00 SEC</h1>;
-    
+
     // const renderer = ({days, hours, minutes, seconds, completed }) => {
     //     if (completed) {
     //       // Render a completed state
@@ -236,245 +289,245 @@ export default function CryptoMainPage() {
 
     return (
         <div>
- {/* {
+            {/* {
      issalestart == true &&
      <div className="top-bar">
             <Countdown date={Date.now() + startTime} renderer={renderer} autoStart />
     </div>
     
     } */}
-    {
-        iswhitelist == true ? <>
-    <h1 className="green-head">You are WHITELISTED</h1>
-    </>
-    :<>
-    <h1 className="red-head">Connect to Your Wallet</h1>
-    </>
-    }
-    <div className="container-fluid">
-        <div className="custom-padding">
-            <div className="row nft-section">
-                <h1 className="white-head">TRAINS</h1>
-                <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                    <div className="nft">
-                        <h6 className="nft-box-head">{loading === "loading"? (<p>loading</p>): `${Train_common_limit - Train_common}/${Train_common_limit}` }</h6>
-                        <img className="nft-box" src={train1} alt="" style={{borderColor: "#258fad"}}/>
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>GOODS TRAIN</h5>
-                                <div className="tag" >
-                                    <h6 style={{background: "#258fad"}}>COMMON</h6>
+            {
+                iswhitelist == true ? <>
+                    <h1 className="green-head">You are WHITELISTED</h1>
+                </>
+                    : <>
+                        <h1 className="red-head">Connect to Your Wallet</h1>
+                    </>
+            }
+            <div className="container-fluid">
+                <div className="custom-padding">
+                    <div className="row nft-section">
+                        <h1 className="white-head">TRAINS</h1>
+                        <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
+                            <div className="nft">
+                                <h6 className="nft-box-head">{loading === "loading" ? (<p>loading</p>) : `${Train_common_limit - Train_common}/${Train_common_limit}`}</h6>
+                                <img className="nft-box" src={train1} alt="" style={{ borderColor: "#258fad" }} />
+                                <div className="text-section">
+                                    <div className="tag-section">
+                                        <h5>GOODS TRAIN</h5>
+                                        <div className="tag" >
+                                            <h6 style={{ background: "#258fad" }}>COMMON</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="price-section">
+                                    <div className="d-flex justify-content-center">
+                                        <span className="text-center">{Train_common_limit_price} BUSD</span>
+                                        <img src={busd} alt="" />
+                                    </div>
+                                    <div className="d-flex justify-content-center">
+                                        <button onClick={() => {
+                                            buynft(0)
+
+                                        }} className="custom-btn btn-green" >Buy NFT</button>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="price-section">
-                            <div className="d-flex justify-content-center">
-                                <span className="text-center">250 BUSD</span>
-                                <img src={busd} alt=""/>
-                            </div>
-                            <div className="d-flex justify-content-center">
-                                <button  onClick={()=> {
-                                    buynft(0)
-                                    
-                                } } className="custom-btn btn-green" >Buy NFT</button>
-                                
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                    <div className="nft">
-                        <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Train_rare_limit - Train_rare}/${Train_rare_limit}`}</h6>
-                        <img className="nft-box" src={train2} alt="" style={{borderColor:'#4AA41F'}}/>
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>VILLAGE TRAIN</h5>
-                                <div className="tag">
-                                    <h6 style={{background: "#4AA41F"}}>RARE</h6>
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
+                            <div className="nft">
+                                <h6 className="nft-box-head">{loading === "loading" ? (<p>loading</p>) : `${Train_rare_limit - Train_rare}/${Train_rare_limit}`}</h6>
+                                <img className="nft-box" src={train2} alt="" style={{ borderColor: '#4AA41F' }} />
+                                <div className="text-section">
+                                    <div className="tag-section">
+                                        <h5>VILLAGE TRAIN</h5>
+                                        <div className="tag">
+                                            <h6 style={{ background: "#4AA41F" }}>RARE</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="price-section">
+                                    <div className="d-flex justify-content-center">
+                                        <span className="text-center">{Train_rare_limit_price} BUSD</span>
+                                        <img src={busd} alt="" />
+                                    </div>
+                                    <div className="d-flex justify-content-center">
+                                        <button onClick={() => {
+                                            buynft(1)
+
+                                        }} className="custom-btn btn-green" >Buy NFT</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="price-section">
-                            <div className="d-flex justify-content-center">
-                                <span className="text-center">550 BUSD</span>
-                                <img src={busd} alt=""/>
-                            </div>
-                            <div className="d-flex justify-content-center">
-                                <button onClick={()=> {
-                                    buynft(1)
-                                    
-                                } } className="custom-btn btn-green" >Buy NFT</button>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                    <div className="nft">
-                        <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Train_epic_limit - Train_epic}/${Train_epic_limit}`}</h6>
-                        <img className="nft-box" src={train3} alt="" style={{borderColor:"#745ca4"}} />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>CITY TRAIN</h5>
-                                <div className="tag">
-                                    <h6 style={{background: "#745ca4"}} >EPIC</h6>
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
+                            <div className="nft">
+                                <h6 className="nft-box-head">{loading === "loading" ? (<p>loading</p>) : `${Train_epic_limit - Train_epic}/${Train_epic_limit}`}</h6>
+                                <img className="nft-box" src={train3} alt="" style={{ borderColor: "#745ca4" }} />
+                                <div className="text-section">
+                                    <div className="tag-section">
+                                        <h5>CITY TRAIN</h5>
+                                        <div className="tag">
+                                            <h6 style={{ background: "#745ca4" }} >EPIC</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="price-section">
+                                    <div className="d-flex justify-content-center">
+                                        <span className="text-center">{Train_epic_limit_price} BUSD</span>
+                                        <img src={busd} alt="" />
+                                    </div>
+                                    <div className="d-flex justify-content-center">
+                                        <button onClick={() => {
+                                            buynft(2)
+
+                                        }} className="custom-btn btn-green" >Buy NFT</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="price-section">
-                            <div className="d-flex justify-content-center">
-                                <span className="text-center">900 BUSD</span>
-                                <img src={busd} alt=""/>
-                            </div>
-                            <div className="d-flex justify-content-center">
-                                <button onClick={()=> {
-                                    buynft(2)
-                                    
-                                } } className="custom-btn btn-green" >Buy NFT</button>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                    <div className="nft">
-                        <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Train_legendary_limit - Train_legendary}/${Train_legendary_limit}`}</h6>
-                        <img className="nft-box" src={train4} alt="" style={{borderColor:"#ECCC43"}} />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>HIGH-SPEED TRAIN</h5>
-                                <div className="tag">
-                                    <h6 style={{background: "#ECCC43"}} >LEGENDARY</h6>
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
+                            <div className="nft">
+                                <h6 className="nft-box-head">{loading === "loading" ? (<p>loading</p>) : `${Train_legendary_limit - Train_legendary}/${Train_legendary_limit}`}</h6>
+                                <img className="nft-box" src={train4} alt="" style={{ borderColor: "#ECCC43" }} />
+                                <div className="text-section">
+                                    <div className="tag-section">
+                                        <h5>HIGH-SPEED TRAIN</h5>
+                                        <div className="tag">
+                                            <h6 style={{ background: "#ECCC43" }} >LEGENDARY</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="price-section">
+                                    <div className="d-flex justify-content-center">
+                                        <span className="text-center">{Train_legendary_limit_price} BUSD</span>
+                                        <img src={busd} alt="" />
+                                    </div>
+                                    <div className="d-flex justify-content-center">
+                                        <button onClick={() => {
+                                            buynft(3)
+
+                                        }} className="custom-btn btn-green" >Buy NFT</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="price-section">
-                            <div className="d-flex justify-content-center">
-                                <span className="text-center">250 BUSD</span>
-                                <img src={busd} alt=""/>
-                            </div>
-                            <div className="d-flex justify-content-center">
-                                <button onClick={()=> {
-                                    buynft(3)
-                                    
-                                } } className="custom-btn btn-green" >Buy NFT</button>
-                            </div>
-                        </div>
-                    </div>
 
+                        </div>
+
+                    </div>
                 </div>
-                
+                <div className="custom-padding">
+                    <div className="row nft-section">
+                        <h1 className="white-head">STATIONS</h1>
+                        <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
+                            <div className="nft">
+                                <h6 className="nft-box-head">{loading === "loading" ? (<p>loading</p>) : `${Station_common_limit - Station_common}/${Station_common_limit}`}</h6>
+                                <img className="nft-box" src={train5} alt="" style={{ borderColor: "#258fad" }} />
+                                <div className="text-section">
+                                    <div className="tag-section">
+                                        <h5>GOODS STATION</h5>
+                                        <div className="tag">
+                                            <h6 style={{ background: "#258fad" }} >COMMON</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="price-section">
+                                    <div className="d-flex justify-content-center">
+                                        <span className="text-center">{Station_common_limit_price} BUSD</span>
+                                        <img src={busd} alt="" />
+                                    </div>
+                                    <div className="d-flex justify-content-center">
+                                        <button onClick={() => {
+                                            buynft(4)
+
+                                        }} className="custom-btn btn-green" >Buy NFT</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
+                            <div className="nft">
+                                <h6 className="nft-box-head">{loading === "loading" ? (<p>loading</p>) : `${Station_mitic_limit - Station_mitic}/${Station_mitic_limit}`}</h6>
+                                <img className="nft-box" src={train6} alt="" style={{ background: "#745ca4" }} />
+                                <div className="text-section">
+                                    <div className="tag-section">
+                                        <h5>CITY STATION</h5>
+                                        <div className="tag">
+                                            <h6 style={{ background: "#745ca4" }} >EPIC</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="price-section">
+                                    <div className="d-flex justify-content-center">
+                                        <span className="text-center">{Station_mitic_limit_price} BUSD</span>
+                                        <img src={busd} alt="" />
+                                    </div>
+                                    <div className="d-flex justify-content-center">
+                                        <button onClick={() => {
+                                            buynft(5)
+
+                                        }} className="custom-btn btn-green" >Buy NFT</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
+                            <div className="nft">
+                                <h6 className="nft-box-head">{loading === "loading" ? (<p>loading</p>) : `${Station_Legendary_limit - Station_Legendary}/${Station_Legendary_limit}`}</h6>
+                                <img className="nft-box" src={train7} alt="" style={{ background: "#ECCC43" }} />
+                                <div className="text-section">
+                                    <div className="tag-section">
+                                        <h5>HIGH-SPEED STATION</h5>
+                                        <div className="tag">
+                                            <h6 style={{ background: "#ECCC43" }} >LEGENDARY</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="price-section">
+                                    <div className="d-flex justify-content-center">
+                                        <span className="text-center">{Station_Legendary_limit_price} BUSD</span>
+                                        <img src={busd} alt="" />
+                                    </div>
+                                    <div className="d-flex justify-content-center">
+                                        <button onClick={() => {
+                                            buynft(6)
+
+                                        }} className="custom-btn btn-green" >Buy NFT</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
             </div>
-        </div>
-        <div className="custom-padding">
-            <div className="row nft-section">
-                <h1 className="white-head">STATIONS</h1>
-                <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                    <div className="nft">
-                        <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Station_common_limit - Station_common}/${Station_common_limit}`}</h6>
-                        <img className="nft-box" src={train5} alt="" style={{borderColor:"#258fad"}} />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>GOODS STATION</h5>
-                                <div className="tag">
-                                    <h6 style={{background: "#258fad"}} >COMMON</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="price-section">
-                            <div className="d-flex justify-content-center">
-                                <span className="text-center">1100 BUSD</span>
-                                <img src={busd} alt=""/>
-                            </div>
-                            <div className="d-flex justify-content-center">
-                                <button onClick={()=> {
-                                    buynft(4)
-                                    
-                                } } className="custom-btn btn-green" >Buy NFT</button>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                    <div className="nft">
-                        <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Station_mitic_limit - Station_mitic}/${Station_mitic_limit}`}</h6>
-                        <img className="nft-box" src={train6} alt="" style={{background: "#745ca4"}}/>
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>CITY STATION</h5>
-                                <div className="tag">
-                                    <h6 style={{background: "#745ca4"}} >EPIC</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="price-section">
-                            <div className="d-flex justify-content-center">
-                                <span className="text-center">1800 BUSD</span>
-                                <img src={busd} alt=""/>
-                            </div>
-                            <div className="d-flex justify-content-center">
-                                <button onClick={()=> {
-                                    buynft(5)
-                                    
-                                } } className="custom-btn btn-green" >Buy NFT</button>
-                            </div>
-                        </div>
+            <Modal show={show} onHide={handleClose} className='custom-modal' size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered>
+                <Modal.Header closeButton>
+                    <h3 className="modal-title" id="exampleModalLabel">CONGRATULATIONS! YOU HAVE PURCHASED YOUR NFT</h3>
+                    <button type="button" className="btn-close" ></button>
+                </Modal.Header>
+                <Modal.Body>
+                    <h1>You can buy 5 NFT per WALLET!</h1>
+                    <h1>{`${purchased}/5 NFT`}</h1>
+                    <div className="d-flex justify-content-center">
+                        <a className="custom-btn btn-white" onClick={handleClose}>KEEP BUYING</a>
+                        <a className="custom-btn btn-white" onClick={handleClose}>VIEW MY NFTS</a>
                     </div>
-
-                </div>
-                <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
-                    <div className="nft">
-                        <h6 className="nft-box-head">{loading === "loading"?(<p>loading</p>):`${Station_Legendary_limit- Station_Legendary}/${Station_Legendary_limit}`}</h6>
-                        <img className="nft-box" src={train7} alt="" style={{background: "#ECCC43"}} />
-                        <div className="text-section">
-                            <div className="tag-section">
-                                <h5>HIGH-SPEED STATION</h5>
-                                <div className="tag">
-                                    <h6 style={{background: "#ECCC43"}} >LEGENDARY</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="price-section">
-                            <div className="d-flex justify-content-center">
-                                <span className="text-center">900 BUSD</span>
-                                <img src={busd} alt=""/>
-                            </div>
-                            <div className="d-flex justify-content-center">
-                                <button onClick={()=> {
-                                    buynft(6)
-                                    
-                                } } className="custom-btn btn-green" >Buy NFT</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                
-            </div>
-        </div>
-    </div>
-    
-    <Modal show={show} onHide={handleClose} className='custom-modal' size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered>
-        <Modal.Header closeButton>
-        <h3 className="modal-title" id="exampleModalLabel">CONGRATULATIONS! YOU HAVE PURCHASED YOUR NFT</h3>
-        <button type="button" className="btn-close" ></button> 
-        </Modal.Header>
-        <Modal.Body>
-            <h1>You can buy 5 NFT per WALLET!</h1>
-              <h1>{`${purchased}/5 NFT`}</h1>
-              <div className="d-flex justify-content-center">
-                  <a className="custom-btn btn-white"  onClick={handleClose}>KEEP BUYING</a>
-                  <a className="custom-btn btn-white"  onClick={handleClose}>VIEW MY NFTS</a>
-              </div>
-        </Modal.Body>
-        <Modal.Footer>
-        </Modal.Footer>
-      </Modal>
-    {/* <div className="modal fade custom-modal" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+                </Modal.Body>
+                <Modal.Footer>
+                </Modal.Footer>
+            </Modal>
+            {/* <div className="modal fade custom-modal" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
