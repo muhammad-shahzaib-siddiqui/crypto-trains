@@ -256,7 +256,7 @@ const [shortAddress,setShortAddress] = useState()
         <div className="top-bar">
           {console.log("statyus", status)}
           {console.log("timer>>>", timer)}
-          {status == false ? timer <= 0 ? (<div><h1>PRESALE WILL BE START SOON</h1></div>): (<div><h1>PRESALE</h1></div>) : discountTime > 0 ? (<div> <Countdown date={Date.now() + discountTime * 1000} key="discount" renderer={renderer2}  autoStart={true} /></div>) : <div>PRESALE HAS BEEN STARTED</div>}
+          {status == false ? timer <= 0 ? (<div><h1>PRESALE WILL BE START SOON</h1></div>): (<div><h1>PRESALE</h1></div>) : discountTime > 0 ? (<div> <Countdown date={Date.now() + discountTime * 1000} key="discount" renderer={renderer2}  autoStart={true} /></div>) : <div><h1>PRESALE HAS BEEN STARTED</h1></div>}
          {/* {status === false && loading==1 && timer > 0 ? (<div>PRESALE STARTS IN: {minutes}:{seconds}</div>) :  status == true &&
           loading1 ==1 &&
          discountTime > 0 ?(<div>

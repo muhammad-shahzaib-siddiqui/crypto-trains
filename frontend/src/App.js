@@ -7,7 +7,6 @@ import Home from "./components/Home"
 import { BrowserRouter, Route, Router, Routes, Switch } from 'react-router-dom';
 import Nfts from './screens/Nfts';
 import Airdrop from './screens/Airdrop';
-import Time from './screens/Time';
 
 
 

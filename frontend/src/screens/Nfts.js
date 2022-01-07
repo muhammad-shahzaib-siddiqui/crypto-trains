@@ -176,9 +176,7 @@ let journal = [
 
     return (
         <div>
-    <div >
-        {balance}
-    </div>
+    
     <h1 className="green-head">You are WHITELISTED</h1>
     <div className="container-fluid">
         <div className="custom-padding">
