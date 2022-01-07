@@ -7,8 +7,8 @@ import train5 from "../assets/img/train5.jpg"
 import train6 from "../assets/img/train6.jpg"
 import train7 from "../assets/img/train7.jpg"
 import busd from "../assets/img/busd.svg"
-import { ethers, BigNumber } from 'ethers'
-import { nft_addr, nftPreSale_addr, BUSD_addr } from "../contract/addresses"
+import { ethers,BigNumber } from 'ethers'
+import {nft_addr, nftPreSale_addr, BUSD_addr} from "../contract/addresses"
 import NFT from "../contract/NFT.json";
 import NFTCrowdsale from "../contract/NFTCrowdsale.json"
 import BUSD from "../contract/BUSD.json"
@@ -16,7 +16,7 @@ import Web3Modal from 'web3modal'
 import { useWeb3React } from "@web3-react/core";
 import { Button, Modal } from 'react-bootstrap'
 import Countdown from 'react-countdown';
-import { generate } from "../components/metadata"
+import {generate} from "../components/metadata"
 
 
 
@@ -41,6 +41,14 @@ export default function CryptoMainPage() {
     const [balance, setBalance] = useState();
     const [issalestart, setissalestart] = useState(true);
     const [iswhitelist, setiswhitelist] = useState(false);
+
+    const [Train_common_limit_price, setTrain_common_limit_price] = useState()
+    const [Train_rare_limit_price, setTrain_rare_limit_price] = useState()
+    const [Train_epic_limit_price, setTrain_epic_limit_price] = useState()
+    const [Train_legendary_limit_price, setTrain_legendary_limit_price] = useState()
+    const [Station_common_limit_price, setStation_common_limit_price] = useState()
+    const [Station_mitic_limit_price, setStation_mitic_limit_price] = useState()
+    const [Station_Legendary_limit_price, setStation_Legendary_limit_price] = useState()
 
     const [loading, setLoading] = useState("loading")
     const [show, setShow] = useState(false);
@@ -111,6 +119,33 @@ export default function CryptoMainPage() {
             setStation_mitic(parseInt(Station_mitic.toString()))
             setStation_Legendary(parseInt(Station_Legendary.toString()))
 
+            // let Train_common = await NFTcontract.Train_common()
+            // let Train_rare = await NFTcontract.Train_rare()
+            // let Train_epic = await NFTcontract.Train_epic()
+            // let Train_legendary = await NFTcontract.Train_legendary()
+            // let Station_common = await NFTcontract.Station_common()
+            // let Station_mitic = await NFTcontract.Station_mitic()
+            // let Station_Legendary = await NFTcontract.Station_Legendary() 
+            
+            let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
+            let Train_common_Price = await NFTCrowdsaleContract.getPrice(0)
+            let Train_rare_Price = await NFTCrowdsaleContract.getPrice(1)
+            let Train_epic_Price = await NFTCrowdsaleContract.getPrice(2)
+            let Train_legendary_Price = await NFTCrowdsaleContract.getPrice(3)
+            let Station_common_Price = await NFTCrowdsaleContract.getPrice(4)
+            let Station_mitic_Price = await NFTCrowdsaleContract.getPrice(5)
+            let Station_Legendary_Price = await NFTCrowdsaleContract.getPrice(6)
+
+            setTrain_common_limit_price(ethers.utils.formatEther(Train_common_Price))
+            setTrain_rare_limit_price(ethers.utils.formatEther(Train_rare_Price))
+            setTrain_epic_limit_price(ethers.utils.formatEther(Train_epic_Price))
+            setTrain_legendary_limit_price(ethers.utils.formatEther(Train_legendary_Price))
+            setStation_common_limit_price(ethers.utils.formatEther(Station_common_Price))
+            setStation_mitic_limit_price(ethers.utils.formatEther(Station_mitic_Price))
+            setStation_Legendary_limit_price(ethers.utils.formatEther(Station_Legendary_Price))
+
+            
+
             setLoading("loaded")
 
 
@@ -123,7 +158,7 @@ export default function CryptoMainPage() {
     }
 
 
-
+    console.log("Train_common_limit", Train_common_limit_price)
 
     const loadWhiteList = async () => {
         try {
@@ -167,6 +202,7 @@ export default function CryptoMainPage() {
             let _value = await NFTCrowdsaleContract.getPrice(no)
             let uri = generate(no)
             console.log("value>>", _value.toString())
+<<<<<<< HEAD
             let allowanceCheck = await BUSDContract.allowance(account,nftPreSale_addr)
             allowanceCheck = parseInt(allowanceCheck.toString())
             console.log("allowance :",allowanceCheck);
@@ -188,7 +224,32 @@ export default function CryptoMainPage() {
             }else{
                 let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri)
         
+=======
+            let allowance = await BUSDContract.increaseAllowance(nftPreSale_addr, _value)
+            let allowanceTX = await allowance.wait()
+            console.log("allowanceTX>>", allowanceTX)
+            if (allowanceTX.conformation == 1) {
+                console.log("started")
+                // let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri, { value: _value })
+
+                // let tx = await buy.wait()
+                // console.log("tx>>>", tx)
+                // let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
+                // setPurchased(parseInt(userPurchased.toString()))
+                // console.log("purchased", purchased)
+
+                // console.log("userPurchased", userPurchased)
+                // if (tx.confirmations == 1) {
+                //     loadLimit()
+                //     handleShow()
+                // }
+            }
+            else{
+                 let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri, { value: _value })
+
+>>>>>>> baff88ce43ddb67ae8ebe4bb24e29b2cafcee3df
                 let tx = await buy.wait()
+                console.log("tx>>>", tx)
                 let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
                 setPurchased(parseInt(userPurchased.toString()))
                 console.log("purchased", purchased)
@@ -302,7 +363,7 @@ export default function CryptoMainPage() {
                                 </div>
                                 <div className="price-section">
                                     <div className="d-flex justify-content-center">
-                                        <span className="text-center">250 BUSD</span>
+                                        <span className="text-center">{Train_common_limit_price} BUSD</span>
                                         <img src={busd} alt="" />
                                     </div>
                                     <div className="d-flex justify-content-center">
@@ -330,7 +391,7 @@ export default function CryptoMainPage() {
                                 </div>
                                 <div className="price-section">
                                     <div className="d-flex justify-content-center">
-                                        <span className="text-center">550 BUSD</span>
+                                        <span className="text-center">{Train_rare_limit_price} BUSD</span>
                                         <img src={busd} alt="" />
                                     </div>
                                     <div className="d-flex justify-content-center">
@@ -357,7 +418,7 @@ export default function CryptoMainPage() {
                                 </div>
                                 <div className="price-section">
                                     <div className="d-flex justify-content-center">
-                                        <span className="text-center">900 BUSD</span>
+                                        <span className="text-center">{Train_epic_limit_price} BUSD</span>
                                         <img src={busd} alt="" />
                                     </div>
                                     <div className="d-flex justify-content-center">
@@ -384,7 +445,7 @@ export default function CryptoMainPage() {
                                 </div>
                                 <div className="price-section">
                                     <div className="d-flex justify-content-center">
-                                        <span className="text-center">250 BUSD</span>
+                                        <span className="text-center">{Train_legendary_limit_price} BUSD</span>
                                         <img src={busd} alt="" />
                                     </div>
                                     <div className="d-flex justify-content-center">
@@ -417,7 +478,7 @@ export default function CryptoMainPage() {
                                 </div>
                                 <div className="price-section">
                                     <div className="d-flex justify-content-center">
-                                        <span className="text-center">1100 BUSD</span>
+                                        <span className="text-center">{Station_common_limit_price} BUSD</span>
                                         <img src={busd} alt="" />
                                     </div>
                                     <div className="d-flex justify-content-center">
@@ -444,7 +505,7 @@ export default function CryptoMainPage() {
                                 </div>
                                 <div className="price-section">
                                     <div className="d-flex justify-content-center">
-                                        <span className="text-center">1800 BUSD</span>
+                                        <span className="text-center">{Station_mitic_limit_price} BUSD</span>
                                         <img src={busd} alt="" />
                                     </div>
                                     <div className="d-flex justify-content-center">
@@ -471,7 +532,7 @@ export default function CryptoMainPage() {
                                 </div>
                                 <div className="price-section">
                                     <div className="d-flex justify-content-center">
-                                        <span className="text-center">900 BUSD</span>
+                                        <span className="text-center">{Station_Legendary_limit_price} BUSD</span>
                                         <img src={busd} alt="" />
                                     </div>
                                     <div className="d-flex justify-content-center">
