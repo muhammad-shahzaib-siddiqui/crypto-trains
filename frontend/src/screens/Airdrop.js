@@ -36,7 +36,7 @@ const Airdrop = () => {
     const [share,setShare]=useState()
     console.log(addr)
 
-    const typeSelect = parseInt(select)
+    const [typeSelect,setTypeSelect] = useState()
     console.log("select", typeSelect)
 
     const loadProvider = async () => {
@@ -75,8 +75,10 @@ const Airdrop = () => {
             let signer = await loadProvider()
             let NFTContract = new ethers.Contract(nft_addr, NFT, signer);
             let meta = generate(typeSelect)
-            // let acc = ethers.utils.getAddress( addr )
-            console.log("meta", meta)
+            console.log({typeSelect})
+            let acc = ethers.utils.getAddress( airdropAddr )
+             console.log("meta", meta)
+            console.log({airdropAddr})
 
             let drop = await NFTContract.AirDrop(meta, airdropAddr, typeSelect)
             let tx = await drop.wait()
@@ -234,8 +236,8 @@ const Airdrop = () => {
 
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
                                     <Form.Label>Select NFT Type</Form.Label>
-                                    <Form.Select aria-label="Default select example">
-                                        <option>Select Type</option>
+                                    <Form.Select value={typeSelect} onChange={(e)=>setTypeSelect(e.target.value)} aria-label="Default select example" name="select">
+                                        <option >Select Type</option>
                                         <option value="0">GOODS TRAIN</option>
                                         <option value="1">VILLAGE TRAIN</option>
                                         <option value="2">CITY TRAIN</option>
@@ -249,7 +251,7 @@ const Airdrop = () => {
 
 
                             </Form>
-                            <button className='custom-btn btn-white' onClick={airDrop} >Submit</button>
+                            <button className='custom-btn btn-white' onClick={()=>airDrop()} >Submit</button>
                         </div>
                     </Col>
                 </Row>
