@@ -159,18 +159,35 @@ export default function CryptoMainPage() {
             let signer = await loadProvider()
             console.log("number", no)
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
+            let whitelist = await NFTCrowdsaleContract.whitelist(account)
+            if(whitelist){
+
+            
             let BUSDContract = new ethers.Contract(BUSD_addr, BUSD, signer)
             let _value = await NFTCrowdsaleContract.getPrice(no)
-            let _value1 = await NFTCrowdsaleContract.Train_common()
-            // let _value = await ethers.utils.parseEther('0.3')
             let uri = generate(no)
-            console.log("uri>>>", uri)
             console.log("value>>", _value.toString())
-            let allowance = await BUSDContract.increaseAllowance(nftPreSale_addr, _value)
-            let allowanceTX = await allowance.wait()
-            if (allowanceTX.conformation == 1) {
-                let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri, { value: _value })
-
+            let allowanceCheck = await BUSDContract.allowance(account,nftPreSale_addr)
+            allowanceCheck = parseInt(allowanceCheck.toString())
+            console.log("allowance :",allowanceCheck);
+            if(allowanceCheck < parseInt(_value.toString())){
+                let allowance = await BUSDContract.approve(nftPreSale_addr, _value)
+                let allowanceTX = await allowance.wait()
+                if (allowanceTX && allowanceTX.blockNumber) {
+                        let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri)
+                        let tx = await buy.wait()
+                        let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
+                        setPurchased(parseInt(userPurchased.toString()))
+                        console.log("purchased", purchased)
+                        console.log("userPurchased", userPurchased)
+                        if (tx.confirmations == 1) {
+                            loadLimit()
+                            handleShow()
+                        }
+                }                            
+            }else{
+                let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri)
+        
                 let tx = await buy.wait()
                 let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
                 setPurchased(parseInt(userPurchased.toString()))
@@ -182,6 +199,22 @@ export default function CryptoMainPage() {
                     handleShow()
                 }
             }
+            // let allowance = await BUSDContract.increaseAllowance(nftPreSale_addr, _value)
+            // let allowanceTX = await allowance.wait()
+            // if (allowanceTX.conformation == 1) {
+            //     let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri, { value: _value })
+
+            //     let tx = await buy.wait()
+            //     let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
+            //     setPurchased(parseInt(userPurchased.toString()))
+            //     console.log("purchased", purchased)
+
+            //     console.log("userPurchased", userPurchased)
+            //     if (tx.confirmations == 1) {
+            //         loadLimit()
+            //         handleShow()
+            //     }
+            // }
             // let buy = await NFTCrowdsaleContract.buyNFT(no, uri, { value: _value })
 
             // let tx = await buy.wait()
@@ -196,7 +229,7 @@ export default function CryptoMainPage() {
             // }
             // console.log("tx", tx)
 
-        }
+        }}
         catch (e) {
             console.log("error", e)
         }
