@@ -116,7 +116,7 @@ contract NFT is ERC721 , Ownable{
     function createToken(string memory tokenURI , address account,uint8 nftType) public returns(uint) {
         require(_owner[_msgSender()]==true,"Not authorized to mint");
         require(_tokenIds.current() < 5260 ,"all NFTs Minted");
-        require(addressMintedBalance[account] < 510000 , "You cannot have more than 5 NFTs");
+        require(addressMintedBalance[account] < 5 , "You cannot have more than 5 NFTs");
         require(inc_nftType(nftType));
         _tokenIds.increment();
         uint256 newItemId = _tokenIds.current();

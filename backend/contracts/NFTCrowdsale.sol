@@ -225,7 +225,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
             
         }
 
-            require (purchase[_msgSender()] < 500000000,"cant buy more nft");
+            require (purchase[_msgSender()] < 5,"cant buy more nft");
             require (_whitelist[_msgSender()] == true,"you are not whitelisted");
             require(_nftPurchased < limit,"All nft Sold");
     
@@ -256,7 +256,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
             price = normal_price(no);        
         }
 
-            require (purchase[_msgSender()] < 500000000,"cant buy more nft");
+            require (purchase[_msgSender()] < 5,"cant buy more nft");
             require (_whitelist[_msgSender()] == true,"you are not whitelisted");
             require(_nftPurchased < limit,"All nft Sold");
         require (!finalized,"Sale Ended");

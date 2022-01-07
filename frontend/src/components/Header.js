@@ -33,6 +33,7 @@ function Header(props) {
   const [loading1, setLoading1] = useState(0);
   const [presaleStartted, setPresaleStarted] = useState(false);
   const [status, setStatus] = useState();
+  const [shortAddress,setShortAddress] = useState()
 
   const startDate = React.useRef(Date.now());
   
@@ -131,6 +132,10 @@ function Header(props) {
         try {
           startSaleTime();
           limitationTime()
+          let len = account.length 
+          let short = account.slice(0, 4)+"..." + account.slice(len-5, len-1)
+          setShortAddress(short);
+          
         } catch (error) {
           console.log(error);
         }
@@ -225,7 +230,7 @@ function Header(props) {
               </Link>
             </div>
 
-            <a className="custom-btn btn-white justify-content-center">
+            <a  className="custom-btn btn-white">
               {/* {<img  src="./assets/img/metamask.png" alt="" />} */}
               {active ? (
                 <div
@@ -237,7 +242,7 @@ function Header(props) {
                   }}
                 >
                   {/* <img height="27" src={metamask} alt="" /> */}
-                  <p>{account}</p>
+                  <span>{shortAddress}</span>
                 </div>
               ) : (
                 <div

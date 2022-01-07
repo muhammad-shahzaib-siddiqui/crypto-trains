@@ -202,7 +202,6 @@ export default function CryptoMainPage() {
             let _value = await NFTCrowdsaleContract.getPrice(no)
             let uri = generate(no)
             console.log("value>>", _value.toString())
-<<<<<<< HEAD
             let allowanceCheck = await BUSDContract.allowance(account,nftPreSale_addr)
             allowanceCheck = parseInt(allowanceCheck.toString())
             console.log("allowance :",allowanceCheck);
@@ -224,30 +223,6 @@ export default function CryptoMainPage() {
             }else{
                 let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri)
         
-=======
-            let allowance = await BUSDContract.increaseAllowance(nftPreSale_addr, _value)
-            let allowanceTX = await allowance.wait()
-            console.log("allowanceTX>>", allowanceTX)
-            if (allowanceTX.conformation == 1) {
-                console.log("started")
-                // let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri, { value: _value })
-
-                // let tx = await buy.wait()
-                // console.log("tx>>>", tx)
-                // let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
-                // setPurchased(parseInt(userPurchased.toString()))
-                // console.log("purchased", purchased)
-
-                // console.log("userPurchased", userPurchased)
-                // if (tx.confirmations == 1) {
-                //     loadLimit()
-                //     handleShow()
-                // }
-            }
-            else{
-                 let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri, { value: _value })
-
->>>>>>> baff88ce43ddb67ae8ebe4bb24e29b2cafcee3df
                 let tx = await buy.wait()
                 console.log("tx>>>", tx)
                 let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
@@ -342,7 +317,7 @@ export default function CryptoMainPage() {
                     <h1 className="green-head">You are WHITELISTED</h1>
                 </>
                     : <>
-                        <h1 className="red-head">Connect to Your Wallet</h1>
+                        <h1 className="red-head">You are not WHITELISTED</h1>
                     </>
             }
             <div className="container-fluid">

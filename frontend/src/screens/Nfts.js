@@ -135,10 +135,10 @@ let journal = [
             setTwo(_two)
             setThree(_three)
             setFour(_four)
-            setFour(_five)
+            setFive(_five)
             setSix(_six)
             
-            console.log("QUANTITY ZERO",_two);
+           
 
             
             setBalance(balance)
@@ -207,6 +207,10 @@ let journal = [
                 }
                 {
                     five>0 ? ( <MyNft image={train6} name={"CITY STATION"} qty={five} category={"EPIC"}/>):null
+                
+                }
+                {
+                    six>0 ? ( <MyNft image={train7} name={"HIGH-SPEED STATION"} qty={six} category={"LEGENDARY"}/>):null
                 
                 }
 
