@@ -37,7 +37,7 @@ const Airdrop = () => {
     console.log(addr)
 
     const typeSelect = parseInt(select)
-    console.log("select", typeSelect)
+    console.log("select", airdropAddr)
 
     const loadProvider = async () => {
         try {

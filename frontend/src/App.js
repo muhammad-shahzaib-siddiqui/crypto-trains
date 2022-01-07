@@ -25,7 +25,6 @@ function App() {
       }
       <BrowserRouter>
       <Header setErrorMessage={setErrorMessage}/>
-      {/* <Time /> */}
       <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/myNft" element={<Nfts />} />
