@@ -317,7 +317,7 @@ export default function CryptoMainPage() {
                     <h1 className="green-head">You are WHITELISTED</h1>
                 </>
                     : <>
-                        <h1 className="red-head">Connect to Your Wallet</h1>
+                        <h1 className="red-head">You are not WHITELISTED</h1>
                     </>
             }
             <div className="container-fluid">

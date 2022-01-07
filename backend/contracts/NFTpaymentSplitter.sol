@@ -37,7 +37,7 @@ contract NFTpaymentSplitter is Context {
     address PreDevelopment = address(0x0259FC8c828255fA7b90D928b3939f6944475ba7) ;
 
     uint256[] shares_ = [2375,2375,2375,2375,500];
-    address[] payees = [address(0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266),Development,Pool,Contingencies,PreDevelopment];
+    address[] payees = [address(0x3B2FA3fB4c7eD3bC495F276DC60782b635bB04d9),Development,Pool,Contingencies,PreDevelopment];
 
  constructor() payable {
         require(payees.length == shares_.length, "PaymentSplitter: payees and shares length mismatch");
@@ -113,6 +113,14 @@ contract NFTpaymentSplitter is Context {
 
         SafeERC20.safeTransfer(BUSD, account, payment);
         emit ERC20PaymentReleased(BUSD, account, payment);
+    }
+
+    function pendingBUSD(address account) public view returns(uint256){
+         require(_shares[account] > 0, "PaymentSplitter: account has no shares");
+
+        uint256 totalReceived = BUSD.balanceOf(address(this)) + totalReleased(BUSD);
+        uint256 payment = _pendingPayment(account, totalReceived, released(BUSD, account));
+        return payment;
     }
 
      function _pendingPayment(

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import logo from '../assets/img/logo.png';
-import { Col, Form, Row } from 'react-bootstrap';
+import { Col, Form, Modal, Row } from 'react-bootstrap';
 import { Button } from 'bootstrap';
 
 import { ethers, BigNumber } from 'ethers'
-import { nft_addr, nftPreSale_addr } from "../contract/addresses"
+import {nft_addr, nftPreSale_addr, BUSD_addr , nFTpaymentSplitter_addr} from "../contract/addresses"
 import NFT from "../contract/NFT.json";
 import NFTCrowdsale from "../contract/NFTCrowdsale.json"
+import NFTpaymentSplitter from "../contract/NFTpaymentSplitter.json"
+import BUSD from "../contract/BUSD.json"
 import Web3Modal from 'web3modal'
 import { useWeb3React } from "@web3-react/core";
 import { generate } from "../components/metadata";
@@ -30,6 +32,8 @@ const Airdrop = () => {
     const [startTime, setStartTime] = useState()
     const [select, setSelect] = useState()
     const [airdropAddr, setAirdropAddr] = useState()
+    const [totalValue,setTotalValue]=useState()
+    const [share,setShare]=useState()
     console.log(addr)
 
     const typeSelect = parseInt(select)
@@ -54,7 +58,7 @@ const Airdrop = () => {
             let signer = await loadProvider()
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer);
             console.log("account", account)
-            let startSale = await NFTCrowdsaleContract.startSale([addr], nft_addr, startTime)
+            let startSale = await NFTCrowdsaleContract.startSale(whitelist, nft_addr, startTime)
             let tx = await startSale.wait()
 
             console.log("startSale", startSale)
@@ -83,13 +87,59 @@ const Airdrop = () => {
         }
     }
 
+    const loadShare = async () => {
+        try {
+            let signer = await loadProvider()
+            let BUSDContract = new ethers.Contract(BUSD_addr, BUSD, signer)
+            let balance = await BUSDContract.balanceOf(nFTpaymentSplitter_addr)
+            let NFTpaymentSplitterContract = new ethers.Contract(nFTpaymentSplitter_addr, NFTpaymentSplitter, signer);
+            let myShare = await NFTpaymentSplitterContract.pendingBUSD(account)
+            setShare(ethers.utils.formatEther(myShare))
+            setTotalValue(ethers.utils.formatEther(balance))    
 
+           console.log("balancee :",balance)
+
+
+            // console.log("taaaaaaaaaaaaiiiiiiiiiiiiinnnnnnnnnnn: ", data.toString())
+        } catch (error) {
+            console.log("data :", error)
+        }
+    }
+
+    const retrieve = async () => {
+        try {
+            let signer = await loadProvider()
+            let NFTpaymentSplitterContract = new ethers.Contract(nFTpaymentSplitter_addr, NFTpaymentSplitter, signer);
+            let myShare = await NFTpaymentSplitterContract.releaseBUSD(account)
+            let tx = await myShare.wait()
+           
+
+          
+
+
+            // console.log("taaaaaaaaaaaaiiiiiiiiiiiiinnnnnnnnnnn: ", data.toString())
+        } catch (error) {
+            console.log("data :", error)
+        }
+    }
+    const [whitelist, setWhitelist] = useState([])
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    function onKeyUp(event) {
+        if (event.charCode === 13) {
+            whitelist.push(event.target.value)
+            event.target.value = '';
+        }
+    }
 
 
     useEffect(() => {
         (async () => {
             if (account) {
                 try {
+                    loadShare()
 
                 } catch (error) {
                     console.log(error)
@@ -101,16 +151,35 @@ const Airdrop = () => {
 
     return (
         <div>
-
             <div className="container-fluid">
+            
                 <Row>
                     <Col lg={5} className='m-auto'>
+                    
                         <div className='custom-form'>
-                            <h1 className='text-white'>Pre-Sale</h1>
+                        <h1 className='text-white'>Amount Raised</h1>
+                        
+                        <p className='text-white' style={{fontSize:'20px'}}>Total BUSD : {totalValue} BUSD</p>
+                        <p className='text-white' style={{fontSize:'20px'}}>Your Share : {share} BUSD</p>
+                        <button onClick={()=>retrieve()} className='custom-btn btn-white'>Retrieve</button>
+                       
+                        </div>
+                    </Col>
+                </Row>
+
+            </div>
+            <div className="container-fluid">
+           
+                <Row>
+                    <Col lg={5} className='m-auto'>
+                    
+                        <div className='custom-form'>
+                        
+                            <h1 className='text-white'>Start Pre-Sale</h1>
                             <Form>
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
                                     <Form.Label>Whitelist Addresses</Form.Label>
-                                    <Form.Control type="text" placeholder="Whitelist Addresses" onChange={(e) => setAddr(e.target.value)} />
+                                    <Form.Control type="text" placeholder="Whitelist Addresses" onKeyPress={(e)=>onKeyUp(e)} />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -119,8 +188,34 @@ const Airdrop = () => {
                                 </Form.Group>
 
                             </Form>
-                            <button onClick={startSale} >Submit</button>
-                        </div>
+                            <button onClick={startSale} className='custom-btn btn-white'>Submit</button>
+                            <button className='custom-btn btn-white' onClick={handleShow}>
+        View
+      </button>
+
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+        className='custom-modal'>
+        <Modal.Header closeButton>
+          <Modal.Title>Whitelist</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ul className='whitelist'>
+          {whitelist.map(animal => (
+            <li>{animal}</li>
+            ))}
+          </ul>
+        </Modal.Body>
+        <Modal.Footer>
+          <button className='custom-btn btn-white'  onClick={handleClose}>
+            Close
+          </button>
+     
+        </Modal.Footer>
+      </Modal>                        </div>
                     </Col>
                 </Row>
 
@@ -154,7 +249,7 @@ const Airdrop = () => {
 
 
                             </Form>
-                            <button onClick={airDrop} >Submit</button>
+                            <button className='custom-btn btn-white' onClick={airDrop} >Submit</button>
                         </div>
                     </Col>
                 </Row>

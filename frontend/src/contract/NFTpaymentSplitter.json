@@ -5,6 +5,7 @@
   "event PaymentReceived(address,uint256)",
   "event PaymentReleased(address,uint256)",
   "function payee(uint256) view returns (address)",
+  "function pendingBUSD(address) view returns (uint256)",
   "function release(address)",
   "function releaseBUSD(address)",
   "function released(address,address) view returns (uint256)",

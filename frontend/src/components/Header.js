@@ -36,6 +36,8 @@ function Header(props) {
   const [status, setStatus] = useState();
   const [countDown, setCountDown] = React.useState(0);
 const [runTimer, setRunTimer] = React.useState(false);
+const [shortAddress,setShortAddress] = useState()
+
 
   const startDate = React.useRef(Date.now());
   
@@ -119,6 +121,10 @@ const [runTimer, setRunTimer] = React.useState(false);
         try {
           startSaleTime();
           limitationTime()
+          let len = account.length 
+          let short = account.slice(0, 4)+"..." + account.slice(len-5, len-1)
+          setShortAddress(short);
+          
         } catch (error) {
           console.log(error);
         }
@@ -181,7 +187,7 @@ const [runTimer, setRunTimer] = React.useState(false);
         return (
           <>
             <h1>
-          DISCOUNT STARTSa IN: {days} DAYS {hours} H {minutes} Minutes{" "}
+          DISCOUNT STARTS IN: {days} DAYS {hours} H {minutes} Minutes{" "}
           {seconds} SEC
         </h1>
           </>
@@ -215,7 +221,7 @@ const [runTimer, setRunTimer] = React.useState(false);
               </Link>
             </div>
 
-            <a className="custom-btn btn-white justify-content-center">
+            <a  className="custom-btn btn-white">
               {/* {<img  src="./assets/img/metamask.png" alt="" />} */}
               {active ? (
                 <div
@@ -227,7 +233,7 @@ const [runTimer, setRunTimer] = React.useState(false);
                   }}
                 >
                   {/* <img height="27" src={metamask} alt="" /> */}
-                  <p>{account}</p>
+                  <span>{shortAddress}</span>
                 </div>
               ) : (
                 <div

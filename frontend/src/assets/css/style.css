@@ -228,3 +228,9 @@ body{
     color: white;
     font-size: 20px;
 }
+.whitelist li{
+    list-style: none;
+    text-align: left;
+    border-bottom: 1px solid;
+    padding-bottom: 1rem;
+}
