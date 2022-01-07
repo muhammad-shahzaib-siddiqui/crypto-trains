@@ -191,7 +191,7 @@ function Header(props) {
       return (
         <>
           <h1>
-        DISCOUNT STARTSa IN: {days} DAYS {hours} H {minutes} Minutes{" "}
+        DISCOUNT ENDS IN: {days} DAYS {hours} H {minutes} Minutes{" "}
         {seconds} SEC
       </h1>
         </>
@@ -261,10 +261,10 @@ function Header(props) {
           {console.log("timer>>>>>>>>>", parseInt(timer))}
           {console.log("discountTime>>>>>>>>>",discountTime)}
           {console.log("Status>>>>>>>>>", status)}
-         {status === false && loading==1 ? (<div> {console.log("timer>>>>>>>>>", timer)} <Countdown date={startDate.current + timer * 1000}  renderer={renderer} autoStart={true} /></div>) :  status == true &&
+         {status === false && loading==1 ? (<div> {console.log("timer>>>>>>>>>", timer)} <Countdown date={startDate.current + timer * 1000} key="first"  onMount={console.log("first mount")} renderer={renderer} autoStart={true} /></div>) :  status == true &&
           loading1 ==1 &&
          discountTime > 0 ?(<div>
-          <Countdown date={Date.now() + discountTime * 1000} renderer={renderer2} autoStart={true} />
+          <Countdown date={Date.now() + discountTime * 1000} key="second" onMount={console.log("second mount")} renderer={renderer2} autoStart={true} />
           {console.log("Timee>>", Timeee)}
             </div>): null }
 

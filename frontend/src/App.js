@@ -7,6 +7,7 @@ import Home from "./components/Home"
 import { BrowserRouter, Route, Router, Routes, Switch } from 'react-router-dom';
 import Nfts from './screens/Nfts';
 import Airdrop from './screens/Airdrop';
+import Time from './screens/Time';
 
 
 
@@ -24,6 +25,7 @@ function App() {
       }
       <BrowserRouter>
       <Header setErrorMessage={setErrorMessage}/>
+      {/* <Time /> */}
       <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/myNft" element={<Nfts />} />
