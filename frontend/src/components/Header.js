@@ -49,10 +49,10 @@ const [secondss, setSeconds] = useState()
     var minutes = Math.floor(timer % 3600 / 60);
     var seconds = Math.floor(timer % 60); 
     
-    console.log("days", days);
-    console.log("hours", hours);
-    console.log("minutes", minutes);
-    console.log("seconds", seconds);
+    // console.log("days", days);
+    // console.log("hours", hours);
+    // console.log("minutes", minutes);
+    // console.log("seconds", seconds);
 
   // console.log("Timeee", Timeee)
 
@@ -84,11 +84,11 @@ const [secondss, setSeconds] = useState()
       let startime = await NFTCrowdsaleContract.startTime();
       setStatus(await NFTCrowdsaleContract.getTimeStatus()); 
       if (status == false) {
-        console.log("disssss");
+        // console.log("disssss");
 
         setTimer(startime.toNumber());
       }
-      console.log("timeStatus", status);
+      // console.log("timeStatus", status);
       setLoading(1);
     } catch (e) {
       console.log("data", e);
@@ -108,12 +108,12 @@ const [secondss, setSeconds] = useState()
       // setStatus(await NFTCrowdsaleContract.getTimeStatus()); 
       startDiscountTime = await NFTCrowdsaleContract.discountTime();
       if (status == true) {
-        console.log("disssss");
+        // console.log("disssss");
          setDiscountTime(startDiscountTime);
          setLoading1(1)
       }
       
-      console.log("DiscounttimeStatus", status);
+      // console.log("DiscounttimeStatus", status);
       setLoading(1);
 
     } catch (e) {
@@ -166,7 +166,7 @@ const [secondss, setSeconds] = useState()
 
 
 
-  console.log("discount", discountTime);
+  // console.log("discount", discountTime);
 
 
 
@@ -192,7 +192,7 @@ const [secondss, setSeconds] = useState()
       }
     }
 
-  console.log("is active check = ", active);
+  // console.log("is active check = ", active);
   return (
     <div>
       <nav className="custom-padding custom-padd-mobile">
@@ -245,8 +245,8 @@ const [secondss, setSeconds] = useState()
 
       <div>
         <div className="top-bar">
-          {console.log("statyus", status)}
-          {console.log("timer>>>", timer)}
+          {/* {console.log("statyus", status)}
+          {console.log("timer>>>", timer)} */}
           {status == false && discountTime <= 0 ? timer <= 0 ? (<div><h1>PRESALE WILL BE START SOON</h1></div>):  (<div><h1>PRESALE STARTS IN {dayss} dAYS {hourss} HOURS {minutess} MINUTES {secondss} SECONDS</h1></div>) : status == true && discountTime > 0 ? (<div> <Countdown date={Date.now() + discountTime * 1000} key="discount" renderer={renderer2}  autoStart={true} /></div>) : <div><h1>PRESALE HAS BEEN STARTED</h1></div>}
          {/* {status === false && loading==1 && timer > 0 ? (<div>PRESALE STARTS IN: {minutes}:{seconds}</div>) :  status == true &&
           loading1 ==1 &&

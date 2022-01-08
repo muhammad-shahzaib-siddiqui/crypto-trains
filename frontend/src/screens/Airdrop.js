@@ -34,10 +34,10 @@ const Airdrop = () => {
     const [airdropAddr, setAirdropAddr] = useState()
     const [totalValue,setTotalValue]=useState()
     const [share,setShare]=useState()
-    console.log(addr)
+    // console.log(addr)
 
     const [typeSelect,setTypeSelect] = useState()
-    console.log("select", typeSelect)
+    // console.log("select", typeSelect)
 
     const loadProvider = async () => {
         try {
@@ -57,11 +57,11 @@ const Airdrop = () => {
 
             let signer = await loadProvider()
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer);
-            console.log("account", account)
+            // console.log("account", account)
             let startSale = await NFTCrowdsaleContract.startSale(whitelist, nft_addr, startTime)
             let tx = await startSale.wait()
 
-            console.log("startSale", startSale)
+            // console.log("startSale", startSale)
         } catch (e) {
             console.log("data", e)
         }
@@ -75,10 +75,10 @@ const Airdrop = () => {
             let signer = await loadProvider()
             let NFTContract = new ethers.Contract(nft_addr, NFT, signer);
             let meta = generate(typeSelect)
-            console.log({typeSelect})
+            // console.log({typeSelect})
             let acc = ethers.utils.getAddress( airdropAddr )
-             console.log("meta", meta)
-            console.log({airdropAddr})
+            //  console.log("meta", meta)
+            // console.log({airdropAddr})
 
             let drop = await NFTContract.AirDrop(meta, airdropAddr, typeSelect)
             let tx = await drop.wait()
@@ -99,7 +99,7 @@ const Airdrop = () => {
             setShare(ethers.utils.formatEther(myShare))
             setTotalValue(ethers.utils.formatEther(balance))    
 
-           console.log("balancee :",balance)
+        //    console.log("balancee :",balance)
 
 
             // console.log("taaaaaaaaaaaaiiiiiiiiiiiiinnnnnnnnnnn: ", data.toString())

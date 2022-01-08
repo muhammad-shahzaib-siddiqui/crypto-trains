@@ -17,10 +17,10 @@ const Time = () => {
     
     
 
-    console.log("days", days);
-    console.log("hours", hours);
-    console.log("minutes", minutes);
-    console.log("seconds", seconds);
+    // console.log("days", days);
+    // console.log("hours", hours);
+    // console.log("minutes", minutes);
+    // console.log("seconds", seconds);
     
     useEffect(() => {
       // exit early when we reach 0

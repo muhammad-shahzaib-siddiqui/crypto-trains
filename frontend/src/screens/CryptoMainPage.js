@@ -158,7 +158,7 @@ export default function CryptoMainPage() {
     }
 
 
-    console.log("Train_common_limit", Train_common_limit_price)
+    // console.log("Train_common_limit", Train_common_limit_price)
 
     const loadWhiteList = async () => {
         try {
@@ -192,7 +192,7 @@ export default function CryptoMainPage() {
     const buynft = async (no) => {
         try {
             let signer = await loadProvider()
-            console.log("number", no)
+            // console.log("number", no)
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
             let whitelist = await NFTCrowdsaleContract.whitelist(account)
             if(whitelist){
@@ -201,10 +201,10 @@ export default function CryptoMainPage() {
             let BUSDContract = new ethers.Contract(BUSD_addr, BUSD, signer)
             let _value = await NFTCrowdsaleContract.getPrice(no)
             let uri = generate(no)
-            console.log("value>>", _value.toString())
+            // console.log("value>>", _value.toString())
             let allowanceCheck = await BUSDContract.allowance(account,nftPreSale_addr)
             allowanceCheck = parseInt(allowanceCheck.toString())
-            console.log("allowance :",allowanceCheck);
+            // console.log("allowance :",allowanceCheck);
             if(allowanceCheck < parseInt(_value.toString())){
                 let allowance = await BUSDContract.approve(nftPreSale_addr, _value)
                 let allowanceTX = await allowance.wait()
@@ -213,8 +213,8 @@ export default function CryptoMainPage() {
                         let tx = await buy.wait()
                         let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
                         setPurchased(parseInt(userPurchased.toString()))
-                        console.log("purchased", purchased)
-                        console.log("userPurchased", userPurchased)
+                        // console.log("purchased", purchased)
+                        // console.log("userPurchased", userPurchased)
                         if (tx.confirmations == 1) {
                             loadLimit()
                             handleShow()
@@ -224,12 +224,12 @@ export default function CryptoMainPage() {
                 let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri)
         
                 let tx = await buy.wait()
-                console.log("tx>>>", tx)
+                // console.log("tx>>>", tx)
                 let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
                 setPurchased(parseInt(userPurchased.toString()))
-                console.log("purchased", purchased)
+                // console.log("purchased", purchased)
 
-                console.log("userPurchased", userPurchased)
+                // console.log("userPurchased", userPurchased)
                 if (tx.confirmations == 1) {
                     loadLimit()
                     handleShow()
