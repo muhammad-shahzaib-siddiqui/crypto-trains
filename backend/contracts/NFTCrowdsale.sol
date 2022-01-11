@@ -121,7 +121,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         }
        
         start = block.timestamp + (startTime * 1 seconds);
-        limitationtime = start +14400+  1 seconds;
+        limitationtime = start +500+  1 seconds;
     }
  
     fallback () external payable { 
