@@ -70,28 +70,29 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     mapping (address => uint256) private msgValue;
     uint256 public start;
     uint256 public limitationtime;
+    uint256 public endTime;
     mapping(address => bool) private _whitelist;
    
     constructor( address payable wallet_ ){
         _wallet = wallet_;
         start = 0;
         limitationtime = 0;
-        discounted_Train_common=250 ether;//0
-        discounted_Train_rare=550 ether;//1
-        discounted_Train_epic=900 ether;//2
-        discounted_Train_legendary=250 ether;//3
-        discounted_Station_common=1100 ether;//4
-        discounted_Station_mitic=1800 ether;//5
-        discounted_Station_Legendary=900 ether;//6
+        discounted_Train_common=55 ether;//0
+        discounted_Train_rare=110 ether;//1
+        discounted_Train_epic=220 ether;//2
+        discounted_Train_legendary=550 ether;//3
+        discounted_Station_common=275 ether;//4
+        discounted_Station_mitic=550 ether;//5
+        discounted_Station_Legendary=1100 ether;//6
 
 
-    Train_common=300 ether;//0
-    Train_rare=600 ether;//1
-    Train_epic=1000 ether;//2
-    Train_legendary=1100 ether;//3
-    Station_common=1300 ether;//4
-     Station_mitic=1400 ether;//5
-     Station_Legendary=1500 ether;
+        Train_common=55 ether;//0
+        Train_rare=110 ether;//1
+        Train_epic=220 ether;//2
+        Train_legendary=550 ether;//3
+        Station_common=275 ether;//4
+        Station_mitic=550 ether;//5
+        Station_Legendary=1100 ether;
 
      BUSD = IERC20(0xA41e502175D8086225B83b77883986C0dA0B04C7);
         }
@@ -121,7 +122,12 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         }
        
         start = block.timestamp + (startTime * 1 seconds);
+<<<<<<< HEAD
         limitationtime = start +500+  1 seconds;
+=======
+        limitationtime = start + 3600 *  1 seconds;
+        endTime = start + 2 weeks * 1 seconds;
+>>>>>>> 347af1edab27511e6bc7f313bfa512db6fc4d729
     }
  
     fallback () external payable { 
@@ -214,51 +220,51 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     }
 
     
-    function buyNFT(uint8 no,string memory uri) public nonReentrant payable {
-        require(start<block.timestamp && start !=0,"Sale not started");
-        uint256 price;
-        if(block.timestamp<limitationtime){
-            price = discount_price(no);
+    // function buyNFT(uint8 no,string memory uri) public nonReentrant payable {
+    //     require(start<block.timestamp && start !=0,"Sale not started");
+    //     uint256 price;
+    //     if(block.timestamp<limitationtime){
+    //         price = discount_price(no);
             
-        }else{
-            price = normal_price(no);
+    //     }else{
+    //         price = normal_price(no);
             
-        }
+    //     }
 
-            require (purchase[_msgSender()] < 5,"cant buy more nft");
-            require (_whitelist[_msgSender()] == true,"you are not whitelisted");
-            require(_nftPurchased < limit,"All nft Sold");
+    //         require (purchase[_msgSender()] < 5,"cant buy more nft");
+    //         require (_whitelist[_msgSender()] == true,"you are not whitelisted");
+    //         require(_nftPurchased < limit,"All nft Sold");
     
        
-        require (!finalized,"Sale Ended");
-        uint256 weiAmount = msg.value;
-        require (weiAmount ==  price,"please provide exact amount for one NFT");
+    //     require (!finalized,"Sale Ended");
+    //     uint256 weiAmount = msg.value;
+    //     require (weiAmount ==  price,"please provide exact amount for one NFT");
 
-        nft.createToken(uri,_msgSender(),no);
+    //     nft.createToken(uri,_msgSender(),no);
 
         
-        _nftPurchased ++;
+    //     _nftPurchased ++;
 
-        purchase[_msgSender()]++;
+    //     purchase[_msgSender()]++;
 
-        // update state
-        _weiRaised = _weiRaised.add(weiAmount);
+    //     // update state
+    //     _weiRaised = _weiRaised.add(weiAmount);
 
-        _wallet.transfer(weiAmount);   
-    }
+    //     _wallet.transfer(weiAmount);   
+    // }
 
     function buyNFTV1(uint8 no,string memory uri) public nonReentrant payable {
+        require(endTime>block.timestamp,"Sale has ended");
         require(start<block.timestamp && start !=0,"Sale not started");
         uint256 price;
         if(block.timestamp<limitationtime){
+            require (_whitelist[_msgSender()] == true,"you are not whitelisted");
             price = discount_price(no);    
         }else{
             price = normal_price(no);        
         }
-
-            require (purchase[_msgSender()] < 5,"cant buy more nft");
-            require (_whitelist[_msgSender()] == true,"you are not whitelisted");
-            require(_nftPurchased < limit,"All nft Sold");
+        require (purchase[_msgSender()] < 5,"cant buy more nft");
+        require(_nftPurchased < limit,"All nft Sold");
         require (!finalized,"Sale Ended");
         require (BUSD.allowance(_msgSender(), address(this))>=price,"please Approve exact amount for one NFT");
 
