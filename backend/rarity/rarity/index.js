@@ -736,7 +736,7 @@ emptyArr.forEach((x) => {
 });
 
 console.log("================= TOTAL COUNT =================");
-console.log(counts);
+// console.log(counts);
 
 // view the total percentage of each attribute generated
 Object.entries(counts).forEach((e) => {
@@ -744,4 +744,4 @@ Object.entries(counts).forEach((e) => {
 });
 
 console.log("================= TOTAL PERCENTAGE =================");
-console.log(counts);
+// console.log(counts);

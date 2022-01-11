@@ -86,10 +86,10 @@ let journal = [
             let counter = 0
             for(var i = 0; i < balanceOf; i++) {
               let id = await NFTCrowdsaleContract.tokenOfOwnerByIndex(account,i);
-                console.log("all indexes",id.toString());
+                // console.log("all indexes",id.toString());
                 let tokenType = await NFTCrowdsaleContract.tokenType(id)
                 let token = tokenType.toNumber()
-                console.log("tokenType", token)
+                // console.log("tokenType", token)
                 arr.push(token)
                 console.log("arr", arr)
                 if(token == 0) {
@@ -143,7 +143,7 @@ let journal = [
             
             setBalance(balance)
             
-            console.log("balanceOf", balance)
+            // console.log("balanceOf", balance)
            
             // console.log("signer", signer)
 
@@ -214,7 +214,7 @@ let journal = [
 
                   
                 
-               { console.log('====>',journal[type1] && journal[type1].name)}
+               {/* { console.log('====>',journal[type1] && journal[type1].name)} */}
                 
             </div>
         </div>

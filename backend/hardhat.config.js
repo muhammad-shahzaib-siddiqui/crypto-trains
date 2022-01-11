@@ -7,7 +7,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
 
   for (const account of accounts) {
-    console.log(account.address);
+    // console.log(account.address);
   }
 });
 
@@ -30,6 +30,12 @@ module.exports = {
       url: `https://eth-rinkeby.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
       accounts: [`0x${privateKey}`],
     },
+    mainnet: {
+      url: "https://bsc-dataseed.binance.org/",
+      chainId: 56,
+      gasPrice: 20000000000,
+      accounts: [`0x${privateKey}`],
+    }
   },
   abiExporter: {
     path: '../frontend/src/contract',
