@@ -122,12 +122,8 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         }
        
         start = block.timestamp + (startTime * 1 seconds);
-<<<<<<< HEAD
-        limitationtime = start +500+  1 seconds;
-=======
-        limitationtime = start + 3600 *  1 seconds;
-        endTime = start + 2 weeks * 1 seconds;
->>>>>>> 347af1edab27511e6bc7f313bfa512db6fc4d729
+        limitationtime = start +200+  1 seconds;
+        endTime = start + 100 * 1 seconds;
     }
  
     fallback () external payable { 
@@ -167,6 +163,22 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
             return true;
         }
     }
+
+    
+     function getTimeStatusCount() public view returns(uint8){
+        if(start==0){
+            return 0;
+        }else if(start>0 && start <block.timestamp){
+            return 1;
+        }else if(block.timestamp>start && limitationtime < block.timestamp ){
+            return 2;
+        }else if(block.timestamp>limitationtime && endTime<block.timestamp ){
+            return 3;
+        }else if(block.timestamp>endTime){
+            return 4;
+        }
+     }
+
     function getPrice(uint8 no) public view returns(uint256){
         uint256 price;
         if(block.timestamp>limitationtime && start !=0){
