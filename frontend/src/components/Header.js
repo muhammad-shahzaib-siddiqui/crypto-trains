@@ -191,6 +191,10 @@ function Header(props) {
             <img className="logo" src={logo} alt="" />
           </Link>
           <div className="d-flex ">
+          <div>
+            <a href="https://pancakeswap.finance/swap?outputCurrency=0xe9e7cea3dedca5984780bafc599bd69add087d56" target="_blank"className="custom-btn btn-white" >BUY BUSD
+            </a>  
+            </div>
             <div>
               <Link to="myNft" className="custom-btn btn-white">
                 MY NFTS
