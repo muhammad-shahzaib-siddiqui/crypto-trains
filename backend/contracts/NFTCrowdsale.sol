@@ -232,8 +232,9 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
 
 
     function buyNFTV1(uint8 no,string memory uri) public nonReentrant payable {
-        require(endTime>block.timestamp,"Sale has ended");
+       
         require(start<block.timestamp && start !=0,"Sale not started");
+        require(endTime>block.timestamp,"Sale has ended");
         uint256 price;
         if(block.timestamp<limitationtime){
             require (_whitelist[_msgSender()] == true,"you are not whitelisted");

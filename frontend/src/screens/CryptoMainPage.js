@@ -53,11 +53,10 @@ export default function CryptoMainPage() {
 
     const [loading, setLoading] = useState("loading")
     const [show, setShow] = useState(false);
-    const [show1, setShow1] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const handleClose1 = () => setShow1(false);
-    const handleShow1 = () => setShow1(true);
+    // const handleClose1 = () => setShow1(false);
+    // const handleShow1 = () => setShow1(true);
     const [purchased, setPurchased] = useState()
     const [startTime, setStartTime] = useState(10000)
 
@@ -198,7 +197,7 @@ export default function CryptoMainPage() {
             // console.log("number", no)
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
             let whitelist = await NFTCrowdsaleContract.whitelist(account)
-            if(whitelist){
+           
 
             
             let BUSDContract = new ethers.Contract(BUSD_addr, BUSD, signer)
@@ -239,37 +238,9 @@ export default function CryptoMainPage() {
                     handleShow()
                 }
             }
-            // let allowance = await BUSDContract.increaseAllowance(nftPreSale_addr, _value)
-            // let allowanceTX = await allowance.wait()
-            // if (allowanceTX.conformation == 1) {
-            //     let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri, { value: _value })
+            
 
-            //     let tx = await buy.wait()
-            //     let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
-            //     setPurchased(parseInt(userPurchased.toString()))
-            //     console.log("purchased", purchased)
-
-            //     console.log("userPurchased", userPurchased)
-            //     if (tx.confirmations == 1) {
-            //         loadLimit()
-            //         handleShow()
-            //     }
-            // }
-            // let buy = await NFTCrowdsaleContract.buyNFT(no, uri, { value: _value })
-
-            // let tx = await buy.wait()
-            // let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
-            // setPurchased(parseInt(userPurchased.toString()))
-            // console.log("purchased", purchased)
-
-            // console.log("userPurchased", userPurchased)
-            // if (tx.confirmations == 1) {
-            //     loadLimit()
-            //     handleShow()
-            // }
-            // console.log("tx", tx)
-
-        }}
+        }
         catch (e) {
             console.log("error", e)
         }
@@ -346,8 +317,8 @@ export default function CryptoMainPage() {
                                         <img src={busd} alt="" />
                                     </div>
                                     <div className="d-flex justify-content-center">
-                                        <button onClick={() => {
-                                            buynft(0)
+                                        <button onClick={(e) => {
+                                           buynft(0)
 
                                         }} className="custom-btn btn-green" >Buy NFT</button>
 
@@ -541,14 +512,14 @@ export default function CryptoMainPage() {
                     <h1>{`${purchased}/5 NFT`}</h1>
                     <div className="d-flex justify-content-center">
                         <a className="custom-btn btn-white" onClick={handleClose}>KEEP BUYING</a>
-                        <Link><a className="custom-btn btn-white" onClick={handleClose}>VIEW MY NFTS</a></Link>
+                        <Link to={'/myNft'} className="custom-btn btn-white">VIEW MY NFTS</Link>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
                 </Modal.Footer>
             </Modal>
 
-            <Modal show={show1} onHide={handleClose1} className='custom-modal' size="lg"
+            {/* <Modal show={show1} onHide={handleClose1} className='custom-modal' size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
                 <Modal.Header closeButton>
@@ -565,7 +536,7 @@ export default function CryptoMainPage() {
                 </Modal.Body>
                 <Modal.Footer>
                 </Modal.Footer>
-            </Modal>
+            </Modal> */}
             {/* <div className="modal fade custom-modal" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog modal-lg modal-dialog-centered">
           <div className="modal-content">
