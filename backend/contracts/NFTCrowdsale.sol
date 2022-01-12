@@ -121,7 +121,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         }
        
         start = block.timestamp + (_startTime * 1 seconds);
-        limitationtime = start + 3600 *  1 seconds;
+        limitationtime = start + 50 *  1 seconds;
         endTime = start + 2 weeks * 1 seconds;
     }
  
@@ -230,39 +230,6 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         return block.timestamp * 1 seconds;
     }
 
-    
-    // function buyNFT(uint8 no,string memory uri) public nonReentrant payable {
-    //     require(start<block.timestamp && start !=0,"Sale not started");
-    //     uint256 price;
-    //     if(block.timestamp<limitationtime){
-    //         price = discount_price(no);
-            
-    //     }else{
-    //         price = normal_price(no);
-            
-    //     }
-
-    //         require (purchase[_msgSender()] < 5,"cant buy more nft");
-    //         require (_whitelist[_msgSender()] == true,"you are not whitelisted");
-    //         require(_nftPurchased < limit,"All nft Sold");
-    
-       
-    //     require (!finalized,"Sale Ended");
-    //     uint256 weiAmount = msg.value;
-    //     require (weiAmount ==  price,"please provide exact amount for one NFT");
-
-    //     nft.createToken(uri,_msgSender(),no);
-
-        
-    //     _nftPurchased ++;
-
-    //     purchase[_msgSender()]++;
-
-    //     // update state
-    //     _weiRaised = _weiRaised.add(weiAmount);
-
-    //     _wallet.transfer(weiAmount);   
-    // }
 
     function buyNFTV1(uint8 no,string memory uri) public nonReentrant payable {
         require(endTime>block.timestamp,"Sale has ended");

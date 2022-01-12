@@ -25,83 +25,85 @@ function Header(props) {
     errorWeb3Modal,
   } = useWeb3React();
 
-  // console.log("is active check = ", active);
-
-  // const [issalestart,setissalestart] = useState(true);
-  const [timer, setTimer] = useState(0);
-  const [discountTime, setDiscountTime] = useState(0);
-  const [loading, setLoading] = useState(0);
-  const [endTimer, setEndTimer]= useState(0)
-  
-  const [loading1, setLoading1] = useState(0);
-  const [condition, setCondition] = useState(0);
-  const [status, setStatus] = useState();
-const [shortAddress,setShortAddress] = useState()
-
-const [hourss,setHours] = useState()
-const [dayss, setDays] = useState()
-const [minutess, setMinutes] = useState()
-const [secondss, setSeconds] = useState()
-
-const [discountHourss,setDiscountEndHours] = useState()
-const [discountDayss, setDiscountEndDays] = useState()
-const [discountMinutess, setDiscountEndMinutes] = useState()
-const [discountSecondss, setDiscountEndSeconds] = useState()
-
-const [endHourss,setEndHours] = useState()
-const [endDayss, seEndDays] = useState()
-const [endMinutess, setEndMinutes] = useState()
-const [endSecondss, setEndSeconds] = useState()
-
-
-  // For Start Presale Time
-    var days = Math.floor(timer / (3600*24))
-    var hours = Math.floor(timer % (3600*24) / 3600);
-    var minutes = Math.floor(timer % 3600 / 60);
-    var seconds = Math.floor(timer % 60); 
+  const [currentTime,setCurrentTime] = useState(0);
+  const [timeState,setTimeState] = useState(0)
+  const [d,setD] = useState(0)
+  const [h,setH] = useState(0)
+  const [m,setM] = useState(0)
+  const [s,setS] = useState(0)
+  const [shortAddress,setShortAddress] = useState()
 
 
 
-    // For Sale End Time
-    var dateNow =  new Date()
-    let secondsDiff = (endTimer - (dateNow/1000))
-    var _days = Math.floor(secondsDiff/84600)-1 ;
-    var endDays = parseInt(_days)
-    console.log("endTimer>>>", endTimer)
-    var endHours = Math.floor(secondsDiff % (3600*24) / 3600);//(3600*24) / 3600)
-    var endMinutes = Math.floor(endTimer % 3600 / 60);
-    var endSeconds = Math.floor(endTimer % 60); 
-
-    // var endDays = Math.floor(endTimer / (3600*24))
-    // var endHours = Math.floor(endTimer % (3600*24) / 3600);
-    // var endMinutes = Math.floor(endTimer % 3600 / 60);
-    // var endSeconds = Math.floor(endTimer % 60); 
-
-        // For Discount Time
-
-        var dateNow =  new Date()
-        let discountDiff = (discountTime - (dateNow/1000))
-        var discount = Math.floor(discountDiff/84600)-1 ;
-        var discountDays = parseInt(discount)
-        var discountHours = Math.floor(discountTime % (3600*24) / 3600);//(3600*24) / 3600)
-        var discountMinutes = Math.floor(discountTime % 3600 / 60);
-        var discountSeconds = Math.floor(discountTime % 60); 
-        console.log("days>>>", discountTime.toString())
+ 
+        
 
 
 
 
     
-    console.log("condition", condition);
-    // console.log("minutes", minutes);
-    // console.log("seconds", seconds);
 
-  // console.log("Timeee", Timeee)
-
-  // let address = account.toString()
-  // let accountAddress = address.slice(0,3)
-  // console.log("accountAddress", accountAddress)
-  // console.log("currentDate", currentDate)
+  const Time = async () => {
+    try {
+      let signer = await loadProvider();
+      let dateNow =  new Date()
+      let current = 0
+      let timestate = 0
+      let NFTCrowdsaleContract = new ethers.Contract(
+        nftPreSale_addr,
+        NFTCrowdsale,
+        signer
+      );
+      let start = await NFTCrowdsaleContract.start();
+      let startDiff = (start - (dateNow/1000))
+      let limitationtime = await NFTCrowdsaleContract.limitationtime();
+      let limitDiff = (limitationtime - (dateNow/1000))
+      let endTime = await NFTCrowdsaleContract.endTime();
+      let endDiff = (endTime - (dateNow/1000))
+      if(parseInt(start.toString()) == 0){
+        current = 0;
+        timestate = 0
+        setCurrentTime(current)
+        console.log("time state 1:" ,timestate)
+        console.log("time  1:" ,current)
+      }else if(startDiff>0){
+        start = await NFTCrowdsaleContract.start();
+        startDiff = (start - (dateNow/1000))
+        current = parseInt(start.toString());
+        timestate = 1
+        setCurrentTime(parseInt(startDiff))
+        console.log("time state 2:" ,timestate)
+        console.log("time  2:" ,current)
+      }else if(limitDiff>0){
+        limitationtime = await NFTCrowdsaleContract.limitationtime();
+        limitDiff = (limitationtime - (dateNow/1000))
+        current = parseInt(limitationtime.toString())
+        timestate = 2
+        setCurrentTime(parseInt(limitDiff))
+        console.log("time state 2:" ,timestate)
+        console.log("time  2:" ,current)
+      }else if(endDiff>0){
+        current = parseInt(endTime.toString())
+        timestate = 3
+        endTime = await NFTCrowdsaleContract.endTime();
+        endDiff = (endTime - (dateNow/1000))
+        setCurrentTime(parseInt(endDiff))
+        console.log("time state 3:" ,timestate)
+        console.log("time  3:" ,current)
+      }else{
+        current = 0;
+        timestate = 4
+        setCurrentTime(current)
+        console.log("time state 4:" ,timestate)
+        console.log("time  4:" ,current)
+      }
+      
+      setTimeState(timestate)
+      
+    } catch (e) {
+      console.log("loadProvider: ", e);
+    }
+  };
  
 
   const loadProvider = async () => {
@@ -115,87 +117,12 @@ const [endSecondss, setEndSeconds] = useState()
     }
   };
 
-  const startSaleTime = async () => {
-    try {
-      let signer = await loadProvider();
-      let NFTCrowdsaleContract = new ethers.Contract(
-        nftPreSale_addr,
-        NFTCrowdsale,
-        signer
-      );
-      let start = await NFTCrowdsaleContract.start();
-      let startime = await NFTCrowdsaleContract.startTime();
-      setStatus(await NFTCrowdsaleContract.getTimeStatus()); 
-      if (status == false) {
-        // console.log("disssss");
-
-        setTimer(startime.toString());
-      }
-      // console.log("timeStatus", status);
-      setLoading(1);
-    } catch (e) {
-      console.log("data", e);
-    }
-  };
-
-
-  let startDiscountTime;
-  const limitationTime = async () => {
-    try {
-      let signer = await loadProvider();
-      let NFTCrowdsaleContract = new ethers.Contract(
-        nftPreSale_addr,
-        NFTCrowdsale,
-        signer
-      );
-
-      // setStatus(await NFTCrowdsaleContract.getTimeStatus()); 
-      startDiscountTime = await NFTCrowdsaleContract.discountTime();
-      if (status == true) {
-        // console.log("disssss");
-         setDiscountTime(startDiscountTime);
-         setLoading1(1)
-      }
-      
-      // console.log("DiscounttimeStatus", status);
-      setLoading(1);
-
-    } catch (e) {
-      console.log("data", e);
-    }
-  };
-
-  const endTime = async () => {
-    try{
-      let signer = await loadProvider();
-      let NFTCrowdsaleContract = new ethers.Contract(
-        nftPreSale_addr,
-        NFTCrowdsale,
-        signer
-      );
-      let getTimeStatusCount = await NFTCrowdsaleContract.getTimeStatusCount()
-      // setCondition(getTimeStatusCount.toString())
-      // console.log(getTimeStatusCount.toString())
-      let endTime = await NFTCrowdsaleContract.endTime()
-      setEndTimer(endTime.toString())
-      
-    }
-    catch(error){
-      console.log("error", error);
-    }
-  }
-
-
-
 
 
   useEffect(() => {
     (async () => {
       if (account) {
         try {
-          startSaleTime();
-          limitationTime();
-          endTime();
           let len = account.length 
           let short = account.slice(0, 4)+"..." + account.slice(len-5, len-1)
           setShortAddress(short);
@@ -205,62 +132,37 @@ const [endSecondss, setEndSeconds] = useState()
         }
       }
     })();
-  }, [account, status, condition]);
-
+  }, [account]);
 
   useEffect(() => {
-    if (!timer) return;
+    if(currentTime > 0){
+      const intervalId = setInterval(() => {
+      var _days = Math.floor(currentTime/84600)
+      if(_days>1){
+        _days = _days -1
+      }
+      var hours = Math.floor(currentTime % (3600*24) / 3600);
+      var minutes = Math.floor(currentTime % 3600 / 60);
+      var seconds = Math.floor(currentTime % 60);
+      setD(_days)
+      setH(hours)
+      setM(minutes)
+      setS(seconds)
+        console.log("Seconds :",seconds)
+        console.log("Minutes :",minutes)
+        console.log("Hours :",hours)
+        setCurrentTime(currentTime-1)
+        console.log(currentTime)
+      }, 1000);
+      return () => clearInterval(intervalId);
+    }else{
+      console.log("console")
+      Time()
+    }
     
-    setDays(days)
-    setHours(hours)
-  setMinutes(minutes)
-  setSeconds(seconds)
-  if(timer > 0){
-    const intervalId = setInterval(() => {
-      setTimer(timer - 1);
-    }, 1000);
+  }, [currentTime]);
 
-    return () => clearInterval(intervalId);
-  }
-    
-  }, [timer]);
-
-
-useEffect(() => {
-  if (!discountTime) return;
   
-  else{
-    setDiscountEndDays(discountDays)
-    setDiscountEndHours(discountHours)
-    setDiscountEndMinutes(discountMinutes)
-    setDiscountEndSeconds(discountSeconds)
-  }
-  if(discountTime > 0) {
-    const intervalId = setInterval(() => {
-      setEndTimer(discountTime - 1);
-    }, 1000);
-  
-  return () => clearInterval(intervalId);
-  }
-}, [discountTime]);
-
-useEffect(() => {
-  if (!endTimer) return;
- 
-  else{
-    seEndDays(endDays)
-  setEndHours(endHours)
-setEndMinutes(endMinutes)
-setEndSeconds(endSeconds)
-  }
-  if(endTimer > 0){
-    const intervalId = setInterval(() => {
-      setEndTimer(endTimer - 1);
-    }, 1000);
-    return () => clearInterval(intervalId);
-  }
-
-}, [endTimer]);
 
 // console.log("discount", discountTime.toString())
 
@@ -347,13 +249,13 @@ setEndSeconds(endSeconds)
 
       <div>
         <div className="top-bar">
-          {console.log("status", status)}
-          {console.log("timer>>>", timer)} 
-          {status == false && discountTime <= 0 ? timer <= 0 ? (<div><h1>PRESALE WILL BE START SOON</h1></div>):  (<div><h1>PRESALE STARTS IN {dayss} DAYS {hourss} HOURS {minutess} MINUTES {secondss} SECONDS</h1></div>) : status == true && discountTime > 0 ? (<div><h1>DISCOUNT ENDS IN {discountDayss} DAYS {discountHourss} HOURS {discountMinutess} MINUTES {discountSecondss} SECONDS</h1></div>) : 
-            timer<=0 && discountTime<=0 && endTimer>timer && endTimer>discountTime ? (<div><h1>SALE ENDS IN {endDayss} DAYS {endHourss} HOURS {endMinutess} MINUTES {endSecondss} SECONDS</h1></div>): (<div><h1>SALE HAS BEEN STARTED</h1></div>)  }
-{/* {status == false && discountTime <= 0 ? timer <= 0 ? (<div><h1>PRESALE WILL BE START SOON</h1></div>):  (<div><h1>PRESALE STARTS IN {dayss} dAYS {hourss} HOURS {minutess} MINUTES {secondss} SECONDS</h1></div>) : status == true && discountTime > 0 && timer <= 0 ? (<div> <Countdown date={Date.now() + discountTime * 1000} key="discount" renderer={renderer2}  autoStart={true} /></div>) : null}
-            {status == true && discountTime <= 0 && timer <= 0 && endTimer > 0 ? (<div><h1>SALE ENDS IN {endDayss} DAYS {endHourss} HOURS {endMinutess} MINUTES {endSecondss} SECONDS</h1></div>):  (<div><h1>PRESALE HAS BEEN STARTED</h1></div>)}  */}
-      
+          
+          {timeState == 0 ? (<div><h1>SALE WILL START SOON</h1></div>):null}
+          {timeState == 1 ? (<div><h1>SALE WILL START IN {d} DAYS {h} HOURS {m} MINUTES {s} SECONDS</h1></div>):null}
+          {timeState == 2 ? (<div><h1>SALE DISCOUNT ENDS IN {h} HOURS {m} MINUTES {s} SECONDS</h1></div>):null}
+          {timeState == 3 ? (<div><h1>SALE WILL END IN {d} DAYS {h} HOURS {m} MINUTES {s} SECONDS</h1></div>):null}
+          {timeState == 4 ? (<div><h1>SALE HAS BEEN ENDED </h1></div>):null}
+       
         </div>
       </div>
     </div>
