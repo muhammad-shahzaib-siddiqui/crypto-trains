@@ -105,7 +105,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         return purchase[account];
     }
     
-    function startSale(address[] memory accounts,address _nft,uint256 startTime) public onlyOwner {
+    function startSale(address[] memory accounts,address _nft,uint256 _startTime) public onlyOwner {
         //NFT(_nft) req
         require(address(_nft) != address(0), "NFT: token is the zero address");
         require(start == 0 ,"Sale already started");
@@ -121,7 +121,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
             }
         }
        
-        start = block.timestamp + (startTime * 1 seconds);
+        start = block.timestamp + (_startTime * 1 seconds);
         limitationtime = start + 3600 *  1 seconds;
         endTime = start + 2 weeks * 1 seconds;
     }
@@ -161,6 +161,19 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
             return false;
         }else if(block.timestamp>start){
             return true;
+        }
+    }
+    function getTimeStatusCount() public view returns(uint8){
+        if(start==0){
+            return 0;
+        }else if(start>0 && start <block.timestamp){
+            return 1;
+        }else if(block.timestamp>start && limitationtime < block.timestamp ){
+            return 2;
+        }else if(block.timestamp>limitationtime && endTime<block.timestamp ){
+            return 3;
+        }else if(block.timestamp>endTime){
+            return 4;
         }
     }
     function getPrice(uint8 no) public view returns(uint256){
