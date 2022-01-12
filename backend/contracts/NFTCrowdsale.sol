@@ -24,7 +24,6 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     address payable private _wallet;
     address payable public _manager;
 
-    
     uint256 private _rate;
     uint256 private limit = 5260;
     uint256 public min;
@@ -33,7 +32,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     uint256 public pubPrice = 0.3 ether;
 
     //dicounted price
-    uint256 public discounted_Train_common;
+    uint256 public discounted_Train_common;//0
     uint256 public discounted_Train_rare;//1
     uint256 public discounted_Train_epic;//2
     uint256 public discounted_Train_legendary;//3
@@ -77,13 +76,13 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         _wallet = wallet_;
         start = 0;
         limitationtime = 0;
-        discounted_Train_common=55 ether;//0
-        discounted_Train_rare=110 ether;//1
-        discounted_Train_epic=220 ether;//2
-        discounted_Train_legendary=550 ether;//3
-        discounted_Station_common=275 ether;//4
-        discounted_Station_mitic=550 ether;//5
-        discounted_Station_Legendary=1100 ether;//6
+        discounted_Train_common=45 ether;//0
+        discounted_Train_rare=95 ether;//1
+        discounted_Train_epic=190 ether;//2
+        discounted_Train_legendary=470 ether;//3
+        discounted_Station_common=235 ether;//4
+        discounted_Station_mitic=470 ether;//5
+        discounted_Station_Legendary=935 ether;//6
 
 
         Train_common=55 ether;//0
@@ -163,7 +162,9 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
             return true;
         }
     }
-    function getTimeStatusCount() public view returns(uint8){
+
+    
+     function getTimeStatusCount() public view returns(uint8){
         if(start==0){
             return 0;
         }else if(start>0 && start <block.timestamp){
@@ -175,7 +176,8 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         }else if(block.timestamp>endTime){
             return 4;
         }
-    }
+     }
+
     function getPrice(uint8 no) public view returns(uint256){
         uint256 price;
         if(block.timestamp>limitationtime && start !=0){

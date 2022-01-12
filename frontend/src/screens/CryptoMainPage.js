@@ -17,6 +17,7 @@ import { useWeb3React } from "@web3-react/core";
 import { Button, Modal } from 'react-bootstrap'
 import Countdown from 'react-countdown';
 import {generate} from "../components/metadata"
+import {Link} from "react-router-dom"
 
 
 
@@ -52,9 +53,11 @@ export default function CryptoMainPage() {
 
     const [loading, setLoading] = useState("loading")
     const [show, setShow] = useState(false);
-
+    const [show1, setShow1] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const handleClose1 = () => setShow1(false);
+    const handleShow1 = () => setShow1(true);
     const [purchased, setPurchased] = useState()
     const [startTime, setStartTime] = useState(10000)
 
@@ -203,6 +206,7 @@ export default function CryptoMainPage() {
             let uri = generate(no)
             // console.log("value>>", _value.toString())
             let allowanceCheck = await BUSDContract.allowance(account,nftPreSale_addr)
+            
             allowanceCheck = parseInt(allowanceCheck.toString())
             // console.log("allowance :",allowanceCheck);
             if(allowanceCheck < parseInt(_value.toString())){
@@ -222,7 +226,7 @@ export default function CryptoMainPage() {
                 }                            
             }else{
                 let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri)
-        
+                // handleShow1()
                 let tx = await buy.wait()
                 // console.log("tx>>>", tx)
                 let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
@@ -537,7 +541,26 @@ export default function CryptoMainPage() {
                     <h1>{`${purchased}/5 NFT`}</h1>
                     <div className="d-flex justify-content-center">
                         <a className="custom-btn btn-white" onClick={handleClose}>KEEP BUYING</a>
-                        <a className="custom-btn btn-white" onClick={handleClose}>VIEW MY NFTS</a>
+                        <Link><a className="custom-btn btn-white" onClick={handleClose}>VIEW MY NFTS</a></Link>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={show1} onHide={handleClose1} className='custom-modal' size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered>
+                <Modal.Header closeButton>
+                    <h3 className="modal-title" id="exampleModalLabel">CONGRATULATIONS! YOU HAVE PURCHASED YOUR NFT</h3>
+                    <button type="button" className="btn-close" ></button>
+                </Modal.Header>
+                <Modal.Body>
+                    <h1>You can buy 5 NFT per WALLET!</h1>
+                    <h1>{`${purchased}/5 NFT`}</h1>
+                    <div className="d-flex justify-content-center">
+                        <a className="custom-btn btn-white" onClick={handleClose1}>KEEP BUYING</a>
+                        <Link><a className="custom-btn btn-white" onClick={handleClose1}>VIEW MY NFTS</a></Link>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
