@@ -8,5 +8,7 @@ export const injectedConnector = new InjectedConnector({
                 5, // Goerli
                 //42, // Kovan
                 1337,
+                97,
+                56
         ]
 })

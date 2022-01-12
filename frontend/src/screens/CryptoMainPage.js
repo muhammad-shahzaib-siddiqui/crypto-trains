@@ -14,7 +14,7 @@ import NFTCrowdsale from "../contract/NFTCrowdsale.json"
 import BUSD from "../contract/BUSD.json"
 import Web3Modal from 'web3modal'
 import { useWeb3React } from "@web3-react/core";
-import { Button, Modal } from 'react-bootstrap'
+import { Button, Modal, Spinner } from 'react-bootstrap'
 import Countdown from 'react-countdown';
 import {generate} from "../components/metadata"
 import {Link} from "react-router-dom"
@@ -53,12 +53,15 @@ export default function CryptoMainPage() {
 
     const [loading, setLoading] = useState("loading")
     const [show, setShow] = useState(false);
+    const [show1, setShow1] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    // const handleClose1 = () => setShow1(false);
-    // const handleShow1 = () => setShow1(true);
     const [purchased, setPurchased] = useState()
+    const [heading, setHeading] = useState('APPROVING')
+    const [loaderstatus, setLoaderstatus] = useState('approve')
     const [startTime, setStartTime] = useState(10000)
+
+    // console.log("handleClose", show)
 
     const {
         connector,
@@ -121,13 +124,7 @@ export default function CryptoMainPage() {
             setStation_mitic(parseInt(Station_mitic.toString()))
             setStation_Legendary(parseInt(Station_Legendary.toString()))
 
-            // let Train_common = await NFTcontract.Train_common()
-            // let Train_rare = await NFTcontract.Train_rare()
-            // let Train_epic = await NFTcontract.Train_epic()
-            // let Train_legendary = await NFTcontract.Train_legendary()
-            // let Station_common = await NFTcontract.Station_common()
-            // let Station_mitic = await NFTcontract.Station_mitic()
-            // let Station_Legendary = await NFTcontract.Station_Legendary() 
+            
             
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
             let Train_common_Price = await NFTCrowdsaleContract.getPrice(0)
@@ -175,26 +172,13 @@ export default function CryptoMainPage() {
         }
     }
 
-    // const getPrice = async  (no) => {
-    //     try{
-    //         let signer = await loadProvider()
-    //         console.log("number", no)
-    //         let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
-    //         let _value = await NFTCrowdsaleContract.getPrice(no)
-    //         // let _value = await ethers.utils.parseEther('0.3')
-    //         console.log("getPrice", _value.toString())
-    //     }
-    //     catch(e){
-    //         console.log("error", e)
-    //     }
-    // }
-
 
 
     const buynft = async (no) => {
         try {
+            handleShow("APPROVING")
             let signer = await loadProvider()
-            // console.log("number", no)
+           
             let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer)
             let whitelist = await NFTCrowdsaleContract.whitelist(account)
            
@@ -209,18 +193,25 @@ export default function CryptoMainPage() {
             allowanceCheck = parseInt(allowanceCheck.toString())
             // console.log("allowance :",allowanceCheck);
             if(allowanceCheck < parseInt(_value.toString())){
+                
                 let allowance = await BUSDContract.approve(nftPreSale_addr, _value)
                 let allowanceTX = await allowance.wait()
                 if (allowanceTX && allowanceTX.blockNumber) {
+                    setHeading("BUYING")
                         let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri)
                         let tx = await buy.wait()
+                        // {console.log("tx>>", tx)}
                         let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
                         setPurchased(parseInt(userPurchased.toString()))
                         // console.log("purchased", purchased)
                         // console.log("userPurchased", userPurchased)
                         if (tx.confirmations == 1) {
+                            setHeading("Finishh")
                             loadLimit()
-                            handleShow()
+                            // handleShow()
+                        }
+                        else{
+                            console.log("Error>>>")
                         }
                 }                            
             }else{
@@ -231,9 +222,10 @@ export default function CryptoMainPage() {
                 let userPurchased = await NFTCrowdsaleContract.userPurchased(account)
                 setPurchased(parseInt(userPurchased.toString()))
                 // console.log("purchased", purchased)
-
+                // {console.log("tx>>", tx.confirmations)}
                 // console.log("userPurchased", userPurchased)
                 if (tx.confirmations == 1) {
+                    setHeading("Finish")
                     loadLimit()
                     handleShow()
                 }
@@ -243,6 +235,7 @@ export default function CryptoMainPage() {
         }
         catch (e) {
             console.log("error", e)
+            setHeading("RejectedError")
         }
     }
 
@@ -264,29 +257,11 @@ export default function CryptoMainPage() {
         })()
     }, [account]);
 
-    // const Completionist = () =><h1>PRESALE STARTS IN: 00 DAYS 00 H 00 Minutes 00 SEC</h1>;
-
-    // const renderer = ({days, hours, minutes, seconds, completed }) => {
-    //     if (completed) {
-    //       // Render a completed state
-    //       return <Completionist />;
-    //     } else {
-    //       // Render a countdown
-    //     return <>
-    //     <h1>PRESALE STARTS IN: {days} DAYS {hours} H {minutes} Minutes {seconds} SEC</h1>
-    //     </>
-    //     }
-    //   };
+   
 
     return (
         <div>
-            {/* {
-     issalestart == true &&
-     <div className="top-bar">
-            <Countdown date={Date.now() + startTime} renderer={renderer} autoStart />
-    </div>
-    
-    } */}
+           
             {
                 iswhitelist == true ? <>
                     <h1 className="green-head">You are WHITELISTED</h1>
@@ -319,6 +294,7 @@ export default function CryptoMainPage() {
                                     <div className="d-flex justify-content-center">
                                         <button onClick={(e) => {
                                            buynft(0)
+                                           setHeading("APPROVING")
 
                                         }} className="custom-btn btn-green" >Buy NFT</button>
 
@@ -347,6 +323,7 @@ export default function CryptoMainPage() {
                                     <div className="d-flex justify-content-center">
                                         <button onClick={() => {
                                             buynft(1)
+                                            setHeading("APPROVING")
 
                                         }} className="custom-btn btn-green" >Buy NFT</button>
                                     </div>
@@ -374,6 +351,7 @@ export default function CryptoMainPage() {
                                     <div className="d-flex justify-content-center">
                                         <button onClick={() => {
                                             buynft(2)
+                                            setHeading("APPROVING")
 
                                         }} className="custom-btn btn-green" >Buy NFT</button>
                                     </div>
@@ -401,6 +379,7 @@ export default function CryptoMainPage() {
                                     <div className="d-flex justify-content-center">
                                         <button onClick={() => {
                                             buynft(3)
+                                            setHeading("APPROVING")
 
                                         }} className="custom-btn btn-green" >Buy NFT</button>
                                     </div>
@@ -434,6 +413,7 @@ export default function CryptoMainPage() {
                                     <div className="d-flex justify-content-center">
                                         <button onClick={() => {
                                             buynft(4)
+                                            setHeading("APPROVING")
 
                                         }} className="custom-btn btn-green" >Buy NFT</button>
                                     </div>
@@ -499,13 +479,20 @@ export default function CryptoMainPage() {
                     </div>
                 </div>
             </div>
-
-            <Modal show={show} onHide={handleClose} className='custom-modal' size="lg"
+            {/* {console.log("hh>>", heading)} */}
+            <Modal show={show} onHide={handleClose}  className='custom-modal' size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered>
-                <Modal.Header closeButton>
+                    {heading== "APPROVING" ||  heading == "BUYING"?
+                      (<Modal.Header > <div style={{textAlign:"center"}}>
+                          <h1>{heading}</h1>
+                          <div><Spinner animation="border" variant="success" /></div>
+                          </div></Modal.Header>)
+                    :  heading == "RejectedError" ? (<Modal.Body><div><h1 style={{color:"red"}}>Rejected</h1></div></Modal.Body>) 
+                   
+                     : heading== "Finishh" || heading=="Finish" ? (<div style={{textAlign:"center"}} >
+                        <Modal.Header >
                     <h3 className="modal-title" id="exampleModalLabel">CONGRATULATIONS! YOU HAVE PURCHASED YOUR NFT</h3>
-                    <button type="button" className="btn-close" ></button>
                 </Modal.Header>
                 <Modal.Body>
                     <h1>You can buy 5 NFT per WALLET!</h1>
@@ -517,47 +504,13 @@ export default function CryptoMainPage() {
                 </Modal.Body>
                 <Modal.Footer>
                 </Modal.Footer>
+                    </div>) : null}
+
+                
             </Modal>
 
-            {/* <Modal show={show1} onHide={handleClose1} className='custom-modal' size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered>
-                <Modal.Header closeButton>
-                    <h3 className="modal-title" id="exampleModalLabel">CONGRATULATIONS! YOU HAVE PURCHASED YOUR NFT</h3>
-                    <button type="button" className="btn-close" ></button>
-                </Modal.Header>
-                <Modal.Body>
-                    <h1>You can buy 5 NFT per WALLET!</h1>
-                    <h1>{`${purchased}/5 NFT`}</h1>
-                    <div className="d-flex justify-content-center">
-                        <a className="custom-btn btn-white" onClick={handleClose1}>KEEP BUYING</a>
-                        <Link><a className="custom-btn btn-white" onClick={handleClose1}>VIEW MY NFTS</a></Link>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                </Modal.Footer>
-            </Modal> */}
-            {/* <div className="modal fade custom-modal" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-lg modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h3 className="modal-title" id="exampleModalLabel">CONGRATULATIONS! YOU HAVE PURCHASED YOUR NFT</h3>
-               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
-            </div>
-            <div className="modal-body">
-              <h1>You can buy 5 NFT per WALLET!</h1>
-              <h1>1/5 NFT</h1>
-              <div className="d-flex justify-content-center">
-                  <a className="custom-btn btn-white" data-bs-dismiss="modal" aria-label="Close">KEEP BUYING</a>
-                  <a className="custom-btn btn-white" data-bs-dismiss="modal" aria-label="Close">VIEW MY NFTS</a>
-              </div>
-            </div>
-            <div className="modal-footer">
-              
-            </div>
-          </div>
-        </div>
-      </div> */}
+            
+            
 
 
         </div>

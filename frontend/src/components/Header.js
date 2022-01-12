@@ -64,38 +64,38 @@ function Header(props) {
         current = 0;
         timestate = 0
         setCurrentTime(current)
-        console.log("time state 1:" ,timestate)
-        console.log("time  1:" ,current)
+        // console.log("time state 1:" ,timestate)
+        // console.log("time  1:" ,current)
       }else if(startDiff>0){
         start = await NFTCrowdsaleContract.start();
         startDiff = (start - (dateNow/1000))
         current = parseInt(start.toString());
         timestate = 1
         setCurrentTime(parseInt(startDiff))
-        console.log("time state 2:" ,timestate)
-        console.log("time  2:" ,current)
+        // console.log("time state 2:" ,timestate)
+        // console.log("time  2:" ,current)
       }else if(limitDiff>0){
         limitationtime = await NFTCrowdsaleContract.limitationtime();
         limitDiff = (limitationtime - (dateNow/1000))
         current = parseInt(limitationtime.toString())
         timestate = 2
         setCurrentTime(parseInt(limitDiff))
-        console.log("time state 2:" ,timestate)
-        console.log("time  2:" ,current)
+        // console.log("time state 2:" ,timestate)
+        // console.log("time  2:" ,current)
       }else if(endDiff>0){
         current = parseInt(endTime.toString())
         timestate = 3
         endTime = await NFTCrowdsaleContract.endTime();
         endDiff = (endTime - (dateNow/1000))
         setCurrentTime(parseInt(endDiff))
-        console.log("time state 3:" ,timestate)
-        console.log("time  3:" ,current)
+        // console.log("time state 3:" ,timestate)
+        // console.log("time  3:" ,current)
       }else{
         current = 0;
         timestate = 4
         setCurrentTime(current)
-        console.log("time state 4:" ,timestate)
-        console.log("time  4:" ,current)
+        // console.log("time state 4:" ,timestate)
+        // console.log("time  4:" ,current)
       }
       
       setTimeState(timestate)
@@ -148,11 +148,11 @@ function Header(props) {
       setH(hours)
       setM(minutes)
       setS(seconds)
-        console.log("Seconds :",seconds)
-        console.log("Minutes :",minutes)
-        console.log("Hours :",hours)
+        // console.log("Seconds :",seconds)
+        // console.log("Minutes :",minutes)
+        // console.log("Hours :",hours)
         setCurrentTime(currentTime-1)
-        console.log(currentTime)
+        // console.log(currentTime)
       }, 1000);
       return () => clearInterval(intervalId);
     }else{
@@ -179,22 +179,8 @@ function Header(props) {
  
 
 
-    const renderer2 = ({ days, hours, minutes, seconds, completed }) => {
-      if (!completed) {
-        return (
-          <>
-            <h1>
-          DISCOUNT ENDS IN: {days} DAYS {hours} H {minutes} Minutes{" "}
-          {seconds} SEC
-        </h1>
-          </>
-        );
-      } 
-      else if(completed == true){
-        return <h1>dd</h1>
-      }
-      
-    }
+    
+    
 
   // console.log("is active check = ", active);
   return (
