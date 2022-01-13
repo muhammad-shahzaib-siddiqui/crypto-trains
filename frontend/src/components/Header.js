@@ -40,7 +40,7 @@ function Header(props) {
   const ownerCheck = async () => {
     try{
       let NFTContract = new ethers.Contract(nft_addr, NFT, library);
-      console.log(library._network)
+      // console.log(library._network)
       let Owner = await NFTContract.owner()
       if(Owner == account){
         setOwner(true)
@@ -70,7 +70,7 @@ function Header(props) {
         NFTCrowdsale,
         signer
       );
-      console.log(library)
+      // console.log(library)
       let start = await NFTCrowdsaleContract.start();
       let startDiff = (start - (dateNow/1000))
       let limitationtime = await NFTCrowdsaleContract.limitationtime();
@@ -126,7 +126,7 @@ function Header(props) {
   const loadProvider = async () => {
     try {
       const provider = new ethers.providers.Web3Provider(window.ethereum)
-      console.log(provider)
+      // console.log(provider)
       return provider
     } catch (e) {
       console.log("loadProvider: ", e);
@@ -165,7 +165,7 @@ function Header(props) {
     (async () => {
       if (true) {
         try {
-         console.log("use effect :",library)
+        //  console.log("use effect :",library)
         } catch (error) {
           console.log(error);
         }

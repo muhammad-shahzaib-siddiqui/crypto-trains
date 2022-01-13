@@ -1,7 +1,6 @@
 function MyNft(props){
-    return <>
-      
-      <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
+    return (
+        <div className="col-lg-3 col-md-6 col-sm-6 position-relative">
                         <div>
                             <div className="nft">
                         <div className="tag-top">
@@ -12,7 +11,7 @@ function MyNft(props){
                             <div className="tag-section">
                                 <h5>{props.name}</h5>
                                 <div className="tag">
-                                    <h6 >{props.category}</h6>
+                                    <h6>{props.category}</h6>
                                 </div>
                             </div>
                         </div>
@@ -20,6 +19,6 @@ function MyNft(props){
                     </div>
                         </div>
                </div> 
-    </>
+    )
 }
 export default MyNft;

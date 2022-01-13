@@ -79,7 +79,7 @@ export default function CryptoMainPage() {
     const loadProvider = async () => {
         try {
           const provider = new ethers.providers.Web3Provider(window.ethereum)
-          console.log(provider)
+        //   console.log(provider)
           return provider
         } catch (e) {
           console.log("loadProvider: ", e);
@@ -109,7 +109,7 @@ export default function CryptoMainPage() {
             let Station_common_limit = await NFTcontract.Station_common_limit()
             let Station_mitic_limit = await NFTcontract.Station_mitic_limit()
             let Station_Legendary_limit = await NFTcontract.Station_Legendary_limit()
-            console.log("load :", Train_common_limit)
+            // console.log("load :", Train_common_limit)
 
             setTrain_common_limit(parseInt(Train_common_limit.toString()))
             setTrain_rare_limit(parseInt(Train_rare_limit.toString()))
@@ -202,7 +202,7 @@ export default function CryptoMainPage() {
             let allowanceCheck = await BUSDContract.allowance(account,nftPreSale_addr)
             
             allowanceCheck = parseInt(allowanceCheck.toString())
-             console.log("allowance :",allowanceCheck);
+            //  console.log("allowance :",allowanceCheck);
             if(allowanceCheck < parseInt(_value.toString())){
                 
                 let allowance = await BUSDContract.approve(nftPreSale_addr, _value)
@@ -222,7 +222,7 @@ export default function CryptoMainPage() {
                             // handleShow()
                         }
                         else{
-                            console.log("Error>>>",tx.confirmations)
+                            console.log("Error",tx.confirmations)
                         }
                 }                            
             }else{
