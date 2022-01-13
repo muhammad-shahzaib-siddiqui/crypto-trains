@@ -36,7 +36,7 @@ const Nfts = () => {
     } = useWeb3React();
     
     const [count, setCount] = useState()
-
+    const [iswhitelist, setiswhitelist] = useState(false);
     
 let journal = [
     {"name":"GOODS TRAIN", "category":"COMMON", "image": train1, "qty": count},
@@ -75,6 +75,19 @@ let journal = [
         }
     }
 
+    const loadWhiteList = async () => {
+        try {
+
+            let signer = await loadProvider()
+            let NFTCrowdsaleContract = new ethers.Contract(nftPreSale_addr, NFTCrowdsale, signer);
+            let _whitelist = await NFTCrowdsaleContract.whitelist(account)
+
+            setiswhitelist(_whitelist)
+        } catch (e) {
+            console.log("data", e)
+        }
+    }
+
     const loadNFTs = async () => {
         try {
             
@@ -91,7 +104,7 @@ let journal = [
                 let token = tokenType.toNumber()
                 // console.log("tokenType", token)
                 arr.push(token)
-                console.log("arr", arr)
+                // console.log("arr", arr)
                 if(token == 0) {
                     counter += 1
                     setCount(counter)
@@ -157,6 +170,7 @@ let journal = [
             if (account) {
                 try {
                     loadNFTs()
+                    loadWhiteList()
                 } catch (error) {
                     console.log(error)
                 }
@@ -177,7 +191,15 @@ let journal = [
     return (
         <div>
     
-    <h1 className="green-head">You are WHITELISTED</h1>
+    {/* <h1 className="green-head">You are WHITELISTED</h1> */}
+    {
+                iswhitelist == true ? <>
+                    <h1 className="green-head">You are WHITELISTED</h1>
+                </>
+                    : <>
+                        <h1 className="red-head">You are not WHITELISTED</h1>
+                    </>
+            }
     <div className="container-fluid">
         <div className="custom-padding">
             <div className="row nft-section">
