@@ -134,6 +134,27 @@ const Airdrop = () => {
             whitelist.push(event.target.value)
             event.target.value = '';
         }
+
+    if(event.target.files.length>0){
+        let file = event.target.files[0];
+        let whiteListTempArr = [];
+        const reader = new window.FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onloadend = () => {
+            const records = parse(Buffer(reader.result), {
+                columns: false,
+                skip_empty_lines: true,
+            });
+            records.map((item)=>{
+                whiteListTempArr.push(ethers.utils.getAddress(item[0]))
+            })
+            
+            setWhiteListAddress(whiteListTempArr)
+        };
+    }
+
+
+
     }
 
 
