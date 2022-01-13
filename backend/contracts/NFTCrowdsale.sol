@@ -93,7 +93,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         Station_mitic=550 ether;//5
         Station_Legendary=1100 ether;
 
-     BUSD = IERC20(0xA41e502175D8086225B83b77883986C0dA0B04C7);
+     BUSD = IERC20(0x833655CAA72938494309905edcec453Cf852556c);
         }
     
     function whitelist(address account)public view returns(bool){
@@ -121,7 +121,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         }
        
         start = block.timestamp + (_startTime * 1 seconds);
-        limitationtime = start + 50 *  1 seconds;
+        limitationtime = start + 600 *  1 seconds;
         endTime = start + 2 weeks * 1 seconds;
     }
  

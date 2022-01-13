@@ -32,11 +32,27 @@ function Header(props) {
   const [m,setM] = useState(0)
   const [s,setS] = useState(0)
   const [shortAddress,setShortAddress] = useState()
+  const [owner, setOwner] = useState(false)
 
 
 
  
-        
+  const ownerCheck = async () => {
+    try{
+      let NFTContract = new ethers.Contract(nft_addr, NFT, library);
+      console.log(library._network)
+      let Owner = await NFTContract.owner()
+      if(Owner == account){
+        setOwner(true)
+      }else{
+        setOwner(false)
+      }
+  
+    }
+    catch(error) {
+      console.log("error", error)
+    }
+  } 
 
 
 
@@ -54,6 +70,7 @@ function Header(props) {
         NFTCrowdsale,
         signer
       );
+      console.log(library)
       let start = await NFTCrowdsaleContract.start();
       let startDiff = (start - (dateNow/1000))
       let limitationtime = await NFTCrowdsaleContract.limitationtime();
@@ -101,19 +118,29 @@ function Header(props) {
       setTimeState(timestate)
       
     } catch (e) {
-      console.log("loadProvider: ", e);
+      console.log("func :: Time: ", e);
     }
   };
  
 
   const loadProvider = async () => {
     try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      console.log(provider)
+      return provider
+    } catch (e) {
+      console.log("loadProvider: ", e);
+    }
+  };
+
+  const loadSigner = async () => {
+    try {
       const web3Modal = new Web3Modal();
       const connection = await web3Modal.connect();
       const provider = new ethers.providers.Web3Provider(connection);
       return provider.getSigner();
     } catch (e) {
-      console.log("loadProvider: ", e);
+      console.log("loadProvider default: ", e);
     }
   };
 
@@ -121,20 +148,33 @@ function Header(props) {
 
   useEffect(() => {
     (async () => {
-      if (account) {
+      if (account && library) {
         try {
           let len = account.length 
           let short = account.slice(0, 4)+"..." + account.slice(len-5, len-1)
           setShortAddress(short);
-          
+          ownerCheck()
         } catch (error) {
           console.log(error);
         }
       }
     })();
-  }, [account]);
+  }, [account,library]);
 
   useEffect(() => {
+    (async () => {
+      if (true) {
+        try {
+         console.log("use effect :",library)
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    })();
+  }, [account,library]);
+
+  useEffect(() => {
+    
     if(currentTime > 0){
       const intervalId = setInterval(() => {
       var _days = Math.floor(currentTime/84600)
@@ -160,29 +200,11 @@ function Header(props) {
       Time()
     }
     
-  }, [currentTime]);
+  }, [currentTime,library]);
 
   
 
-// console.log("discount", discountTime.toString())
 
-
-// console.log("endTime", endTimer)
-
-
-
-
-  // console.log("discount", discountTime);
-
-
-
- 
-
-
-    
-    
-
-  // console.log("is active check = ", active);
   return (
     <div>
       <nav className="custom-padding custom-padd-mobile">
@@ -200,11 +222,13 @@ function Header(props) {
                 MY NFTS
               </Link>
             </div>
-            <div>
+            {owner ? (<div>
               <Link to="airDrop" className="custom-btn btn-white">
                 AirDrop
               </Link>
-            </div>
+            </div>) : null}
+
+
 
             <a  className="custom-btn btn-white">
               {/* {<img  src="./assets/img/metamask.png" alt="" />} */}
