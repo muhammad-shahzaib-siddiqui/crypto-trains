@@ -236,7 +236,7 @@ export default function CryptoMainPage() {
                 // console.log("purchased", purchased)
                 // {console.log("tx>>", tx.confirmations)}
                 // console.log("userPurchased", userPurchased)
-                if (tx.confirmations == 1) {
+                if (tx.confirmations >= 1) {
                     setHeading("Finish")
                     loadLimit()
                     handleShow()
