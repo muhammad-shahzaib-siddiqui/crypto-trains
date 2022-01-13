@@ -78,7 +78,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         _wallet = wallet_;
         start = 0;
         limitationtime = 0;
-        discounted_Train_common=1 ether;//0 //45
+        discounted_Train_common=45 ether;//0 //45
         discounted_Train_rare=95 ether;//1
         discounted_Train_epic=190 ether;//2
         discounted_Train_legendary=470 ether;//3
@@ -87,7 +87,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         discounted_Station_Legendary=935 ether;//6
 
 
-        Train_common=1 ether;//0 // 55
+        Train_common=55 ether;//0 // 55
         Train_rare=110 ether;//1
         Train_epic=220 ether;//2
         Train_legendary=550 ether;//3
