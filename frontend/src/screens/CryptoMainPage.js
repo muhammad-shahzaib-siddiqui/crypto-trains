@@ -519,46 +519,7 @@ export default function CryptoMainPage() {
                 </Modal.Footer>
             </Modal>
 
-            {/* <Modal show={show1} onHide={handleClose1} className='custom-modal' size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered>
-                <Modal.Header closeButton>
-                    <h3 className="modal-title" id="exampleModalLabel">CONGRATULATIONS! YOU HAVE PURCHASED YOUR NFT</h3>
-                    <button type="button" className="btn-close" ></button>
-                </Modal.Header>
-                <Modal.Body>
-                    <h1>You can buy 5 NFT per WALLET!</h1>
-                    <h1>{`${purchased}/5 NFT`}</h1>
-                    <div className="d-flex justify-content-center">
-                        <a className="custom-btn btn-white" onClick={handleClose1}>KEEP BUYING</a>
-                        <Link><a className="custom-btn btn-white" onClick={handleClose1}>VIEW MY NFTS</a></Link>
-                    </div>
-                </Modal.Body>
-                <Modal.Footer>
-                </Modal.Footer>
-            </Modal> */}
-            {/* <div className="modal fade custom-modal" id="exampleModal"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-lg modal-dialog-centered">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h3 className="modal-title" id="exampleModalLabel">CONGRATULATIONS! YOU HAVE PURCHASED YOUR NFT</h3>
-               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> 
-            </div>
-            <div className="modal-body">
-              <h1>You can buy 5 NFT per WALLET!</h1>
-              <h1>1/5 NFT</h1>
-              <div className="d-flex justify-content-center">
-                  <a className="custom-btn btn-white" data-bs-dismiss="modal" aria-label="Close">KEEP BUYING</a>
-                  <a className="custom-btn btn-white" data-bs-dismiss="modal" aria-label="Close">VIEW MY NFTS</a>
-              </div>
-            </div>
-            <div className="modal-footer">
-              
-            </div>
-          </div>
-        </div>
-      </div> */}
-
+           
 
         </div>
     )
