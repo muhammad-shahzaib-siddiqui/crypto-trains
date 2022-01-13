@@ -509,13 +509,9 @@ export default function CryptoMainPage() {
                 
             </Modal>
 
-<<<<<<< HEAD
-           
-=======
             
             
 
->>>>>>> 8185a1cc2e642128b6f78eba2f4fa1e58dbf67b7
 
         </div>
     )
