@@ -11,6 +11,7 @@ import "./NFT.sol";
 
 
 
+
 contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
 
     using SafeMath for uint256;
@@ -20,6 +21,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
     IERC20 private _token;
     NFT private nft;
     IERC20 private BUSD;
+  
     // Address where funds are collected
     address payable private _wallet;
     address payable public _manager;
@@ -76,7 +78,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         _wallet = wallet_;
         start = 0;
         limitationtime = 0;
-        discounted_Train_common=45 ether;//0
+        discounted_Train_common=1 ether;//0 //45
         discounted_Train_rare=95 ether;//1
         discounted_Train_epic=190 ether;//2
         discounted_Train_legendary=470 ether;//3
@@ -85,7 +87,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         discounted_Station_Legendary=935 ether;//6
 
 
-        Train_common=55 ether;//0
+        Train_common=1 ether;//0 // 55
         Train_rare=110 ether;//1
         Train_epic=220 ether;//2
         Train_legendary=550 ether;//3
@@ -93,7 +95,8 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         Station_mitic=550 ether;//5
         Station_Legendary=1100 ether;
 
-     BUSD = IERC20(0x833655CAA72938494309905edcec453Cf852556c);
+     BUSD = IERC20(0xca9Eb9DDC1B511d5B67d833D1d36Ee85503DA93E);
+    
         }
     
     function whitelist(address account)public view returns(bool){
@@ -121,7 +124,7 @@ contract NFTCrowdsale is Context, ReentrancyGuard,Ownable {
         }
        
         start = block.timestamp + (_startTime * 1 seconds);
-        limitationtime = start + 600 *  1 seconds;
+        limitationtime = start + 50 *  1 seconds;
         endTime = start + 2 weeks * 1 seconds;
     }
  

@@ -72,9 +72,11 @@ function saveFrontendFiles(nFTpaymentSplitter, nftPreSale, nft) {
  export const nft_addr = "${nft.address}"
  export const nftPreSale_addr = "${nftPreSale.address}"
  export const nFTpaymentSplitter_addr = "${nFTpaymentSplitter.address}"
- export const BUSD_addr = "0xA41e502175D8086225B83b77883986C0dA0B04C7"
+ export const BUSD_addr = "0xca9Eb9DDC1B511d5B67d833D1d36Ee85503DA93E"
 `
-//change BUSD address
+//change BUSD address "0xA41e502175D8086225B83b77883986C0dA0B04C7" -rinkeby
+//change BUSD address "0x17331B1B090cfA4E8754Bb0637206C1186926C4D" -BSC testnet
+//pegged BUSD test = 0xca9Eb9DDC1B511d5B67d833D1d36Ee85503DA93E -BSC testnet 
 
   let data = JSON.stringify(config)
   fs.writeFileSync(

@@ -202,7 +202,7 @@ export default function CryptoMainPage() {
             let allowanceCheck = await BUSDContract.allowance(account,nftPreSale_addr)
             
             allowanceCheck = parseInt(allowanceCheck.toString())
-            // console.log("allowance :",allowanceCheck);
+             console.log("allowance :",allowanceCheck);
             if(allowanceCheck < parseInt(_value.toString())){
                 
                 let allowance = await BUSDContract.approve(nftPreSale_addr, _value)
@@ -222,10 +222,11 @@ export default function CryptoMainPage() {
                             // handleShow()
                         }
                         else{
-                            console.log("Error>>>")
+                            console.log("Error>>>",tx.confirmations)
                         }
                 }                            
             }else{
+               setHeading("BUYING")
                 let buy = await NFTCrowdsaleContract.buyNFTV1(no, uri)
                 // handleShow1()
                 let tx = await buy.wait()

@@ -42,7 +42,7 @@ contract NFTpaymentSplitter is Context {
  constructor() payable {
         require(payees.length == shares_.length, "PaymentSplitter: payees and shares length mismatch");
         require(payees.length > 0, "PaymentSplitter: no payees");
-        BUSD = IERC20(0x833655CAA72938494309905edcec453Cf852556c);
+        BUSD = IERC20(0xca9Eb9DDC1B511d5B67d833D1d36Ee85503DA93E);
         for (uint256 i = 0; i < payees.length; i++) {
             _addPayee(payees[i], shares_[i]);
         }
